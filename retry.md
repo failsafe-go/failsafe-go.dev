@@ -1,0 +1,161 @@
+---
+layout: default
+title: Retry
+---
+
+# Retry Policy
+{: .no_toc }
+
+1. TOC
+{:toc}
+
+[Retry policies][RetryPolicy] will retry failed executions a certain number of times, with an optional delay between attempts.
+
+Creating a [RetryPolicy] is straightforward, for example:
+
+```go
+// Retry on ErrConnecting up to 3 times with a 1 second delay between attempts
+retryPolicy := retrypolicy.Builder[Connection]().
+  HandleErrors(ErrConnecting).
+  WithDelay(time.Second).
+  WithMaxRetries(3).
+  Build()
+```
+
+## Failure Handling
+
+A [RetryPolicy] can be configured to handle only [certain results or errors][failure-handling] as failures:
+
+```go
+builder.
+  HandleErrors(ErrConnecting).
+  HandleResult(nil)
+```
+
+## Return Values
+
+By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return a [RetriesExceededError] wrapping the last execution result and error, but it can also be configured to return these instead:
+
+```go
+builder.ReturnLastFailure()
+```
+
+If additional handling or an alternative result is needed, additional policies, such as a [fallbacks], can be [composed][policy-composition] around a [RetryPolicy].
+
+## Max Attempts
+
+[By default][retrypolicy-defaults], a [RetryPolicy] will allow a maximum of 3 execution attempts. You can configure a different max number of [attempts][WithMaxAttempts]:
+
+```go
+builder.WithMaxAttempts(3)
+```
+
+Or a max number of [retries][WithMaxRetries]:
+
+```go
+builder.WithMaxRetries(2)
+```
+
+You can also disable the default max attempt limit:
+
+```go
+builder.WithMaxAttempts(-1)
+```
+
+## Max Duration
+
+In addition to max attempts, you can also add a [max duration][WithMaxDuration] for an execution, after which retries will stop if the max attempts haven't already been reached.
+
+```go
+builder.WithMaxDuration(5*time.Minute)
+```
+
+## Delays
+
+By default, a [RetryPolicy] has no delay between attempts. You can configure a fixed delay:
+
+```go
+builder.WithDelay(time.Second)
+```
+
+Or a delay that [backs off][WithBackoff] exponentially:
+
+```go
+builder.WithBackoff(time.Second, 30*time.Second)
+```
+
+A [random delay][WithRandomDelay] for some range:
+
+```go
+builder.WithRandomDelay(time.Second, 10*time.Second)
+```
+
+Or a [computed delay][WithDelayFn] based on an execution result or exception:
+
+```go
+builder.WithDelayFn(ComputeDelay)
+```
+
+### Jitter
+
+You can also combine a delay with a random [jitter factor][WithJitterFactor]:
+
+```go
+builder.WithJitterFactor(.1)
+```
+
+Or a [time based jitter][WithJitter]:
+
+```go
+builder.WithJitter(100*time.Second)
+```
+
+To cancel running executions, see the [execution cancellation][execution-cancellation] docs or [Timeout][timeouts] policy.
+
+## Aborts
+
+You can also specify which results, exceptions, or conditions to [abort retries][AbortOnErrors] on:
+
+```go
+builder.
+  AbortOnResult(true)
+  AbortOnError(ErrConnecting)
+  AbortIf(AbortFn)
+```
+
+## Event Listeners
+
+In addition to the standard [policy event listeners][policy-listeners], a [RetryPolicy] can notify you with an [ExecutionEvent] when a retry is about to be attempted:
+
+```go
+builder.OnRetry(func(e failsafe.ExecutionEvent[any]) {
+  fmt.Println("Execution failed. Retrying.")
+})
+```
+
+When an execution fails and the max retries are [exceeded][OnRetriesExceeded]:
+
+```go
+builder.OnRetry(func(e failsafe.ExecutionEvent[any]) {
+  fmt.Println("Failed to connect. Max retries exceeded.")
+})
+```
+
+Or when retries have been aborted:
+
+```go
+builder.OnAbort(func(e failsafe.ExecutionEvent[any]) {
+  fmt.Println("Connection aborted due to", e.LastError())
+})
+```
+
+It can also notify you with an [ExecutionScheduledEvent] when a retry is scheduled to be attempted after the configured delay:
+
+```go
+builder.OnRetry(func(e failsafe.ExecutionScheduledEvent[any]) {
+  fmt.Println("Connection retry scheduled for after", e.Delay)
+})
+```
+
+
+{% include common-links.html %}
