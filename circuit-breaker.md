@@ -15,7 +15,7 @@ Creating a [CircuitBreaker] is straightforward, for example:
 
 ```go
 // Opens after 5 failures, half-opens after 1 minute, closes after 2 successes
-breaker = circuitbreaker.Builder[any]().
+breaker := circuitbreaker.Builder[any]().
   HandleErrors(ErrConnecting).
   WithFailureThreshold(5).
   WithDelay(time.Minute).

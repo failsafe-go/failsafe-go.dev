@@ -90,7 +90,7 @@ retryPolicyBuilder.HandleErrors(
 A typical policy composition might place a `Fallback` as the outer-most policy, followed by a `RetryPolicy`, a `CircuitBreaker` or `RateLimiter`, and a `Timeout` as the inner-most policy:
 
 ```go
-failsafe.With[any](fallback, retryPolicy, circuitBreaker, timeout)
+failsafe.NewExecutor[any](fallback, retryPolicy, circuitBreaker, timeout)
 ```
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.
