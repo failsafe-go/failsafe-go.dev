@@ -39,7 +39,7 @@ response, err := failsafe.Get(PerformRequest, retryPolicy)
 
 ### Composing Policies
 
-Multiple [policies] can be arbitrarily composed to add additional layers of resilience or to handle different failures in different ways:
+Multiple [policies] can be composed to add additional layers of resilience or to handle different failures in different ways:
 
 ```go
 fallback := fallback.WithResult(BackupConnection)
