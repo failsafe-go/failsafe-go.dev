@@ -18,6 +18,7 @@
 
 - Resources
   - [Godocs][godocs]
+  - [Github][github]
   - [Slack][slack]
 
 {% include common-links.html %}

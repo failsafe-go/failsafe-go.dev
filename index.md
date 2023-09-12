@@ -5,11 +5,7 @@ title: Fault tolerance and resilience patterns for Go
 
 # Overview
 
-Failsafe-go is a library for building fault tolerant Go applications. It has a concise API for handling everyday use cases and the flexibility to handle everything else. Failsafe-go works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed.
-
-## Setup
-
-Add the latest [Failsafe-go release][releases] to your project.
+Failsafe-go is a library for building fault tolerant Go applications. It works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. It has a concise API for handling common use cases and the flexibility to handle everything else. 
 
 ## Getting Started
 
@@ -23,14 +19,14 @@ retryPolicy := retrypolicy.Builder[any]().
   Build()
 ```
 
-We can then execute a `func` *with* retries:
+We can then execute a `func` with retries:
 
 ```go
 // Run with retries
 err := failsafe.Run(Connect, retryPolicy)
 ```
 
-Or we can execute a `func` that gets a result *with* retries:
+Or we can execute a `func` that gets a result with retries:
 
 ```go
 // Get with retries
