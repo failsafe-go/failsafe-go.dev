@@ -87,10 +87,10 @@ retryPolicyBuilder.HandleErrors(
 
 ### Composition Recommendations
 
-A typical policy composition might place a `Fallback` as the outer-most policy, followed by a `RetryPolicy`, a `CircuitBreaker` or `RateLimiter`, and a `Timeout` as the inner-most policy:
+A typical policy composition might place a `Fallback` as the outer-most policy, followed by a `RetryPolicy`, a `CircuitBreaker` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
 
 ```go
-failsafe.NewExecutor[any](fallback, retryPolicy, circuitBreaker, timeout)
+failsafe.NewExecutor[any](fallback, retryPolicy, circuitBreaker, bulkhead, timeout)
 ```
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.
@@ -103,6 +103,7 @@ Read about the built-in policies that Failsafe supports:
 - [Circuit Breaker][circuit-breakers]
 - [Rate Limiter][rate-limiters]
 - [Timeout][timeouts]
+- [Bulkhead][bulkheads]
 - [Fallback][fallbacks]
 
 {% include common-links.html %}

@@ -1,4 +1,4 @@
-title: Failsafe-Go
+title: Failsafe-go
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://failsafe-go.dev" # the base hostname & protocol for your site, e.g. http://example.com
 github-url: https://github.com/failsafe-go/failsafe-go
@@ -17,7 +17,7 @@ search_enabled: true
 
 # aux_links:
 #   "View on GitHub":
-#     - "//github.com/jhalterman/failsafe"
+#     - "//github.com/failsafe-go/failsafe-go"
 
 ga_tracking: UA-145891145-1
 
