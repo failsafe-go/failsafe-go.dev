@@ -125,35 +125,11 @@ builder.
 
 ## Event Listeners
 
-In addition to the standard [policy event listeners][policy-listeners], a [RetryPolicy] can notify you with an [ExecutionEvent] when a retry is about to be attempted:
+In addition to the standard [policy event listeners][policy-listeners], a RetryPolicy can notify you with an [ExecutionEvent] when a retry is [scheduled][OnRetryScheduled] or is about to be [attempted][OnRetry], when an execution fails and the max retries are [exceeded][OnRetriesExceeded], or when retries are [aborted][OnAbort]. For example:
 
 ```go
 builder.OnRetry(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Execution failed. Retrying.")
-})
-```
-
-When an execution fails and the max retries are [exceeded][OnRetriesExceeded]:
-
-```go
-builder.OnRetry(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Failed to connect. Max retries exceeded.")
-})
-```
-
-Or when retries have been aborted:
-
-```go
-builder.OnAbort(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Connection aborted due to", e.LastError())
-})
-```
-
-It can also notify you with an [ExecutionScheduledEvent] when a retry is scheduled to be attempted after the configured delay:
-
-```go
-builder.OnRetry(func(e failsafe.ExecutionScheduledEvent[any]) {
-  fmt.Println("Connection retry scheduled for after", e.Delay)
+  fmt.Println("Retrying after error", e.LastError())
 })
 ```
 
