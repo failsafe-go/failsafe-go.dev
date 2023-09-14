@@ -30,7 +30,7 @@ Or we can execute a `func` that gets a result with retries:
 
 ```go
 // Get with retries
-response, err := failsafe.Get(PerformRequest, retryPolicy)
+response, err := failsafe.Get(SendMessage, retryPolicy)
 ```
 
 ### Composing Policies
