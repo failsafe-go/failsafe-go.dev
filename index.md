@@ -5,7 +5,7 @@ title: Fault tolerance and resilience patterns for Go
 
 # Overview
 
-Failsafe-go is a library for building fault tolerant Go applications. It works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. It has a concise API for handling common use cases and the flexibility to handle everything else. 
+Failsafe-go is a library for building fault tolerant Go applications. It works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. Policies include [Retry][retry], [CircuitBreaker][circuit-breakers], [RateLimiter][rate-limiters], [Timeout][timeouts], [Bulkhead][bulkheads], and [Fallback][fallbacks].
 
 ## Getting Started
 
