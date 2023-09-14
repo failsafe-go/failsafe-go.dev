@@ -113,8 +113,7 @@ It can also notify you when the breaker [opens][OnOpen], [closes][OnClose], or [
 
 ## Metrics
 
-[CircuitBreaker] provides metrics for the current state that the breaker is in, including [execution count][ExecutionCount], [success count][SuccessCount], [failure count][FailureCount], [success rate][SuccessRate] and [failure rate][FailureRate]. It can also return the [remaining delay][RemainingDelay] when in an *open* state.
-
+[CircuitBreaker] provides [metrics][CircuitBreakerMetrics] for the current state that the breaker is in, including execution count, success count, failure count, success rate, and failure rate. 
 ## Best Practices
 
 A circuit breaker can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
@@ -132,7 +131,7 @@ if breaker.TryAcquirePermit() {
   if err := doSomething(); err != nil {
     breaker.RecordSuccess()
   else {
-    breaker.RecordError(nil, err)
+    breaker.RecordError(err)
   }
 }
 ```
