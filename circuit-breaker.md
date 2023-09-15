@@ -61,12 +61,6 @@ A *time based* circuit breaker can be configured to *open* when a number of fail
 builder.WithFailureThresholdPeriod(3, time.Minute)
 ```
 
-And when a minimum number of executions within a time period:
-
-```go
-builder.WithFailureExecutionThreshold(5)
-```
-
 It can also be configured to *open* when the percentage rate of failures out of a minimum number of executions exceeds a threshold:
 
 ```go
