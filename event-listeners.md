@@ -54,10 +54,10 @@ Policies that can be configured to handle specific results or errors, such as [R
 ```go
 policyBuilder.
   OnSuccess(func(e failsafe.ExecutionEvent[Connection]) {
-    fmt.Println("Connected to", e.Result())
+    fmt.Println("Connected to", e.LastResult())
   }).
   OnFailure(func(e failsafe.ExecutionEvent[Connection]) {
-    fmt.Println("Failed to create connection", e.Error())
+    fmt.Println("Failed to create connection", e.LastError())
   })
 ```
 
