@@ -5,12 +5,12 @@ title: Extending Failsafe-go
 
 # Extending Failsafe-go
 
-Failsafe-go can be extended to add additional capabilities along with existing policies.
+Failsafe-go can be extended to add custom policies along with the existing policies.
 
 ## Custom Policies
 
-[Policy] implementations contain the necessary configuration to handle executions in a certain way. The actual execution handling is done by a corresponding [PolicyExecutor] implementation, which each Policy provides. The PolicyExecutor is responsible for performing any pre-execution behavior and post-execution handling of a result or exception. 
+Policies consist of a [Policy] implementation, containing the necessary configuration to handle executions, and a [PolicyExecutor] implementation, to handle individual executions according to a policy. Policies can be stateful, similar to [circuit breakers][circuit-breakers], or stateless, similar to [retry policies][retry].
 
-The [BasePolicyExecutor] along with the existing PolicyExecutor [implementations][github] are a good reference for creating custom implementations.
+The [policy package][policy-package] provides base types to help with building a custom policy. Those along with the existing [PolicyExecutor][] [implementations][github] are a good reference for creating custom implementations.
 
 {% include common-links.html %}
