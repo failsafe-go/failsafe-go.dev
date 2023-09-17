@@ -11,6 +11,7 @@
   - [Fallback][fallbacks]
 
 - Features
+  - [Async Execution][async-execution]
   - [Event Listeners][event-listeners]
   - [Execution Context][execution-context]
   - [Execution Cancellation][execution-cancellation]

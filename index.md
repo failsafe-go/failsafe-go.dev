@@ -26,12 +26,26 @@ We can then execute a `func` with retries:
 err := failsafe.Run(Connect, retryPolicy)
 ```
 
-Or we can execute a `func` that gets a result with retries:
+Or execute a `func` that gets a result with retries:
 
 ```go
 // Get with retries
 response, err := failsafe.Get(SendMessage, retryPolicy)
 ```
+
+### Asynchronous Execution
+
+Executing a `func` asynchronously via a goroutine is straightforward:
+
+```go
+// Run with retries asynchronously
+result := failsafe.RunAsync(Connect, retryPolicy)
+
+// Get with retries asynchronously
+result := failsafe.GetAsync(SendMessage, retryPolicy)
+```
+
+The returned [ExecutionResult] can be used to wait for the execution to be done and gets its result or error.
 
 ### Composing Policies
 
