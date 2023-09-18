@@ -21,6 +21,7 @@
 - Resources
   - [Godocs][godocs]
   - [Github][github]
+  - [Comparisons][comparisons]
   - [Slack][slack]
 
 {% include common-links.html %}

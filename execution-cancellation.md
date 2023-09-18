@@ -41,7 +41,6 @@ failsafe.RunWithExecution(func(e failsafe.Execution[int]) error {
     if e.IsCancelled() {
       return nil
     }
-    
     if err := doWork(); err != nil {
       return err
     }
