@@ -1,0 +1,10 @@
+Failsafe->Fallback: Execute
+Fallback->RetryPolicy: Execute
+RetryPolicy->CircuitBreaker: Execute
+CircuitBreaker-->RetryPolicy: Return if breaker open
+CircuitBreaker->func: Execute
+func->CircuitBreaker: Result or error
+CircuitBreaker->RetryPolicy: Result or error
+RetryPolicy-->CircuitBreaker: Retry if possible
+RetryPolicy->Fallback: Result or error
+Fallback->Failsafe: Fallback result or error

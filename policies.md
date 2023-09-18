@@ -57,19 +57,19 @@ Each policy makes its own decision to allow an execution attempt to proceed and 
 
 ### Example Execution
 
-Consider the following policy composition execution:
+Consider an execution of the following policy composition:
 
-<img src="/assets/images/composition.png">
+<img class="composition" src="/assets/images/composition.png">
 
-- Failsafe-go calls the `Fallback`
+- `failsafe.Get` calls the `Fallback`
 - `Fallback` calls the `RetryPolicy`
 - `RetryPolicy` calls the `CircuitBreaker`
 - `CircuitBreaker` rejects the execution if the breaker is open, else calls the `func`
-- `func` executes and returns a result or returns an error
+- `func` executes and returns a result or error
 - `CircuitBreaker` records the result as either a success or failure, based on its [configuration](#failure-handling), possibly changing the state of the breaker, then returns
 - `RetryPolicy` records the result as either a success or failure, based on its [configuration](#failure-handling), and either retries or returns
-- `Fallback` handles the result or error according to its configuration and returns a fallback result
-- Failsafe returns the final result or error to the caller
+- `Fallback` handles the result or error according to its configuration and returns a fallback result or error if needed
+- `failsafe.Get` returns the final result or error to the caller
 
 ### Composition and Error Handling
 
