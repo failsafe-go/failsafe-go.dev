@@ -45,7 +45,7 @@ builder.OnBulkheadFull(func(e failsafe.ExecutionEvent[any]) {
 
 ## Best Practices
 
-A bulkhead can and *should* be shared across code that accesses finite resources. This ensures that if the bulkhead is full, all executions that access the same resource and use the same bulkhead will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, you may route them through the same bulkhead.
+A [Bulkhead] can and *should* be shared across code that accesses finite resources. This ensures that if the bulkhead is full, all executions that access the same resource and use the same bulkhead will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, you may route them through the same bulkhead.
 
 ## Standalone Usage
 

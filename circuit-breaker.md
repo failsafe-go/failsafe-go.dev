@@ -108,9 +108,10 @@ It can also notify you when the breaker [opens][OnOpen], [closes][OnClose], or [
 ## Metrics
 
 [CircuitBreaker] provides [metrics][CircuitBreakerMetrics] for the current state that the breaker is in, including execution count, success count, failure count, success rate, and failure rate. 
+
 ## Best Practices
 
-A circuit breaker can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
+A [CircuitBreaker] can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
 
 ## Standalone Usage
 

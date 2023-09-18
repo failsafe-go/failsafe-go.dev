@@ -72,7 +72,7 @@ pre[class*="language-"] {
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: slategray;
+	color: #6E7781;
 }
 
 .token.punctuation {
@@ -90,7 +90,7 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: #905;
+	color: #ff2d62;
 }
 
 .token.selector,
@@ -99,7 +99,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-	color: #1b6be8;
+	color: #0A3069;
 }
 
 .token.operator,
@@ -115,12 +115,12 @@ pre[class*="language-"] {
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-	color: #009188;
+	color: #CF222E;
 }
 
 .token.function,
 .token.class-name {
-	color: #ce0034;
+	color: #0550AE;
 }
 
 .token.regex,

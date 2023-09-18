@@ -54,7 +54,7 @@ Multiple [policies] can be composed to add additional layers of resilience or to
 ```go
 fallback := fallback.WithResult(BackupConnection)
 circuitBreaker := circuitbreaker.WithDefaults[any]()
-timeout := timeout.With[any](10 * time.Second)
+timeout := timeout.With[any](10*time.Second)
 
 // Get with fallback, retries, circuit breaker, and timeout
 failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, timeout)

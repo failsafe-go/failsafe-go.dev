@@ -67,7 +67,7 @@ builder.OnRateLimitExceeded(func(e failsafe.ExecutionEvent[any]) {
 
 ## Best Practices
 
-A rate limiter can and *should* be shared across code that accesses common dependencies. This ensures that if the rate limit is exceeded, all executions that share the same dependency and use the same rate limiter will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same rate limiter.
+A [RateLimiter] can and *should* be shared across code that accesses common dependencies. This ensures that if the rate limit is exceeded, all executions that share the same dependency and use the same rate limiter will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same rate limiter.
 
 ## Standalone Usage
 

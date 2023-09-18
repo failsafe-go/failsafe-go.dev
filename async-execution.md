@@ -9,7 +9,7 @@ title: Async Execution
 1. TOC
 {:toc}
 
-In addition to synchronous execution, Failsafe-go can execute a `func` asynchronously within a goroutine. Async executions return an [ExecutionResult] which can be used to detect when an execution is complete and get the result or error, waiting if needed.
+In addition to synchronous execution, Failsafe-go can execute a `func` asynchronously within a goroutine. Async executions return an [ExecutionResult] which can be used to detect when an execution is done and get the result or error, waiting if needed.
 
 Executing a `func` asynchronously with a policy is simple: 
 

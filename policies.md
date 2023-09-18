@@ -31,6 +31,10 @@ builder.HandleIf(func(response *http.Response, err error) bool {
 
 If multiple handle methods are configured, they are logically OR'ed. The default `error` handling condition is only replaced by another condition that handles errors. A condition that only handles results will not replace the default `error` handling.
 
+## Policy Reuse
+
+All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across executions that access shared resources.
+
 ## Policy Composition
 
 Policies can be composed in any way desired, including multiple policies of the same type. Policies handle execution results in reverse order, similar to the way that function composition works. For example, consider:

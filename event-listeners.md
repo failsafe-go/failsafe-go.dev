@@ -13,11 +13,11 @@ Failsafe-go supports event listeners, both at the top level [failsafe.Executor][
 
 ## Executor Listeners
 
-At the top level, Failsafe-go can notify you when an execution completes:
+At the top level, Failsafe-go can notify you when an execution is done:
 
 ```go
 failsafe.NewExecutor[any](retryPolicy, circuitBreaker).
-  OnComplete(func(e failsafe.ExecutionCompletedEvent[any]) {
+  OnDone(func(e failsafe.ExecutionDoneEvent[any]) {
     if e.Error() != nil {
       fmt.Println("Failed to create connection", e.Error())
     } else {
@@ -27,10 +27,10 @@ failsafe.NewExecutor[any](retryPolicy, circuitBreaker).
   Get(Connect)
 ```
 
-It can notify you when an execution completes *successfully* for all policies:
+It can notify you when an execution is successful for *all* policies:
 
 ```go
-executor.OnSuccess(func(e failsafe.ExecutionCompletedEvent[*http.Response]) {
+executor.OnSuccess(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
   fmt.Println("Request succeeded")
 })
 ```
@@ -38,12 +38,12 @@ executor.OnSuccess(func(e failsafe.ExecutionCompletedEvent[*http.Response]) {
 Or when an execution fails for *any* policy:
 
 ```go
-executor.OnFailure(func(e failsafe.ExecutionCompletedEvent[*http.Response]) {
+executor.OnFailure(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
   fmt.Println("Request succeeded")
 })
 ```
 
-If any policy fails to handle an execution failure, as specified by the policy's [failure handling configuration][failure-handling], then the execution is considered a failure and [OnFailure] will be called, otherwise it's considered a success and [OnSuccess] is called. [OnComplete] will be called for every execution. 
+If any policy fails to handle an execution failure, as specified by the policy's [failure handling configuration][failure-handling], then the execution is considered a failure and [OnFailure] will be called, otherwise it's considered a success and [OnSuccess] is called. [OnDone] will be called for every execution. 
 
 Errors from policies themselves, such as `ErrCircuitBreakerOpen`, `ErrRetriesExceeded`, or `ErrTimeoutExceeded`, are considered failures if they're not handled by an outer policy.
 
