@@ -43,7 +43,7 @@ A [Timeout] can notify you with an [ExecutionEvent] when a timeout has been exce
 
 ```go
 builder.OnTimeoutExceeded(func(e failsafe.ExecutionEvent[Connection]) {
-  fmt.Println("Connection timed out")
+  logger.Error("Connection timed out")
 })
 ```
 

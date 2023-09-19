@@ -18,10 +18,10 @@ At the top level, Failsafe-go can notify you when an execution is done:
 ```go
 failsafe.NewExecutor[any](retryPolicy, circuitBreaker).
   OnDone(func(e failsafe.ExecutionDoneEvent[any]) {
-    if e.Error() != nil {
-      fmt.Println("Failed to create connection", e.Error())
+    if e.Error != nil {
+      logger.Error("Failed to create connection", "error", e.Error)
     } else {
-      fmt.Println("Connected", e.Result())
+      logger.Info("Connected", "connection", e.Result)
     }
   }).
   Get(Connect)
@@ -31,7 +31,7 @@ It can notify you when an execution is successful for *all* policies:
 
 ```go
 executor.OnSuccess(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
-  fmt.Println("Request succeeded")
+  logger.Info("Request succeeded")
 })
 ```
 
@@ -39,7 +39,7 @@ Or when an execution fails for *any* policy:
 
 ```go
 executor.OnFailure(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
-  fmt.Println("Request succeeded")
+  logger.Error("Request failed")
 })
 ```
 
@@ -54,10 +54,10 @@ Policies that can be configured to handle specific results or errors, such as [R
 ```go
 policyBuilder.
   OnSuccess(func(e failsafe.ExecutionEvent[Connection]) {
-    fmt.Println("Connected to", e.LastResult())
+    logger.Info("Connected", "connection", e.LastResult())
   }).
   OnFailure(func(e failsafe.ExecutionEvent[Connection]) {
-    fmt.Println("Failed to create connection", e.LastError())
+    logger.Error("Failed to create connection", "error", e.LastError())
   })
 ```
 

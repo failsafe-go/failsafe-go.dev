@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Execution Context
+title: Execution Info
 ---
 
-# Execution Context
+# Execution Info
 
 Failsafe-go can provide an [Execution] object containing execution related information such as the number of [execution attempts][Attempts], [start][StartTime] and [elapsed times][ElapsedTime], and the last [result][LastResult] or [error][LastError]:
 
 ```go
 failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
-  fmt.Println("Connection attempt", e.Attempts());
+  logger.Info("Connection attempt", "attempts", e.Attempts());
   Connect()
 }, retryPolicy)
 ```
@@ -27,7 +27,7 @@ The [Execution] object can also tell you if an execution is being [retried][IsRe
 ```go
 failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
   if e.IsRetry() {
-    fmt.Println("Retrying connection attempt")
+    logger.Info("Retrying connection attempt")
   }
   Connect()
 }, retryPolicy)

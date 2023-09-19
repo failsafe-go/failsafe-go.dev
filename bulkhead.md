@@ -39,7 +39,7 @@ A [Bulkhead] can notify you with an [ExecutionEvent] when a rate limit has been 
 
 ```go
 builder.OnBulkheadFull(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Bulkhead full")
+  logger.Error("Bulkhead full")
 })
 ```
 

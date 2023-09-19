@@ -13,7 +13,7 @@
 - Features
   - [Async Execution][async-execution]
   - [Event Listeners][event-listeners]
-  - [Execution Context][execution-context]
+  - [Execution Info][execution-info]
   - [Execution Cancellation][execution-cancellation]
   - [Type Safety][type-safety]
   - [Extending][extending]

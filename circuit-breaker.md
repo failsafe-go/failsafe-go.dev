@@ -25,7 +25,7 @@ breaker := circuitbreaker.Builder[any]().
 
 ## Failure Handling
 
-A [CircuitBreaker] can be configured to handle only [certain results or errors][failure-handling] as failures:
+A [CircuitBreaker] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
 ```go
 builder.
@@ -99,7 +99,7 @@ In addition to the standard [policy listeners][policy-listeners], a [CircuitBrea
 
 ```go
 builder.OnStateChanged(func(e circuitbreaker.StateChangedEvent) {
-  fmt.Println("CircuitBreaker state changed from", e.PreviousState, "to", e.CurrentState)
+  logger.Info("CircuitBreaker state changed", "oldState", e.OldState, "newState", e.NewState)
 })
 ```
 

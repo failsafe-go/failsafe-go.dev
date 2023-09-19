@@ -9,7 +9,7 @@ title: Async Execution
 1. TOC
 {:toc}
 
-In addition to synchronous execution, Failsafe-go can execute a `func` asynchronously within a goroutine. Async executions return an [ExecutionResult] which can be used to detect when an execution is done and get the result or error, waiting if needed.
+Failsafe-go can execute a `func` asynchronously via a goroutine. Async executions return an [ExecutionResult] which can be used to detect when the execution is done and get the result or error, waiting if needed.
 
 Executing a `func` asynchronously with a policy is simple: 
 
@@ -23,12 +23,12 @@ result := failsafe.GetAsync(Connect, retryPolicy)
 connection, err := result.Get()
 ```
 
-The `Error()` and `Get()` methods block until the execution is done. You can also use the `IsDone()` method or the `Done()` channel to detect when an execution is done:
+The `Error()` and `Get()` methods block until the execution is done. You can also use `IsDone()` or the `Done()` channel to detect when the execution is done:
 
 ```go
 select {
 case <-result.Done():
-  connect, err := result.Get()
+  connection, err := result.Get()
 }
 ```
 

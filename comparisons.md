@@ -21,7 +21,7 @@ title: Comparisons
 - Failsafe-go provides several retry related event listeners.
 - Failsafe-go can perform [asynchronous executions][async-execution] with retries.
 - Failsafe-go retry policies are concurrency safe.
-- Failsafe-go retries can can receive [execution context][execution-context].
+- Failsafe-go retries can can receive [execution info][execution-info].
 - Failsafe-go retries can [cooperate with cancellation][cooperative-cancellation].
 - Failsafe-go retry backoff delays are computed automatically. [cenkalti/backoff] requires you to call a function.
 - Failsafe-go retries can be [composed][policy-composition] with other policies.
@@ -38,6 +38,7 @@ title: Comparisons
 - Failsafe-go circuit breakers can be configured with separate failure and success thresholds.
 - Failsafe-go circuit breakers can be triggered by execution errors or results.
 - Failsafe-go provides several circuit breaker event listeners.
+- Failsafe-go circuit breakers can be manually operated.
 - Failsafe-go circuit breakers can be [composed][policy-composition] with other policies.
 
 {% include common-links.html %}

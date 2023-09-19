@@ -5,7 +5,7 @@ title: Fault tolerance and resilience patterns for Go
 
 # Overview
 
-Failsafe-go is a library for building fault tolerant Go applications. It works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. Policies include [Retry][retry], [CircuitBreaker][circuit-breakers], [RateLimiter][rate-limiters], [Timeout][timeouts], [Bulkhead][bulkheads], and [Fallback][fallbacks].
+Failsafe-go is a library for building fault tolerant Go applications. It works by wrapping executable logic with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. Policies include [Retry][retry], [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Bulkhead][bulkheads], and [Fallback][fallbacks].
 
 ## Getting Started
 
@@ -19,23 +19,19 @@ retryPolicy := retrypolicy.Builder[any]().
   Build()
 ```
 
-We can then execute a `func` with retries:
+We can then [Run] or [Get] a result from a `func` with retries:
 
 ```go
 // Run with retries
 err := failsafe.Run(Connect, retryPolicy)
-```
 
-Or execute a `func` that gets a result with retries:
-
-```go
 // Get with retries
 response, err := failsafe.Get(SendMessage, retryPolicy)
 ```
 
 ### Asynchronous Execution
 
-Executing a `func` asynchronously via a goroutine is straightforward:
+Executing a `func` [asynchronously][async-execution] with retries is simple:
 
 ```go
 // Run with retries asynchronously

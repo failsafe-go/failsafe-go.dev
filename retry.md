@@ -24,7 +24,7 @@ retryPolicy := retrypolicy.Builder[Connection]().
 
 ## Failure Handling
 
-A [RetryPolicy] can be configured to handle only [certain results or errors][failure-handling] as failures:
+A [RetryPolicy] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
 ```go
 builder.
@@ -129,7 +129,7 @@ In addition to the standard [policy event listeners][policy-listeners], a RetryP
 
 ```go
 builder.OnRetry(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Retrying after error", e.LastError())
+  logger.Error("Retrying after error", "error", e.LastError())
 })
 ```
 

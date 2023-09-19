@@ -16,10 +16,10 @@ But for other policies you might declare a more specific result type:
 ```go
 retryPolicy := retrypolicy.Builder[*http.Response]().
   builder.HandleIf(func(response *http.Response, err error) bool {
-    response.StatusCode == 500
+    return response.StatusCode == 500
   }).
   OnFailure(func(e failsafe.ExecutionEvent[*http.Response]) {
-    fmt.Println("Failed attempt", e.LastResult().StatusCode)
+    logger.Error("Failed attempt", "statusCode", e.LastResult().StatusCode)
   }).
   Build();
 ```
@@ -27,9 +27,9 @@ retryPolicy := retrypolicy.Builder[*http.Response]().
 This allows Failsafe-go to ensure that the same result type used for the policy is returned by the execution and is available in [event listeners][event-listeners]:
 
 ```go
-response := Failsafe.NewExecutor(retryPolicy).
+response := failsafe.NewExecutor[*http.Response](retryPolicy).
   OnSuccess(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
-    fmt.Println("Request sent", e.Result().StatusCode)
+    logger.Info("Request sent", "statusCode", e.Result.StatusCode)
   }).
   Get(SendHttpRequest)
 ```
@@ -37,7 +37,7 @@ response := Failsafe.NewExecutor(retryPolicy).
 It also ensures that when multiple policies are composed, they all share the same result type:
 
 ```go
-circuitBreaker := circuitBreaker.WithDefaults[*http.Response]()
+circuitBreaker := circuitbreaker.WithDefaults[*http.Response]()
 response, err := failsafe.Get(SendHttpRequest, retryPolicy, circuitBreaker)
 ```
 

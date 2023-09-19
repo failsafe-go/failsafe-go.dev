@@ -61,7 +61,7 @@ A [RateLimiter] can notify you with an [ExecutionEvent] when a rate limit has be
 
 ```go
 builder.OnRateLimitExceeded(func(e failsafe.ExecutionEvent[any]) {
-  fmt.Println("Rate limited")
+  logger.Error("Rate limited")
 })
 ```
 

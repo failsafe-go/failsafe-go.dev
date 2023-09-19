@@ -9,9 +9,11 @@ title: Policies
 1. TOC
 {:toc}
 
+Failsafe-go provides several resilience policies including [Retry][retry], [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Bulkhead][bulkheads], and [Fallback][fallbacks]. While each policy handles failures in different ways, some of their common features are described below.
+
 ## Failure Handling
 
-Failsafe-go policies add resilience by detecting failures and handling them. Each policy determines which execution [results, errors, or conditions][FailurePolicyBuilder] represent a failure and how to handle them. 
+Policies add resilience by detecting failures and handling them. Each policy determines which execution [results, errors, or conditions][FailurePolicyBuilder] represent a failure and how to handle them. 
 
 Some policies, such as a [Retry Policy][retry], [Circuit Breaker][circuit-breakers], and [Fallback][fallbacks], allow you to specify which errors or results to handle as failures. By default these policies handle any `error` that is returned. But they can be configured to handle more specific errors or results:
 
@@ -25,15 +27,11 @@ They can also be configured to handle specific conditions:
 
 ```go
 builder.HandleIf(func(response *http.Response, err error) bool {
-  response.StatusCode == 500
+  return response.StatusCode == 500
 })
 ```
 
 If multiple handle methods are configured, they are logically OR'ed. The default `error` handling condition is only replaced by another condition that handles errors. A condition that only handles results will not replace the default `error` handling.
-
-## Policy Reuse
-
-All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across executions that access shared resources.
 
 ## Policy Composition
 
@@ -64,7 +62,7 @@ Consider an execution of the following policy composition:
 - `failsafe.Get` calls the `Fallback`
 - `Fallback` calls the `RetryPolicy`
 - `RetryPolicy` calls the `CircuitBreaker`
-- `CircuitBreaker` rejects the execution if the breaker is open, else calls the `func`
+- `CircuitBreaker` returns `ErrCircuitBreakerOpen` if the breaker is open, else calls the `func`
 - `func` executes and returns a result or error
 - `CircuitBreaker` records the result as either a success or failure, based on its [configuration](#failure-handling), possibly changing the state of the breaker, then returns
 - `RetryPolicy` records the result as either a success or failure, based on its [configuration](#failure-handling), and either retries or returns
@@ -76,13 +74,13 @@ Consider an execution of the following policy composition:
 While policies handle all `error` instances by default, it's common to configure a policy to handle more specific errors, as [described above](#failure-handling):
 
 ```go
-retryPolicyBuilder.HandleErrors(ErrClosed)
+policyBuilder.HandleErrors(ErrClosed)
 ```
 
 But when doing so for a policy that is composed around other policies, you may want to also configure an outer policy to handle errors returned by any inner policies, depending on your use case:
 
 ```go
-retryPolicyBuilder.HandleErrors(
+policyBuilder.HandleErrors(
   retrypolicy.ErrRetriesExceeded, 
   circuitbreaker.ErrCircuitBreakerOpen, 
   timeout.ErrTimeoutExceeded
@@ -98,6 +96,10 @@ failsafe.NewExecutor[any](fallback, retryPolicy, circuitBreaker, bulkhead, timeo
 ```
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.
+
+## Policy Reuse
+
+All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
 
 ## Supported Policies
 
