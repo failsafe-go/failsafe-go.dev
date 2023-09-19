@@ -9,7 +9,7 @@ title: Rate Limiter
 1. TOC
 {:toc}
 
-[Rate limiters][RateLimiter] allow you to control the rate of executions as a way of preventing system overload. Failsafe-go provides two types of rate limiting: *smooth* and *bursty*, which are discussed below.
+[Rate limiters][RateLimiter] can limit the rate of executions as a way of preventing system overload. Failsafe-go supports two types of rate limiters: *smooth* and *bursty*. *Smooth* rate limiters permit a max number of executions per time period, using a leaky bucket approach to spread out executions at an even rate. *Bursty* rate limiters use a fixed window approach to permit a max number of executions for individual time periods, permitting bursts of executions in each time period.
 
 ## How It Works
 
@@ -17,11 +17,12 @@ When the number of executions through the rate limiter exceeds the configured ma
 
 ## Smooth Rate Limiter
 
-A *smooth* rate limiter permits a max number of executions per time period, using a leaky bucket approach to spread out executions at an even rate. Creating a smooth [RateLimiter] is straightforward:
+Creating and using a smooth [RateLimiter] is simple:
 
 ```go
 // Permits 100 executions per second
 limiter := ratelimiter.Smooth(100, time.Second)
+err := failsafe.Run(SendMessage, limiter)
 ```
 
 The rate at which individual executions are permitted is based on the given `maxExecutions` and `period`. Alternatively, you can directly specify the max rate of individual executions:
@@ -35,14 +36,15 @@ Smooth rate limited executions are permitted with no delay up to the max rate, a
 
 ## Bursty Rate Limiter
 
-A *bursty* rate limiter uses a fixed window approach to permit a max number of executions for individual time periods. Creating a bursty [RateLimiter] is also straightforward:
+Creating and using a bursty [RateLimiter] is also simple:
 
 ```go
 // Permits 10 executions per second
 limiter := ratelimiter.Bursty(10, time.Second)
+err := failsafe.Run(SendMessage, limiter)
 ```
 
-Bursty rate limited executions are permitted with no delay up to the given `maxExecutions` for the current period. When a new period begins, the number of permitted executions is reset to the configured `maxExecutions`. This may cause bursts of executions when a new time period begins. Larger time periods may cause larger bursts.
+Bursty rate limited executions are permitted with no delay up to the given `maxExecutions` per `period`. When a new period begins, the number of permitted executions is reset to the configured `maxExecutions`. This may cause bursts of executions when a new time period begins. Larger time periods may cause larger bursts.
 
 ## Waiting
 
@@ -53,7 +55,7 @@ By default, when a [RateLimiter] is exceeded, further executions will immediatel
 builder.WithMaxWaitTime(time.Second)
 ```
 
-Actual wait times for a rate limiter can vary depending on busy the rate limiter is. Wait times will grow if more executions are consistently attempted than the rate limiter permits. Since executions will block while waiting on a rate limiter, a `maxWaitTime` should be chosen carefully to avoid excessive blocking.
+Actual wait times for a rate limiter can vary depending on busy the rate limiter is. Wait times will grow if more executions are consistently attempted than the rate limiter permits.
 
 ## Event Listeners
 

@@ -15,7 +15,7 @@ Failsafe-go provides several resilience policies including [Retry][retry], [Circ
 
 Policies add resilience by detecting failures and handling them. Each policy determines which execution [results, errors, or conditions][FailurePolicyBuilder] represent a failure and how to handle them. 
 
-Some policies, such as a [Retry Policy][retry], [Circuit Breaker][circuit-breakers], and [Fallback][fallbacks], allow you to specify which errors or results to handle as failures. By default these policies handle any `error` that is returned. But they can be configured to handle more specific errors or results:
+Some policies, such as a [Retry][retry], [Circuit Breaker][circuit-breakers], and [Fallback][fallbacks], allow you to specify which errors or results to handle as failures. By default these policies handle any `error` that is returned. But they can be configured to handle more specific errors or results:
 
 ```go
 builder.
@@ -31,7 +31,7 @@ builder.HandleIf(func(response *http.Response, err error) bool {
 })
 ```
 
-If multiple handle methods are configured, they are logically OR'ed. The default `error` handling condition is only replaced by another condition that handles errors. A condition that only handles results will not replace the default `error` handling.
+If multiple handle methods are configured, they are logically OR'ed. The default `error` handling condition is only replaced by another condition that handles errors. A `HandleResult` setting will not replace the default `error` handling.
 
 ## Policy Composition
 
@@ -89,7 +89,7 @@ policyBuilder.HandleErrors(
 
 ### Composition Recommendations
 
-A typical policy composition might place a `Fallback` as the outer-most policy, followed by a `RetryPolicy`, a `CircuitBreaker` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
+A common policy composition might place a `Fallback` as the outer-most policy, followed by a `RetryPolicy`, a `CircuitBreaker` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
 
 ```go
 failsafe.NewExecutor[any](fallback, retryPolicy, circuitBreaker, bulkhead, timeout)

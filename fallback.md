@@ -9,19 +9,23 @@ title: Fallback
 1. TOC
 {:toc}
 
-[Fallbacks][Fallback] allow you to provide an alternative result or error for a failed execution. For example, you can provide a default result:
+[Fallbacks][Fallback] provide an alternative result or error for a failed execution. 
+
+## Usage
+
+Creating a [Fallback] is simple. You can create a fallback that provides a default result:
 
 ```go
 fallback := fallback.WithResult(defaultResult)
 ```
 
-Return a different error:
+An alternative error:
 
 ```go
 fallback := fallback.WithError(ErrConnecting)
 ```
 
-Or compute an alternative result or error:
+Or computes a different result or error:
 
 ```go
 fallback := fallback.WithFn[any](func(e failsafe.Execution[any]) (any, error) {

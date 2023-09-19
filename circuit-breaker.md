@@ -9,19 +9,28 @@ title: Circuit Breaker
 1. TOC
 {:toc}
 
-[Circuit breakers][fowler-circuit-breaker] allow you to create systems that fail fast by temporarily disabling execution as a way of preventing system overload. There are two types of circuit breakers: *count based* and *time based*. *Count based* circuit breakers operate by tracking recent execution results up to a certain limit. *Time based* circuit breakers operate by tracking any number of execution results that occur within a time period.
+[Circuit breakers][fowler-circuit-breaker] react to failures by temporarily disabling execution as a way of preventing system overload. Failsafe-go supports two types of circuit breakers: *count based* and *time based*. *Count based* circuit breakers operate by tracking recent execution results up to a certain limit. *Time based* circuit breakers operate by tracking any number of execution results that occur within a time period.
 
-Creating a [CircuitBreaker] is straightforward, for example:
+## Usage
+
+Creating and using a [CircuitBreaker] is straightforward, for example:
 
 ```go
 // Opens after 5 failures, half-opens after 1 minute, closes after 2 successes
 breaker := circuitbreaker.Builder[any]().
-  HandleErrors(ErrConnecting).
+  HandleErrors(ErrSending).
   WithFailureThreshold(5).
   WithDelay(time.Minute).
   WithSuccessThreshold(2).
   Build()
+  
+// Run with circuit breaking
+err := failsafe.Run(SendMessage, breaker)
 ```
+
+## How it Works
+
+When the number of recent execution failures exceed a configured threshold, the breaker is *opened* and further executions will fail with `ErrCircuitBreakerOpen`. After a delay, the breaker is *half-opened* and trial executions are allowed which determine whether the breaker should be *closed* or *opened* again. If the trial executions meet a success threshold, the breaker is *closed* again and executions will proceed as normal, otherwise it's re-*opened*.
 
 ## Failure Handling
 
@@ -32,10 +41,6 @@ builder.
   HandleErrors(ErrConnecting).
   HandleResult(nil)
 ```
-
-## How it Works
-
-When the number of recent execution failures exceed a configured threshold, the breaker is *opened* and further executions will fail with `ErrCircuitBreakerOpen`. After a delay, the breaker is *half-opened* and trial executions are allowed which determine whether the breaker should be *closed* or *opened* again. If the trial executions meet a success threshold, the breaker is *closed* again and executions will proceed as normal, otherwise it's re-*opened*.
 
 ## Configuration
 

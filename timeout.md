@@ -9,11 +9,19 @@ title: Timeout
 1. TOC
 {:toc}
 
-[Timeouts][Timeout] allow you to cancel an execution with `ErrTimeoutExceeded` if it takes too long to complete:
+[Timeouts][Timeout] can be used to cancel executions that take too long to complete.
+
+## Usage
+
+Creating and using a [Timeout] is simple:
 
 ```go
-timeout := timeout.With(10*time.Second)
+// Timeout after 10 seconds
+timeout := timeout.With[any](10*time.Second)
+err := failsafe.Run(Connect, timeout)
 ```
+
+## How It Works
 
 If an execution is cancelled by a `Timeout`, the execution and policies composed inside the timeout will return `ErrTimeoutExceeded`. See the [execution cancellation][execution-cancellation] page for more on cancellation.
 
@@ -35,7 +43,7 @@ failsafe.Run(Connect, retryPolicy, timeout)
 
 While a [Timeout] is similar to a [Context], in that they both can cause an execution to be cancelled, [Timeouts][Timeout] can be composed with other policies. Additionally, when a [Timeout] is triggered, it can be reset by an outer [RetryPolicy], whereas a [Context] cannot be reset once it is done. 
 
-With this in mind, use a [Timeout] when you want to limit execution time, and use a [Context] when you want to explicitly cancel an execution.
+With this in mind, prefer a [Timeout] when you want to limit execution time, and prefer a [Context] when you want to explicitly cancel an execution.
 
 ## Event Listeners
 

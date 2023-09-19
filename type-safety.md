@@ -5,13 +5,14 @@ title: Type Safety
 
 # Type Safety
 
-Failsafe-go's APIs are typed based on the expected execution result. For some executions and policies, this type may not matter:
+Failsafe-go's APIs are typed based on the expected execution result. For some policies and executions, this type may not matter:
 
 ```go
 retryPolicy := retrypolicy.WithDefaults[any]()
+err := failsafe.Run(Connect, retryPolicy)
 ```
 
-But for other policies you might declare a more specific result type:
+But for other cases you might declare a more specific result type:
 
 ```go
 retryPolicy := retrypolicy.Builder[*http.Response]().

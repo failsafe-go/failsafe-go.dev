@@ -9,20 +9,25 @@ title: Bulkhead
 1. TOC
 {:toc}
 
-[Bulkheads][Bulkhead] allow you to restrict concurrent executions as a way of preventing system overload. Creating a [Bulkhead] is straightforward:
+[Bulkheads][Bulkhead] limit concurrent executions as a way of preventing system overload. 
+
+## Usage
+
+Creating and using a [Bulkhead] is simple:
 
 ```go
-// Permits 10 concurrent executions
+// Permit 10 concurrent executions
 bulkhead := bulkhead.With[any](10)
+err := failsafe.Run(SendRequest, bulkhead)
 ```
 
 ## How It Works
 
-Executions are permitted in a bulkhead until it is full, meaning the max number of concurrent executions has been reached. Any further executions will either fail with `ErrBulkheadFull ` or will wait until permitted.
+Executions are permitted in a bulkhead until it is full, meaning the max number of concurrent executions has been reached. Any further executions will either fail with `ErrBulkheadFull` or will wait until permitted.
 
 ## Waiting
 
-By default, when the max concurrent executions are exceeded, further executions will immediately fail with `ErrBulkheadFull `. A bulkhead can also be configured to wait for execution permission if it can be achieved within a max wait time:
+By default, when the max concurrent executions are exceeded, further executions will immediately fail with `ErrBulkheadFull`. A bulkhead can also be configured to wait for execution permission if it can be achieved within a max wait time:
 
 ```go
 // Wait up to 1 second for execution permission

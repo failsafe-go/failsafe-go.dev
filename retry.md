@@ -3,15 +3,17 @@ layout: default
 title: Retry
 ---
 
-# Retry Policy
+# Retry
 {: .no_toc }
 
 1. TOC
 {:toc}
 
-[Retry policies][RetryPolicy] will retry failed executions a certain number of times, with an optional delay between attempts.
+[Retry policies][RetryPolicy] are used to retry failed executions a certain number of times, with an optional delay between attempts.
 
-Creating a [RetryPolicy] is straightforward, for example:
+## Usage
+
+Creating and using a [RetryPolicy] is straightforward, for example:
 
 ```go
 // Retry on ErrConnecting up to 3 times with a 1 second delay between attempts
@@ -20,6 +22,9 @@ retryPolicy := retrypolicy.Builder[Connection]().
   WithDelay(time.Second).
   WithMaxRetries(3).
   Build()
+  
+// Get with retries
+connection, err := failsafe.Get(Connect, retryPolicy)
 ```
 
 ## Failure Handling
@@ -34,7 +39,7 @@ builder.
 
 ## Return Values
 
-By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return a [RetriesExceededError] wrapping the last execution result and error, but it can also be configured to return these instead:
+By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return a [RetriesExceededError] wrapping the last execution result and error. But it can also be configured to return the last result and error instead:
 
 ```go
 builder.ReturnLastFailure()
@@ -90,7 +95,7 @@ A [random delay][WithRandomDelay] for some range:
 builder.WithRandomDelay(time.Second, 10*time.Second)
 ```
 
-Or a [computed delay][WithDelayFn] based on an execution result or exception:
+Or a [computed delay][WithDelayFn] based on an execution result or error:
 
 ```go
 builder.WithDelayFn(ComputeDelay)
@@ -114,7 +119,7 @@ To cancel running executions, see the [execution cancellation][execution-cancell
 
 ## Aborts
 
-You can also specify which results, exceptions, or conditions to [abort retries][AbortOnErrors] on:
+You can also specify which results, errors, or conditions to [abort retries][AbortOnErrors] on:
 
 ```go
 builder.

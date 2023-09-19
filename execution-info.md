@@ -9,8 +9,8 @@ Failsafe-go can provide an [Execution] object containing execution related infor
 
 ```go
 failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
-  logger.Info("Connection attempt", "attempts", e.Attempts());
-  Connect()
+  logger.Info("Connecting", "attempts", e.Attempts());
+  return Connect()
 }, retryPolicy)
 ```
 
@@ -18,7 +18,7 @@ This is useful for retrying executions that depend on results from a previous at
 
 ```go
 failsafe.GetWithExecution(func(e failsafe.Execution[int]) (int, error) {
-  return e.LastResult() + 1
+  return e.LastResult() + 1, nil
 }, retryPolicy)
 ```
 
@@ -29,7 +29,7 @@ failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
   if e.IsRetry() {
     logger.Info("Retrying connection attempt")
   }
-  Connect()
+  return Connect()
 }, retryPolicy)
 ```
 
