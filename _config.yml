@@ -19,7 +19,7 @@ search_enabled: true
 #   "View on GitHub":
 #     - "//github.com/failsafe-go/failsafe-go"
 
-ga_tracking: UA-145891145-1
+ga_tracking: G-69HPC64MH7
 
 compress_html:
   clippings: all
