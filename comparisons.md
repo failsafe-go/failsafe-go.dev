@@ -15,15 +15,15 @@ title: Comparisons
 
 [cenkalti/backoff](https://github.com/cenkalti/backoff) is an expontial backoff retry implementation. It differs from Failsafe-go's [RetryPolicy][retry] in a few ways:
 
-- Failsafe-go allows you to combine settings for any retry scenario, including fixed, backoff, or random delays, jitter, max retries, and max duration. [cenkalti/backoff] requires different structs for different types of retries.
-- Failsafe-go retries can be configured to handle [different results, errors, or conditions][failure-handling]. [cenkalti/backoff] only retries on non-permanent errors.
-- Failsafe-go retries can be aborted on different results, errors, or conditions.
-- Failsafe-go provides several retry related event listeners.
+- Failsafe-go allows you to combine settings for any retry scenario, including fixed, backoff, or random delays, jitter, max retries, and max duration, through a [single interface][RetryPolicyBuilder].
+- Failsafe-go retries can be configured to handle [different results, errors, or conditions][failure-handling].
+- Failsafe-go retries can be [aborted][aborts] on different results, errors, or conditions.
+- Failsafe-go provides several retry related [event listeners][retry-listeners].
 - Failsafe-go can perform [asynchronous executions][async-execution] with retries.
 - Failsafe-go retry policies are concurrency safe.
 - Failsafe-go retries can can receive [execution info][execution-info].
 - Failsafe-go retries can [cooperate with cancellation][cooperative-cancellation].
-- Failsafe-go retry backoff delays are computed automatically. [cenkalti/backoff] requires you to call a function.
+- Failsafe-go retry backoff delays are computed automatically. [cenkalti/backoff] requires you to call a function on each attempt.
 - Failsafe-go retries can be [composed][policy-composition] with other policies.
 
 ## Circuit Breakers
@@ -33,12 +33,12 @@ title: Comparisons
 [gobreaker] is a circuit breaker implementation. It differs from Failsafe-go's [CircuitBreaker][circuit-breakers] in a few ways:
 
 - Failsafe-go offers count-based and time-based thresholding. [gobreaker] only offers count-based thresholding. 
-- Failsafe-go's circuit breaker provides a uniform interface for any scenario. [gobreaker] has different structs for different types of circuit breaking.
+- Failsafe-go's circuit breaker provides a [single interface][CircuitBreakerBuilder] for configuring any scenario. [gobreaker] has different structs for different types of circuit breaking.
 - Failsafe-go circuit breakers can threshold on recent execution results. [gobreaker] periodically clears execution results, losing recent data.
 - Failsafe-go circuit breakers can be configured to handle [different results, errors, or conditions][failure-handling].
-- Failsafe-go circuit breakers can be configured with separate failure and success thresholds.
-- Failsafe-go provides several circuit breaker event listeners.
-- Failsafe-go circuit breakers can be manually operated.
+- Failsafe-go circuit breakers can be configured with separate [failure and success thresholds][circuit-breaker-configuration].
+- Failsafe-go provides several circuit breaker [event listeners][circuit-breaker-listeners].
+- Failsafe-go circuit breakers can be [manually operated][circuit-breaker-standalone].
 - Failsafe-go circuit breakers can be [composed][policy-composition] with other policies.
 
 {% include common-links.html %}

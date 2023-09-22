@@ -48,7 +48,7 @@ The returned [ExecutionResult] can be used to wait for the execution to be done 
 Multiple [policies] can be composed to add additional layers of resilience or to handle different failures in different ways:
 
 ```go
-fallback := fallback.WithResult(BackupConnection)
+fallback := fallback.WithResult(backupConnection)
 circuitBreaker := circuitbreaker.WithDefaults[any]()
 timeout := timeout.With[any](10*time.Second)
 
