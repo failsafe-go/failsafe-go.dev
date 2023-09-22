@@ -23,7 +23,7 @@ err := failsafe.Run(Connect, timeout)
 
 ## How It Works
 
-If an execution is cancelled by a `Timeout`, the execution and policies composed inside the timeout will return `ErrTimeoutExceeded`. See the [execution cancellation][execution-cancellation] page for more on cancellation.
+If an execution is canceled by a `Timeout`, the execution and policies composed inside the timeout will return `ErrTimeoutExceeded`. See the [execution cancellation][execution-cancellation] page for more on cancellation.
 
 ## Timeouts with Retries
 
@@ -41,7 +41,7 @@ failsafe.Run(Connect, retryPolicy, timeout)
 
 ## Timeout vs Context
 
-While a [Timeout] is similar to a [Context], in that they both can cause an execution to be cancelled, [Timeouts][Timeout] can be composed with other policies. Additionally, when a [Timeout] is triggered, it can be reset by an outer [RetryPolicy], whereas a [Context] cannot be reset once it is done. 
+While a [Timeout] is similar to a [Context], in that they both can cause an execution to be canceled, [Timeouts][Timeout] can be composed with other policies. Additionally, when a [Timeout] is triggered, it can be reset by an outer [RetryPolicy], whereas a [Context] cannot be reset once it is done. 
 
 With this in mind, prefer a [Timeout] when you want to limit execution time, and prefer a [Context] when you want to explicitly cancel an execution.
 

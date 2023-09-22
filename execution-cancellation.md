@@ -9,46 +9,62 @@ title: Execution Cancellation
 1. TOC
 {:toc}
 
-Failsafe-go supports cancellation of executions. Cancellation can be triggered by [Timeouts][timeouts]:
+Failsafe-go supports execution cancellation, which can be triggered in a few ways. It can be triggered by a [Timeout][timeouts]:
 
 ```go
 // Cancel Connect call after 1 second
 failsafe.Get(Connect, timeout.With(time.Second))
 ```
 
-They can also be triggered by a [Context]:
+By a [Context]:
 
 ```go
-ctx, cancel := context.WithCancel(context.Background())
-go func() {
-  time.Sleep(time.Second)
-  cancel()
-}
+ctx, _ := context.WithTimeout(context.Background(), time.Second)
 
-// Connect will be cancelled by the ctx after 1 second
+// Connect will be canceled by the ctx after 1 second
 failsafe.NewExecutor[any](retryPolicy).WithContext(ctx).Get(Connect)
 ```
 
-While a cancellation from a [Timeout][timeouts] could still be retried by an outer [RetryPolicy][retry], a cancellation from a [Context] cannot be.
+Or by an async [ExecutionResult]:
+
+```go
+result := failsafe.RunAsync(Connect, retryPolicy)
+result.Cancel()
+```
+
+While a cancellation from a [Timeout][timeouts] can still be retried by an outer [RetryPolicy][retry], a cancellation from a [Context] or [ExecutionResult] cannot be.
 
 ## Cooperative Cancellation
 
-Executions can cooperate with a cancellation by checking [IsCanceled()][IsCanceled]:
+Executions can cooperate with a cancellation by periodically checking [IsCanceled()][IsCanceled]:
 
 ```go
-failsafe.RunWithExecution(func(e failsafe.Execution[int]) error {
+failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
   for {
-    if e.IsCancelled() {
-      return nil
-    }
-    if err := doWork(); err != nil {
-      return err
+    if !e.IsCanceled() {
+      if err := DoWork(); err != nil {
+        return err
+      }
     }
   }
   return nil
 }, timeout)
 ```
 
-Executions can also select on the [Canceled()][Canceled] channel to detect when an execution is cancelled.
+Executions can also use the [Canceled()][Canceled] channel to detect when an execution is canceled:
+
+```go
+failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
+  for {
+    select {
+    case <-e.Canceled():
+      return nil
+    case task := <-GetTask():
+      Process(task)
+    }
+  }
+  return nil
+}, timeout)
+```
 
 {% include common-links.html %}
