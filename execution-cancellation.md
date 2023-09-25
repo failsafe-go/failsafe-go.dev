@@ -34,6 +34,19 @@ result.Cancel()
 
 While a cancellation from a [Timeout][timeouts] can still be retried by an outer [RetryPolicy][retry], a cancellation from a [Context] or [ExecutionResult] cannot be.
 
+## Execution Context
+
+When providing a [Context] to an execution, a child Context will be created and made available via [Context()][Execution.Context]:
+
+```go
+failsafe.GetWithExecution(func(e failsafe.Execution[*http.Response]) (http.Response, error) {
+  request, err := http.NewRequestWithContext(e.Context(), http.MethodGet, "https://foo.com", nil)
+  return client.Do(request)
+}, timeout)
+```
+
+The is the Context that should be used in executions since it will be canceled when a [Timeout][timeouts] is exceeded, whereas the Context configured via [WithContext] will not be canceled.
+
 ## Cooperative Cancellation
 
 Executions can cooperate with a cancellation by periodically checking [IsCanceled()][IsCanceled]:
