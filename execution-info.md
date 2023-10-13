@@ -9,7 +9,7 @@ Failsafe-go can provide an [Execution] object containing execution related infor
 
 ```go
 failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
-  logger.Info("Connecting", "attempts", e.Attempts());
+  logger.Info("Connecting", "attempts", e.Attempts())
   return Connect()
 }, retryPolicy)
 ```

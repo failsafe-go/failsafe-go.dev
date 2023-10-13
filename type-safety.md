@@ -22,7 +22,7 @@ retryPolicy := retrypolicy.Builder[*http.Response]().
   OnFailure(func(e failsafe.ExecutionEvent[*http.Response]) {
     logger.Error("Failed attempt", "statusCode", e.LastResult().StatusCode)
   }).
-  Build();
+  Build()
 ```
 
 This allows Failsafe-go to ensure that the same result type used for the policy is returned by the execution and is available in [event listeners][event-listeners]:
