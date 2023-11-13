@@ -95,10 +95,10 @@ A [random delay][WithRandomDelay] for some range:
 builder.WithRandomDelay(time.Second, 10*time.Second)
 ```
 
-Or a [computed delay][WithDelayFn] based on an execution result or error:
+Or a [computed delay][WithDelayFunc] based on an execution result or error:
 
 ```go
-builder.WithDelayFn(ComputeDelay)
+builder.WithDelayFunc(ComputeDelay)
 ```
 
 ### Jitter
@@ -125,7 +125,7 @@ You can also specify which results, errors, or conditions to [abort retries][Abo
 builder.
   AbortOnResult(true)
   AbortOnError(ErrConnecting)
-  AbortIf(AbortFn)
+  AbortIf(AbortCondition)
 ```
 
 ## Event Listeners

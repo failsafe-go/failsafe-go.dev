@@ -26,7 +26,7 @@ We can then [Run] or [Get] a result from a `func` with retries:
 err := failsafe.Run(Connect, retryPolicy)
 
 // Get with retries
-response, err := failsafe.Get(SendMessage, retryPolicy)
+response, err := failsafe.Get(SendRequest, retryPolicy)
 ```
 
 ### Asynchronous Execution
@@ -38,7 +38,7 @@ Executing a `func` [asynchronously][async-execution] with retries is simple:
 result := failsafe.RunAsync(Connect, retryPolicy)
 
 // Get with retries asynchronously
-result := failsafe.GetAsync(SendMessage, retryPolicy)
+result := failsafe.GetAsync(SendRequest, retryPolicy)
 ```
 
 The returned [ExecutionResult] can be used to wait for the execution to be done and gets its result or error.

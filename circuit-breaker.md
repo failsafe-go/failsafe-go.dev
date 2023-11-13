@@ -80,7 +80,7 @@ After opening, a breaker will delay for 1 minute by default before before transi
 builder.WithDelay(30*time.Second)
 ```
 
-Or a [computed delay][WithDelayFn] based on an execution result.
+Or a [computed delay][WithDelayFunc] based on an execution result.
 
 ### Closing
 
