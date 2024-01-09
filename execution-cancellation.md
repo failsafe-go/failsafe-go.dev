@@ -39,7 +39,7 @@ While a cancellation from a [Timeout][timeouts] can still be retried by an outer
 When providing a [Context] to an execution, a child Context will be created and made available via [Context()][Execution.Context]:
 
 ```go
-failsafe.GetWithExecution(func(e failsafe.Execution[*http.Response]) (http.Response, error) {
+failsafe.GetWithExecution(func(e failsafe.Execution[*http.Response]) (*http.Response, error) {
   request, err := http.NewRequestWithContext(e.Context(), http.MethodGet, "https://foo.com", nil)
   return client.Do(request)
 }, timeout)
