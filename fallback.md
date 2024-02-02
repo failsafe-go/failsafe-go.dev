@@ -39,7 +39,7 @@ A [Fallback][Fallback] can be configured to handle only [certain results, errors
 
 ```go
 builder.
-  HandleErrors(ErrConnecting, ErrRetriesExceeded).
+  HandleErrors(ErrConnecting, retrypolicy.ErrRetriesExceeded).
   HandleResult(nil)
 ```
 
