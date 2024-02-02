@@ -80,7 +80,13 @@ After opening, a breaker will delay for 1 minute by default before before transi
 builder.WithDelay(30*time.Second)
 ```
 
-Or a [computed delay][WithDelayFunc] based on an execution result.
+Or a [computed delay][WithDelayFunc] based on an execution result. 
+
+When in an *open* state, you can also get the [remaining delay][RemainingDelay], so that callers know how long to wait before retrying:
+
+```go
+breaker.RemainingDelay()
+```
 
 ### Closing
 
