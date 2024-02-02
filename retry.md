@@ -39,7 +39,7 @@ builder.
 
 ## Return Values
 
-By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return a [RetriesExceededError] wrapping the last execution result and error. But it can also be configured to return the last result and error instead:
+By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return a [ExceededError][RetryPolicyExceededError] wrapping the last execution result and error. But it can also be configured to return the last result and error instead:
 
 ```go
 builder.ReturnLastFailure()

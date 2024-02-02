@@ -30,7 +30,7 @@ err := failsafe.Run(SendMessage, breaker)
 
 ## How it Works
 
-When the number of recent execution failures exceed a configured threshold, the breaker is *opened* and further executions will fail with `ErrCircuitBreakerOpen`. After a delay, the breaker is *half-opened* and trial executions are allowed which determine whether the breaker should be *closed* or *opened* again. If the trial executions meet a success threshold, the breaker is *closed* again and executions will proceed as normal, otherwise it's re-*opened*.
+When the number of recent execution failures exceed a configured threshold, the breaker is *opened* and further executions will fail with `ErrOpen`. After a delay, the breaker is *half-opened* and trial executions are allowed which determine whether the breaker should be *closed* or *opened* again. If the trial executions meet a success threshold, the breaker is *closed* again and executions will proceed as normal, otherwise it's re-*opened*.
 
 ## Failure Handling
 
