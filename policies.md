@@ -109,7 +109,8 @@ Read about the built-in policies that Failsafe supports:
 - [Circuit Breaker][circuit-breakers]
 - [Rate Limiter][rate-limiters]
 - [Timeout][timeouts]
-- [Bulkhead][bulkheads]
 - [Fallback][fallbacks]
+- [Hedge][hedge]
+- [Bulkhead][bulkheads]
 
 {% include common-links.html %}

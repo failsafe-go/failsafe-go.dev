@@ -7,8 +7,9 @@
   - [Circuit Breaker][circuit-breakers]
   - [Rate Limiter][rate-limiters]
   - [Timeout][timeouts]
-  - [Bulkhead][bulkheads]
   - [Fallback][fallbacks]
+  - [Hedge][hedge]
+  - [Bulkhead][bulkheads]
 
 - Features
   - [Async Execution][async-execution]

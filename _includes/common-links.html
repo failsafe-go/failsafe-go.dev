@@ -8,6 +8,7 @@
 [retry-listeners]: {{ "/retry#event-listeners" | relative_url }}
 [aborts]: {{ "/retry#aborts" | relative_url }}
 [timeouts]: {{ "/timeout" | relative_url }}
+[hedge]: {{ "/hedge" | relative_url }}
 [bulkheads]: {{ "/bulkhead" | relative_url }}
 [fallbacks]: {{ "/fallback" | relative_url }}
 [fallback-listeners]: {{ "/fallback#event-listeners" | relative_url }}
@@ -52,6 +53,7 @@
 [LastResult]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#ExecutionAttempt.LastResult
 [LastError]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#ExecutionAttempt.LastError
 [IsRetry]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#ExecutionAttempt.IsRetry
+[IsHedge]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#ExecutionAttempt.IsHedge
 [IsFirstAttempt]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#ExecutionAttempt.IsFirstAttempt
 [IsCanceled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#Execution.IsCanceled
 [Canceled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#Execution.Canceled
@@ -95,6 +97,10 @@
 
 [Timeout]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/timeout#Timeout
 
+[HedgePolicy]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicy
+[WithMaxHedges]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicyBuilder.WithMaxHedges
+[OnHedge]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicyBuilder.OnHedge
+
 [Bulkhead]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/bulkhead#Bulkhead
 
 [Fallback]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/fallback#Fallback
@@ -107,3 +113,4 @@
 
 <!-- Misc links -->
 [fowler-circuit-breaker]: http://martinfowler.com/bliki/CircuitBreaker.html
+[tail-at-scale]: https://www.barroso.org/publications/TheTailAtScale.pdf

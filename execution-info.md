@@ -22,7 +22,7 @@ failsafe.GetWithExecution(func(e failsafe.Execution[int]) (int, error) {
 }, retryPolicy)
 ```
 
-The [Execution] object can also tell you if an execution is being [retried][IsRetry] or if it's the [first attempt][IsFirstAttempt]:
+The [Execution] object can also tell you if an execution is a [retry][IsRetry], a [hedge][IsHedge], or the [first attempt][IsFirstAttempt]:
 
 ```go
 failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
