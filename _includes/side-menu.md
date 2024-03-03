@@ -16,6 +16,7 @@
   - [Event Listeners][event-listeners]
   - [Execution Info][execution-info]
   - [Execution Cancellation][execution-cancellation]
+  - [HTTP Integration][http]
   - [Type Safety][type-safety]
   - [Extending][extending]
 
