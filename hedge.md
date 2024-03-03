@@ -33,6 +33,21 @@ By default, a [HedgePolicy] will perform a single hedged execution if the initia
 builder.WithMaxHedges(2)
 ```
 
+## Dynamic Delay
+
+The hedging pattern was first described in [The Tail at Scale][tail-at-scale], which recommends setting a hedging delay equal to the current p95 or p99 latency of your executions. This ensures that if latencies change, you're only targeting long tail requests and don't unintentionally send hedged requests too early. 
+
+With this in mind, you can configure a dynamic delay for a [HedgePolicy], based on a function result:
+
+```go
+hedgePolicy := hedgepolicy.BuilderWithDelayFunc[any](
+  func(exec failsafe.ExecutionAttempt[R]) time.Duration {
+    return p95Latency()  
+  }).
+  WithMaxHedges(2).
+  Build()
+```
+
 ## Cancellation
 
 By default, any outstanding hedges are canceled after the first result is returned. You can also specify that only certain results, errors, or conditions should cause outstanding hedges to be canceled:
@@ -43,10 +58,6 @@ builder.
   CancelOnError(ErrConnecting)
   CancelIf(CancelCondition)
 ```
-
-## Best Practices
-
-The hedging pattern was first described in [The Tail at Scale][tail-at-scale], which recommends setting a hedging delay equal to the current p95 or p99 latency of your executions. This ensures that if latencies change, you're only targeting long tail requests, and don't unintentionally send hedged requests too early.
 
 ## Event Listeners
 
