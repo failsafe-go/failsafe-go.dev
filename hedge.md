@@ -35,13 +35,13 @@ builder.WithMaxHedges(2)
 
 ## Dynamic Delay
 
-The hedging pattern was first described in [The Tail at Scale][tail-at-scale], which recommends setting a hedging delay equal to the current p95 or p99 latency of your executions. This ensures that if latencies change, you're only targeting long tail requests and don't unintentionally send hedged requests too early. 
+The hedging pattern was first described in [The Tail at Scale][tail-at-scale], which recommends setting a hedging delay equal to the current p95 or p99 latency of your executions. This ensures that if latencies change, you're only targeting long tail requests and don't unintentionally perform hedged executions too early. 
 
 With this in mind, you can configure a dynamic delay for a [HedgePolicy], based on a function result:
 
 ```go
 hedgePolicy := hedgepolicy.BuilderWithDelayFunc[any](
-  func(exec failsafe.ExecutionAttempt[R]) time.Duration {
+  func(exec failsafe.ExecutionAttempt[any]) time.Duration {
     return p95Latency()  
   }).
   WithMaxHedges(2).
