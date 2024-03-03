@@ -41,7 +41,20 @@ title: Comparisons
 - Failsafe-go circuit breakers can be [manually operated][circuit-breaker-standalone].
 - Failsafe-go circuit breakers can be [composed][policy-composition] with other policies.
 
+## Hedges
+
+### Failsafe-go vs cristalhq/hedgedhttp
+
+[cristalhq/hedgedhttp] is an HTTP hedging implemetation. It differs from Failsafe-go's [HedgePolicy][hedge] in a few ways:
+
+- Failsafe-go hedges can be used with any type of execution. [cristalhq/hedgedhttp] is based on HTTP.
+- Failsafe-go hedges policies allow you configure which results/errors to cancel outstanding hedges based on. [cristalhq/hedgedhttp] treats any non-error as a success.
+- Failsafe-go supports [dynamic hedge delays][hedge-dynamic-delay].
+- Failsafe-go provides hedge [event listeners][hedge-listeners].
+- Failsafe-go hedges can be [composed][policy-composition] with other policies.
+
 {% include common-links.html %}
 
 [cenkalti/backoff]: https://github.com/cenkalti/backoff
 [gobreaker]: https://github.com/sony/gobreaker
+[cristalhq/hedgedhttp]: https://github.com/cristalhq/hedgedhttp
