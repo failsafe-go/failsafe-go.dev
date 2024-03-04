@@ -18,16 +18,30 @@ roundTripper := failsafehttp.NewRoundTripper(executor, nil)
 
 [Retry policies][retry], [circuit breakers][circuit-breakers], [timeouts], and [hedge policies][hedge] are all common to use with a failsafe `RoundTripper`. 
 
-## Handling HTTP Responses
+## Retrying HTTP Failures
 
-Some policies, such as a [retry policies][retry], [circuit breakers][circuit-breakers], and [fallbacks] can be configured to handle specific HTTP responses, ex:
+The `failsafehttp` package provides a `RetryPolicyBuilder` that can build retry policies with built-in detection of retryable HTTP errors and responses:
 
 ```go
-// Retry on a 400 response
-retryPolicy := retrypolicy.Builder[*http.Response]().
+retryPolicy := failsafehttp.RetryPolicyBuilder().
+  WithBackoff(time.Second, 30*time.Second).
+  WithMaxRetries(3).
+  Build()
+```
+
+`failsafehttp.RetryPolicyBuilder` will also delay retries according to any `Retry-After` header in the HTTP response. Additional configuration, including delays for other responses, can be added to the builder as needed.
+
+## Handling Retry-After
+
+Other policies that support delays, such as [circuit breakers][circuit-breakers] can also be configured with a `failsafehttp.DelayFunc` that delays according to `Retry-After` headers:
+
+```go
+circuitBreaker := circuitbreaker.Builder[*http.Response]().
   HandleIf(func(response *http.Response, err error) bool {
-    return response.StatusCode == 400
-  }).Build()
+    return response.StatusCode == 429
+  }).
+  WithDelayFunc(failsafehttp.DelayFunc()).
+  Build()
 ```
 
 ## Context Cancellation
