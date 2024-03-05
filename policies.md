@@ -9,7 +9,7 @@ title: Policies
 1. TOC
 {:toc}
 
-Failsafe-go provides several resilience policies including [Retry][retry], [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Bulkhead][bulkheads], and [Fallback][fallbacks]. While each policy handles failures in different ways, some of their common features are described below.
+Failsafe-go provides several resilience policies including [Retry][retry], [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge][hedge], and [Bulkhead][bulkheads]. While each policy handles failures in different ways, some of their common features are described below.
 
 ## Failure Handling
 
