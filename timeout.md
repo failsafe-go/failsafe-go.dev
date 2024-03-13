@@ -33,7 +33,7 @@ When a `Timeout` is [composed][policy-composition] _outside_ a `RetryPolicy`, a 
 failsafe.Run(Connect, timeout, retryPolicy)
 ```
 
-When a `Timeout` is [composed][policy-composition] _inside_ a `RetryPolicy`, a timeout occurrence will not automatically cancel any _outer_ retries:
+When a `Timeout` is [composed][policy-composition] _inside_ a `RetryPolicy`, each attempt will get its own timeout, and a timeout occurrence will not automatically cancel any _outer_ retries:
 
 ```go
 failsafe.Run(Connect, retryPolicy, timeout)
