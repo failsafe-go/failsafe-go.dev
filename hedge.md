@@ -9,7 +9,7 @@ title: Hedge
 1. TOC
 {:toc}
 
-[Hedge policies][HedgePolicy] are used to perform additional executions, after some delays, if the initial execution is slow to complete. This differs from retry policies since multiple hedged executions may be in progress at the same time. After the first successful execution is returned, the remaining executions are canceled.
+[Hedge policies][HedgePolicy] are used to bring down tail latencies by performing additional executions, after some delays, if the initial execution is slow to complete. This differs from retry policies since multiple hedged executions may be in progress at the same time. After the first successful execution is returned, the remaining executions are canceled.
 
 ## Usage
 
