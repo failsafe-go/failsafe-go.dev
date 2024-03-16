@@ -3,20 +3,38 @@ layout: default
 title: HTTP Integration
 ---
 
-# HTTP Integration
+# HTTP Support
 {: .no_toc }
 
 1. TOC
 {:toc}
 
-Failsafe-go makes it easy to use any policies with HTTP via an [http.RoundTripper][RoundTripper]. Creating a failsafe `RoundTripper` is straightforward:
+Failsafe-go makes it easy to use any policies with HTTP. One approach is to create a failsafe `RoundTripper`, which you can use with an `http.Client`:
 
 ```go
+client := &http.Client{}
 executor := failsafe.NewExecutor[*http.Response](retryPolicy, circuitBreaker)
-roundTripper := failsafehttp.NewRoundTripper(executor, nil)
+client.Transport = failsafehttp.NewRoundTripper(executor, nil)
 ```
 
-[Retry policies][retry], [circuit breakers][circuit-breakers], [timeouts], and [hedge policies][hedge] are all common to use with a failsafe `RoundTripper`. 
+Any requests made with this client will have failures handled by the configured policies:
+
+```go
+// Get with retries and circuit breaking
+client.Get("http://failsafe-go.dev")
+```
+
+Another approach is to create a failsafe request for an executor, `http.Request`, and `http.Client`:
+
+```go
+executor := failsafe.NewExecutor[*http.Response](retryPolicy)
+failsafeRequest := failsafehttp.NewRequest(executor, request, http.DefaultClient)
+
+// Execute request with retries
+response, err := failsafeRequest.Do()
+```
+
+The difference between these two approaches is that a failsafe `Request` wraps a client whereas a failsafe `RoundTripper` is used internally by a client. This means any errors created by a client before using the `RoundTripper` would not be handled, but could be handled by a failsafe `Request`.
 
 ## Retrying HTTP Failures
 
@@ -46,7 +64,7 @@ circuitBreaker := circuitbreaker.Builder[*http.Response]().
 
 ## Context Cancellation
 
-When using a failsafe `RoundTripper`, [Context] cancellations are automatically propagated to the HTTP request context. When an execution is canceled for any reason, such as a [Timeout][timeouts], any outstanding HTTP request's context is canceled. Similarly, when using a [HedgePolicy][hedge], any outstanding hedge reqests contexts are canceled once the first successful response is received.
+When using a failsafe `RoundTripper` or `Request`, [Context] cancellations are automatically propagated to the HTTP request context. When an execution is canceled for any reason, such as a [Timeout][timeouts], any outstanding HTTP request's context is canceled. Similarly, when using a [HedgePolicy][hedge], any outstanding hedge reqests contexts are canceled once the first successful response is received.
 
 
 {% include common-links.html %}
