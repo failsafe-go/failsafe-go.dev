@@ -45,7 +45,7 @@ executor.OnFailure(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
 
 If any policy fails to handle an execution failure, as specified by the policy's [failure handling configuration][failure-handling], then the execution is considered a failure and [OnFailure] will be called, otherwise it's considered a success and [OnSuccess] is called. [OnDone] will be called for every execution. 
 
-Errors from policies themselves, such as `ErrCircuitBreakerOpen`, `ErrRetriesExceeded`, or `ErrTimeoutExceeded`, are considered failures if they're not handled by an outer policy.
+Errors from policies themselves, such as `circuitbreaker.ErrOpen`, `retrypolicy.ErrExceeded`, or `timeout.ErrExceeded`, are considered failures if they're not handled by an outer policy.
 
 ## Policy Listeners
 

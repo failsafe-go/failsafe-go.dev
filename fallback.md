@@ -39,11 +39,11 @@ A [Fallback][Fallback] can be configured to handle only [certain results, errors
 
 ```go
 builder.
-  HandleErrors(ErrConnecting, retrypolicy.ErrRetriesExceeded).
+  HandleErrors(ErrConnecting, retrypolicy.ErrExceeded).
   HandleResult(nil)
 ```
 
-When using a Fallback in combination with another policy, it's common to configure both to handle the same failures. It's also common for Fallback to handle errors that may be returned by inner policies in a [composition][policy-composition], such as `ErrRetriesExceeded`, `ErrCircuitBreakerOpen`, or `ErrTimeoutExceeded`.
+When using a Fallback in combination with another policy, it's common to configure both to handle the same failures. It's also common for Fallback to handle errors that may be returned by inner policies in a [composition][policy-composition], such as `retrypolicy.ErrExceeded`, `circuitbreaker.ErrOpen`, or `timeout.ErrExceeded`.
 
 ## Event Listeners
 

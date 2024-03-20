@@ -13,7 +13,7 @@ title: Rate Limiter
 
 ## How It Works
 
-When the number of executions through the rate limiter exceeds the configured max per time period, further executions will either fail with `ErrRateLimitExceeded` or will wait until permitted.
+When the number of executions through the rate limiter exceeds the configured max per time period, further executions will either fail with `ErrExceeded` or will wait until permitted.
 
 ## Smooth Rate Limiter
 

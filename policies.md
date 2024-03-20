@@ -62,7 +62,7 @@ Consider an execution of the following policy composition:
 - `failsafe.Get` calls the `Fallback`
 - `Fallback` calls the `RetryPolicy`
 - `RetryPolicy` calls the `CircuitBreaker`
-- `CircuitBreaker` returns `ErrCircuitBreakerOpen` if the breaker is open, else calls the `func`
+- `CircuitBreaker` returns `ErrOpen` if the breaker is open, else calls the `func`
 - `func` executes and returns a result or error
 - `CircuitBreaker` records the result as either a success or failure, based on its [configuration](#failure-handling), possibly changing the state of the breaker, then returns
 - `RetryPolicy` records the result as either a success or failure, based on its [configuration](#failure-handling), and either retries or returns
@@ -81,9 +81,9 @@ But when doing so for a policy that is composed around other policies, you may w
 
 ```go
 policyBuilder.HandleErrors(
-  retrypolicy.ErrRetriesExceeded, 
-  circuitbreaker.ErrCircuitBreakerOpen, 
-  timeout.ErrTimeoutExceeded
+  retrypolicy.ErrExceeded,
+  circuitbreaker.ErrOpen,
+  timeout.ErrExceeded
 )
 ```
 
