@@ -54,8 +54,8 @@ By default, any outstanding hedges are canceled after the first result is return
 
 ```go
 builder.
-  CancelOnResult(true)
-  CancelOnError(ErrConnecting)
+  CancelOnResult(true).
+  CancelOnError(ErrConnecting).
   CancelIf(CancelCondition)
 ```
 
