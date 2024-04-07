@@ -35,7 +35,7 @@ fallback := fallback.WithFunc[any](func(e failsafe.Execution[any]) (any, error) 
 
 ## Failure Handling
 
-A [Fallback][Fallback] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
+A [Fallback] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
 ```go
 builder.

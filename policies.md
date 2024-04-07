@@ -112,5 +112,6 @@ Read about the built-in policies that Failsafe supports:
 - [Fallback][fallbacks]
 - [Hedge][hedge]
 - [Bulkhead][bulkheads]
+- [Cache][cache]
 
 {% include common-links.html %}
