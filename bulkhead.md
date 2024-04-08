@@ -40,7 +40,7 @@ Fairness is guaranteed with waiting executions, meaning they're permitted in the
 
 ## Event Listeners
 
-A [Bulkhead] can notify you with an [ExecutionEvent] when a rate limit has been exceeded by an execution attempt:
+A [Bulkhead] can notify you with an [ExecutionEvent] when the bulkhead is full:
 
 ```go
 builder.OnBulkheadFull(func(e failsafe.ExecutionEvent[any]) {

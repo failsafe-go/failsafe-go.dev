@@ -27,7 +27,7 @@ connection, err := failsafe.Get(Connect, cachePolicy)
 
 ## Cache Keys
 
-A [CachePolicy] can use a key specified at the policy level, as shown above, to store cached execution results. It can also use a cache key provided at execution time, via a `Context`, allowing different keys to be used for different executions:
+A [CachePolicy] can use a key specified at the policy level, as shown above, to store cached execution results. It can also use a cache key provided at execution time, via a [Context], allowing different keys to be used for different executions:
 
 ```go
 executor := failsafe.NewExecutor(cachePolicy)
