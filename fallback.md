@@ -9,7 +9,7 @@ title: Fallback
 1. TOC
 {:toc}
 
-[Fallbacks][Fallback] provide an alternative result or error for a failed execution. 
+[Fallbacks][Fallback] handle failed executions by providing an alternative result or error. 
 
 ## Usage
 
