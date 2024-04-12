@@ -16,7 +16,7 @@ But for other cases you might declare a more specific result type:
 
 ```go
 retryPolicy := retrypolicy.Builder[*http.Response]().
-  builder.HandleIf(func(response *http.Response, err error) bool {
+  HandleIf(func(response *http.Response, err error) bool {
     return response.StatusCode == 500
   }).
   OnFailure(func(e failsafe.ExecutionEvent[*http.Response]) {
@@ -28,7 +28,7 @@ retryPolicy := retrypolicy.Builder[*http.Response]().
 This allows Failsafe-go to ensure that the same result type used for the policy is returned by the execution and is available in [event listeners][event-listeners]:
 
 ```go
-response := failsafe.NewExecutor[*http.Response](retryPolicy).
+response, err := failsafe.NewExecutor[*http.Response](retryPolicy).
   OnSuccess(func(e failsafe.ExecutionDoneEvent[*http.Response]) {
     logger.Info("Request sent", "statusCode", e.Result.StatusCode)
   }).
