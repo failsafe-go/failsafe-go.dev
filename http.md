@@ -9,7 +9,7 @@ title: HTTP Integration
 1. TOC
 {:toc}
 
-Failsafe-go makes it easy to use any policies with HTTP. One approach is to create a failsafe `RoundTripper` for some [policy composition][policy-composition] which can be used with an `http.Client`:
+Failsafe-go makes it easy to use any policies with HTTP. You can create a failsafe `RoundTripper` for some [policy composition][policy-composition] which can be used with an `http.Client`:
 
 ```go
 client := &http.Client{
@@ -20,7 +20,7 @@ client := &http.Client{
 client.Get("http://failsafe-go.dev")
 ```
 
-Another approach is to create a failsafe request for an `http.Request`, `http.Client`, and policies:
+Alternatively, you can create a failsafe request for an `http.Request`, `http.Client`, and policies:
 
 ```go
 failsafeRequest := failsafehttp.NewRequest(request, client, retryPolicy)
