@@ -30,9 +30,10 @@ connection, err := failsafe.Get(Connect, cachePolicy)
 A [CachePolicy] can use a key specified at the policy level, as shown above, to store cached execution results. It can also use a cache key provided at execution time, via a [Context], allowing different keys to be used for different executions:
 
 ```go
-executor := failsafe.NewExecutor(cachePolicy)
 ctx := context.WithValue(context.Background(), cachepolicy.CacheKey, "connection")
-connection, err := executor.WithContext(ctx).Get(Connect)
+connection, err := failsafe.NewExecutor(cachePolicy).
+  WithContext(ctx).
+  Get(Connect)
 ```
 
 ## Conditional Caching
