@@ -135,9 +135,9 @@ breaker.Close()
 
 if breaker.TryAcquirePermit() {
   if err := doSomething(); err != nil {
-    breaker.RecordSuccess()
-  else {
     breaker.RecordError(err)
+  else {
+    breaker.RecordSuccess()
   }
 }
 ```
