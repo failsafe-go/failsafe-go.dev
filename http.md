@@ -53,7 +53,7 @@ circuitBreaker := circuitbreaker.Builder[*http.Response]().
   HandleIf(func(response *http.Response, err error) bool {
     return response.StatusCode == 429
   }).
-  WithDelayFunc(failsafehttp.DelayFunc()).
+  WithDelayFunc(failsafehttp.DelayFunc).
   Build()
 ```
 
