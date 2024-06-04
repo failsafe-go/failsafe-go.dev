@@ -37,16 +37,6 @@ builder.
   HandleResult(nil)
 ```
 
-## Return Values
-
-By default, when failures occur and retries have been exceeded, a [RetryPolicy] will return an [ExceededError][RetryPolicyExceededError] wrapping the last execution result and error. But it can also be configured to return the last result and error instead:
-
-```go
-builder.ReturnLastFailure()
-```
-
-If additional handling or an alternative result is needed, additional policies, such as a [fallbacks], can be [composed][policy-composition] around a [RetryPolicy].
-
 ## Max Attempts
 
 [By default][retrypolicy-defaults], a [RetryPolicy] will allow a maximum of 3 execution attempts. You can configure a different max number of [attempts][WithMaxAttempts]:
@@ -117,7 +107,7 @@ builder.WithJitter(100*time.Second)
 
 To cancel running executions, see the [execution cancellation][execution-cancellation] docs or [Timeout][timeouts] policy.
 
-## Aborts
+## Abort
 
 You can also specify which results, errors, or conditions to [abort retries][AbortOnErrors] on:
 
@@ -127,6 +117,25 @@ builder.
   AbortOnError(ErrConnecting)
   AbortIf(AbortCondition)
 ```
+
+## Return Value
+
+By default, when an execution fails and a [RetryPolicy] is exceeded, an [ExceededError][RetryPolicyExceededError] will be returned, wrapping the last execution result and error:
+
+```go
+connection, err := failsafe.Get(Connect, retryPolicy)
+if errors.Is(err, retrypolicy.ErrExceeded) {
+  logger.Error("Failed to create connection", "error", err)
+}
+```
+
+But a [RetryPolicy] can also be configured to return the last result and error instead:
+
+```go
+builder.ReturnLastFailure()
+```
+
+If additional handling or an alternative result is needed, additional policies, such as a [fallbacks], can be [composed][policy-composition] around a [RetryPolicy].
 
 ## Event Listeners
 
