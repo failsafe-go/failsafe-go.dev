@@ -114,7 +114,7 @@ You can also specify which results, errors, or conditions to [abort retries][Abo
 ```go
 builder.
   AbortOnResult(true)
-  AbortOnError(ErrConnecting)
+  AbortOnErrors(context.Canceled)
   AbortIf(AbortCondition)
 ```
 
