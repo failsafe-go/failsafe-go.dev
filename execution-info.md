@@ -33,4 +33,14 @@ failsafe.RunWithExecution(func(e failsafe.Execution[any]) error {
 }, retryPolicy)
 ```
 
+## Context
+
+A [Context] can also be provided to an Execution, by configuring it with an [Executor]:
+
+```go
+executor := failsafe.NewExecutor[any](retryPolicy).WithContext(ctx)
+```
+
+The [Context] will be available via an [Execution] or any [event][event-listeners].
+
 {% include common-links.html %}
