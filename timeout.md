@@ -23,7 +23,7 @@ err := failsafe.Run(Connect, timeout)
 
 ## How It Works
 
-If an execution is canceled by a `Timeout`, the execution and policies composed inside the timeout will return `ErrExceeded`. See the [execution cancellation][execution-cancellation] page for more on cancellation.
+If an execution is canceled by a `Timeout`, the execution and policies composed inside the timeout will return `timeout.ErrExceeded`. See the [execution cancellation][execution-cancellation] page for more on cancellation.
 
 ## Timeouts with Retries
 

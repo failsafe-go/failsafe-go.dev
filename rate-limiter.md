@@ -13,7 +13,7 @@ title: Rate Limiter
 
 ## How It Works
 
-When the number of executions through the rate limiter exceeds the configured max per time period, further executions will either fail with `ErrExceeded` or will wait until permitted.
+When the number of executions through the rate limiter exceeds the configured max per time period, further executions will either fail with `ratelimiter.ErrExceeded` or will wait until permitted.
 
 ## Smooth Rate Limiter
 
@@ -48,7 +48,7 @@ Bursty rate limited executions are permitted with no delay up to the given `maxE
 
 ## Waiting
 
-By default, when a [RateLimiter] is exceeded, further executions will immediately fail with `ErrExceeded`. A rate limiter can also be configured to wait for execution permission if it can be achieved within a max wait time:
+By default, when a [RateLimiter] is exceeded, further executions will immediately fail with `ratelimiter.ErrExceeded`. A rate limiter can also be configured to wait for execution permission if it can be achieved within a max wait time:
 
 ```go
 // Wait up to 1 second for execution permission
