@@ -43,7 +43,7 @@ failsafe.Run(Connect, retryPolicy, timeout)
 
 While a [Timeout] is similar to a [Context], in that they both can cause an execution to be canceled, [Timeouts][Timeout] can be composed with other policies. Additionally, when a [Timeout] is triggered, it can be reset by an outer [RetryPolicy], whereas a [Context] cannot be reset once it is done. 
 
-With this in mind, prefer a [Timeout] when you want to limit execution time, and prefer a [Context] when you want to explicitly cancel an execution.
+With this in mind, prefer a [Timeout] when you want to limit execution time or use retries, and prefer a [Context] when you want to cancel an entire execution.
 
 ## Event Listeners
 
