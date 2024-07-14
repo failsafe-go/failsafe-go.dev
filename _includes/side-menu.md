@@ -18,6 +18,7 @@
   - [Execution Info][execution-info]
   - [Execution Cancellation][execution-cancellation]
   - [HTTP Support][http]
+  - [gRPC Support][grpc]
   - [Type Safety][type-safety]
   - [Extending][extending]
 
