@@ -16,7 +16,7 @@ Failsafe-go makes it easy to use any policies with gRPC.
 You can create a failsafe `UnaryClientInterceptor` for a [policy composition][policy-composition] to handle errors, limit load, or limit execution time:
 
 ```go
-interceptor := failsafegrpc.NewUnaryClientInterceptor(retryPolicy, circuitBreaker)
+interceptor := failsafegrpc.NewUnaryClientInterceptor[SomeResponse](retryPolicy, circuitBreaker)
 client, err := grpc.NewClient(target, grpc.WithUnaryInterceptor(interceptor))
 
 // Perform an RPC with retries and circuit breaking
@@ -29,14 +29,14 @@ service.DoSomething(ctx, request)
 On the server side, you can use load limiting or time limiting policies to create a failsafe `ServerInHandle`:
 
 ```go
-inTapHandle := failsafegrpc.NewServerInHandle(bulkhead, timeout)
+inTapHandle := failsafegrpc.NewServerInHandle[any](bulkhead, timeout)
 server := grpc.NewServer(grpc.InTapHandle(inTapHandle))
 ```
 
 You can also create a failsafe `UnaryServerInterceptor`:
 
 ```go
-interceptor := failsafegrpc.NewUnaryServerInterceptor(retryPolicy, circuitBreaker)
+interceptor := failsafegrpc.NewUnaryServerInterceptor[SomeResponse](retryPolicy, circuitBreaker)
 server := grpc.NewServer(target, grpc.UnaryInterceptor(interceptor))
 ```
 
