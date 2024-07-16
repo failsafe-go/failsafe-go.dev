@@ -27,7 +27,7 @@ They can also be configured to handle specific conditions:
 
 ```go
 builder.HandleIf(func(response *http.Response, err error) bool {
-  return response.StatusCode == 500
+  return response != nil && response.StatusCode == 500
 })
 ```
 

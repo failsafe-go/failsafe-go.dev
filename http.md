@@ -51,7 +51,7 @@ Other policies that support delays, such as [circuit breakers][circuit-breakers]
 ```go
 circuitBreaker := circuitbreaker.Builder[*http.Response]().
   HandleIf(func(response *http.Response, err error) bool {
-    return response.StatusCode == 429
+    return response != nil && response.StatusCode == 429
   }).
   WithDelayFunc(failsafehttp.DelayFunc).
   Build()

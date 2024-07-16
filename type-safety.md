@@ -17,7 +17,7 @@ But for other cases you might declare a more specific result type:
 ```go
 retryPolicy := retrypolicy.Builder[*http.Response]().
   HandleIf(func(response *http.Response, err error) bool {
-    return response.StatusCode == 500
+    return response != nil && response.StatusCode == 500
   }).
   OnFailure(func(e failsafe.ExecutionEvent[*http.Response]) {
     logger.Error("Failed attempt", "statusCode", e.LastResult().StatusCode)
