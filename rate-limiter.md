@@ -55,7 +55,7 @@ By default, when a [RateLimiter] is exceeded, further executions will immediatel
 builder.WithMaxWaitTime(time.Second)
 ```
 
-Actual wait times for a rate limiter can vary depending on busy the rate limiter is. Wait times will grow if more executions are consistently attempted than the rate limiter permits.
+Actual wait times for a rate limiter can vary depending on how busy the rate limiter is. Wait times will grow if more executions are consistently attempted than the rate limiter permits.
 
 ## Event Listeners
 
