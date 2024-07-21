@@ -13,7 +13,7 @@ title: Fallback
 
 ## Usage
 
-Creating a [Fallback] is simple. You can create a fallback that provides a default result:
+There are a few different options for creating a [Fallback]. You can provide an alternative result:
 
 ```go
 fallback := fallback.WithResult(defaultResult)
@@ -25,12 +25,18 @@ An alternative error:
 fallback := fallback.WithError(ErrConnecting)
 ```
 
-Or computes a different result or error:
+Or compute a different result or error:
 
 ```go
 fallback := fallback.WithFunc[any](func(e failsafe.Execution[any]) (any, error) {
   return ConnectToBackup(backupConfig)
 })
+```
+
+Using a [Fallback] is simple:
+
+```go
+connection, err := failsafe.Get(Connect, fallback)
 ```
 
 ## Failure Handling
