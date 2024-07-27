@@ -42,7 +42,7 @@ By default, any non-error execution results will be cached. But a [CachePolicy] 
 
 ```go
 builder.CacheIf(func(response *http.Response, err error) bool {
-  return response.StatusCode == 200
+  return response != nil && response.StatusCode == 200
 })
 ```
 
