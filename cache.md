@@ -9,11 +9,11 @@ title: Cache
 1. TOC
 {:toc}
 
-[Cache policies][CachePolicy] prevent unnecessary load by caching execution results and returning previous execution results, when possible. 
+[Cache policies][CachePolicy] limit unnecessary load by caching and returning previous execution results, when possible. 
 
 ## Usage
 
-Creating and using a [CachePolicy] for a cache is simple:
+Creating and using a [CachePolicy] for a [cache] is simple:
 
 ```go
 // Store connections under the "connection" key in the cache

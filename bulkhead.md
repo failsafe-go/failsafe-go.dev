@@ -9,7 +9,7 @@ title: Bulkhead
 1. TOC
 {:toc}
 
-[Bulkheads][Bulkhead] limit concurrent executions as a way of preventing system overload. 
+[Bulkheads][Bulkhead] are [load limiters][load-limiting] that limit concurrent executions. 
 
 ## Usage
 

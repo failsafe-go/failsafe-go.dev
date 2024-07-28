@@ -9,7 +9,7 @@ title: Rate Limiter
 1. TOC
 {:toc}
 
-[Rate limiters][RateLimiter] can limit the rate of executions as a way of preventing system overload. Failsafe-go supports two types of rate limiters: *smooth* and *bursty*. *Smooth* rate limiters permit a max number of executions per time period, using a leaky bucket approach to spread out executions at an even rate. *Bursty* rate limiters use a fixed window approach to permit a max number of executions for individual time periods, permitting bursts of executions in each time period.
+[Rate limiters][RateLimiter] are [load limiters][load-limiting] that limit the rate of executions. Failsafe-go supports two types of rate limiters: *smooth* and *bursty*. *Smooth* rate limiters permit a max number of executions per time period, using a leaky bucket approach to spread out executions at an even rate. *Bursty* rate limiters use a fixed window approach to permit a max number of executions for individual time periods, permitting bursts of executions in each time period.
 
 ## How It Works
 

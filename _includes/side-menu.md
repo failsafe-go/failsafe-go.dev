@@ -1,5 +1,6 @@
 - Overview
   - [Getting Started][home]
+  - [Load Limiting][load-limiting]
 
 - Policies
   - [Policies Overview][policies]

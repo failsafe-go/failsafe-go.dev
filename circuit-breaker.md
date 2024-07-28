@@ -9,7 +9,7 @@ title: Circuit Breaker
 1. TOC
 {:toc}
 
-[Circuit breakers][fowler-circuit-breaker] react to failures by temporarily disabling execution as a way of preventing system overload. Failsafe-go supports two types of circuit breakers: *count based* and *time based*. *Count based* circuit breakers operate by tracking recent execution results up to a certain limit. *Time based* circuit breakers operate by tracking any number of execution results that occur within a time period.
+[Circuit breakers][fowler-circuit-breaker] are [load limiters][load-limiting] that temporarily disable execution when failures occur. Failsafe-go supports two types of circuit breakers: *count based* and *time based*. *Count based* circuit breakers operate by tracking recent execution results up to a certain limit. *Time based* circuit breakers operate by tracking any number of execution results that occur within a time period.
 
 ## Usage
 
@@ -123,6 +123,10 @@ It can also notify you when the breaker [opens][OnOpen], [closes][OnClose], or [
 ## Best Practices
 
 A [CircuitBreaker] can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
+
+### Composing Circuit Breakers
+
+When [composing policies][policy-composition], it's recommended to not have a circuit breaker handle errors from other policies, such as `bulkhead.ErrFull` or `ratelimiter.ErrExceeded`. If an execution is rejected by any policy, there's no need to have a circuit breaker open in addition. This makes it easier to reason about why a circuit breaker has opened, and avoids limiting load longer than is needed.
 
 ## Standalone Usage
 
