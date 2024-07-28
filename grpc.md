@@ -9,7 +9,7 @@ title: gRPC Support
 1. TOC
 {:toc}
 
-Failsafe-go makes it easy to use any policies with gRPC. 
+Failsafe-go makes it easy to use any policies with [gRPC][grpc-site].
 
 ## Clients
 
