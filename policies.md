@@ -15,11 +15,12 @@ Failsafe-go provides several resilience policies including [Retry], [Circuit Bre
 
 Policies add resilience by detecting failures and handling them. Each policy determines which execution [results, errors, or conditions][FailurePolicyBuilder] represent a failure and how to handle them. 
 
-Some policies, such as a [Retry][retry], [Circuit Breaker][circuit-breakers], and [Fallback][fallbacks], allow you to specify which errors or results to handle as failures. By default these policies handle any `error` that is returned. But they can be configured to handle more specific errors or results:
+Some policies, such as a [Retry][retry], [Circuit Breaker][circuit-breakers], and [Fallback][fallbacks], allow you to specify which errors or results to handle as failures. By default these policies handle any `error` that is returned. But they can be configured to handle more specific errors, error types, or results:
 
 ```go
 builder.
   HandleErrors(ErrClosed, ErrShutdown).
+  HandleErrorTypes(net.OpError{}, new(net.Error)).
   HandleResult(nil)
 ```
 

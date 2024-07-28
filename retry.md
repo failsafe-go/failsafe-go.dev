@@ -123,13 +123,14 @@ builder.
 By default, when an execution fails and a [RetryPolicy] is exceeded, an [ExceededError][RetryPolicyExceededError] will be returned, wrapping the last execution result and error:
 
 ```go
-connection, err := failsafe.Get(Connect, retryPolicy)
-if errors.Is(err, retrypolicy.ErrExceeded) {
-  logger.Error("Failed to create connection", "error", err)
+response, err := failsafe.Get(SendMessage, retryPolicy)
+var exceededErr retrypolicy.ExceededError
+if errors.As(err, &exceededErr) {
+  logger.Error("Failed to send message", "response", err.LastResult, "err", err.LastError)
 }
 ```
 
-But a [RetryPolicy] can also be configured to return the last result and error instead:
+A [RetryPolicy] can also be configured to return the last result and error instead of wrapping them:
 
 ```go
 builder.ReturnLastFailure()
