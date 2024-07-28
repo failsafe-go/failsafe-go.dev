@@ -27,10 +27,10 @@ Time based [Circuit Breakers][circuit-breakers] can be used as *reactive* load l
 
 ## Rate Limiters vs Bulkheads
 
-[Rate limiters][rate-limiters] and [Bulkhead][bulkheads] are both forms of *proactive* limiting, and should be configured based on a system's capacity, but they differ in that [Bulkheads][bulkheads] are better at handling varied workloads than rate limiters. The reason for this is highlighted by [Little's Law][littles-law], which states that the average concurrency inside a system relates to the average request rate and response time.
+[Rate limiters][rate-limiters] and [Bulkheads][bulkheads] are both forms of *proactive* limiting, and should be configured based on a system's capacity, but they differ in that [Bulkheads][bulkheads] are better at handling varied workloads than rate limiters. The reason for this is highlighted by [Little's Law][littles-law], which states that the average concurrency inside a system relates to the average request rate and response time.
 
 For example: 100 reqs/sec * 1 sec/req = an average concurrency of 100. If we limit the request rate to 100, the concurrency and load on the system is 100 so long as requests take 1 second to process. If more expensive requests arrive that take 2 seconds to process, then concurrency inside the system increases to 200.
 
-[Bulkheads][bulkheads] avoid this problem since they directly limits concurrency, and therefore load. When the request rate or response times change, the concurrency limit is still the same, allowing a bulkhead to better match different workloads to some system capacity.
+[Bulkheads][bulkheads] avoid this problem since they directly limit concurrency, and therefore load. When the request rate or response times change, the concurrency limit is still the same, allowing a bulkhead to better control workloads for some system capacity.
 
 {% include common-links.html %}
