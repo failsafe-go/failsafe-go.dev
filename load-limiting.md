@@ -9,7 +9,7 @@ title: Policies
 1. TOC
 {:toc}
 
-Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk, thread pools, and so on. Failsafe-go offers several policies that can prevent system overload, including [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], and [Caches][Cache]. We'll discuss below how these policies differ, and when you might choose one over another.
+Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk, thread pools, and so on. Failsafe-go offers several policies that can prevent system overload, including [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], [Timeouts][timeouts], and [Caches][Cache]. We'll discuss below how these policies differ, and when you might choose one over another.
 
 ## Types of Load Limiting
 
@@ -17,7 +17,7 @@ There's two general approaches to load limiting: *proactive*, where we guess whe
 
 ### Proactive Load Limiting
 
-[Bulkheads][bulkheads] and [Rate Limiters][rate-limiters] are *proactive* load limiters. They must be statically configured to limit load at some point. Ideally, that configuration should be carefully chosen through load testing to start limiting before the system becomes overloaded, but to not limit so early that the system's resources are underutilized. While it's better to limit sooner than later, choosing configuration for these policies that actually matches a workload and system capacity can be challenging, especially as these change over time. This is the main drawback of *proactive* load limiting.
+[Bulkheads][bulkheads], [Rate Limiters][rate-limiters], and [Timeouts][timeouts] are *proactive* load limiters. They must be statically configured to limit load at some point. Ideally, that configuration should be carefully chosen through load testing to start limiting before the system becomes overloaded, but to not limit so early that the system's resources are underutilized. While it's better to limit sooner than later, choosing configuration for these policies that actually matches a workload and system capacity can be challenging, especially as these change over time. This is the main drawback of *proactive* load limiters.
 
 ### Reactive Load Limiting
 
