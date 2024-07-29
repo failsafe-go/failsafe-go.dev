@@ -11,7 +11,7 @@
   - [Fallback][fallbacks]
   - [Hedge][hedge]
   - [Bulkhead][bulkheads]
-  - [Cache][cache]
+  - [Cache][caches]
 
 - Features
   - [Async Execution][async-execution]

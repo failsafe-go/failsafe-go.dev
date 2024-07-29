@@ -9,7 +9,7 @@ title: Load Limiting
 1. TOC
 {:toc}
 
-Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk, thread pools, and so on. Failsafe-go offers several policies that can prevent system overload, including [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], [Timeouts][timeouts], and [Caches][Cache]. We'll discuss below how these policies differ, and when you might choose one over another.
+Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk, thread pools, and so on. Failsafe-go offers several policies that can prevent system overload, including [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], [Timeouts][timeouts], and [Caches][caches]. We'll discuss below how these policies differ, and when you might choose one over another.
 
 ## Types of Load Limiting
 
