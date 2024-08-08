@@ -13,7 +13,7 @@ Systems become overloaded when usage exceeds the capacity of resources such as C
 
 ## Types of Load Limiting
 
-There's two general approaches to load limiting: *proactive*, where we guess when a system might be overloaded and proactively limit it, or *reactive*, where we react to a signal that indicates a system is actually overloaded and limit it.
+There's two general approaches to load limiting: *proactive*, where we estimate when a system might be overloaded and proactively limit it, or *reactive*, where we react to a signal that indicates a system is actually overloaded and limit it.
 
 ### Proactive Load Limiting
 
