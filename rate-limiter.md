@@ -90,6 +90,6 @@ scheduler.Schedule(SomeFunc, permitWaitTime)
 
 ## Performance
 
-Failsafe's internal [RateLimiter] implementation is efficient, with _O(1)_ time and space complexity.
+Failsafe-go's internal [RateLimiter] implementation is efficient, with _O(1)_ time and space complexity.
 
 {% include common-links.html %}
