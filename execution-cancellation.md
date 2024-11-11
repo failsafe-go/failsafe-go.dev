@@ -36,7 +36,7 @@ Outstanding [hedge executions][hedge] are also canceled once a successful result
 
 ## Propagating Cancellations
 
-For executions that may be canceled by a policy such as a [timeout] or [hedge policy][hedge], a child context is created and made available via [Context()][Execution.Context], which should be used to propagate these cancellations to downstream code:
+For executions that may be canceled by a policy such as a [timeout] or [hedge policy][hedge], a child context is created and made available via [Context()][ExecutionInfo.Context], which should be used to propagate these cancellations to downstream code:
 
 ```go
 failsafe.GetWithExecution(func(exec failsafe.Execution[*http.Response]) (*http.Response, error) {
