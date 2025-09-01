@@ -38,7 +38,7 @@ Details on how adaptive limiters work, along with their configuration options, a
 
 Executions are permitted until the number of concurrent executions hits the limit, after which executions will either fail with `ErrExceeded` or wait until permitted.
 
-### How it Behaves
+## How it Behaves
 
 When not overloaded, an adaptive limiter will increase its limit up to a multiple of the current inflight executions. This provides headroom for bursts without being too high to lower quickly if overload is detected. 
 
@@ -48,13 +48,13 @@ To better get a feel for how adaptive limiters behave and to see their overload 
 
 ## Limits
 
-You can set the min, max, and initial limits for an adaptive limiter:
+You can set the [min, max, and initial limits][WithLimits] for an adaptive limiter:
 
 ```go
 builder.WithLimits(1, 100, 20)
 ```
 
-You can also configure the max limit factor, which controls how high a limit is allowed to increase as a multiple of the current number of inflight executions:
+You can also configure the [max limit factor][WithMaxLimitFactor], which controls how high a limit is allowed to increase as a multiple of the current number of inflight executions:
 
 ```go
 builder.WithMaxLimitFactor(5)
@@ -62,21 +62,21 @@ builder.WithMaxLimitFactor(5)
 
 ## Execution Times
 
-The primary indicator of overload in an adaptive limiter is execution times, since when a system is overloaded, work will queue and execution times will increase. Adaptive limiters aggregate recent execution times in a window and regularly compare them to baseline execution times, to estimate if work is queueing inside a system. 
+The primary indicator of overload in an adaptive limiter is execution times, since when a system is overloaded, work will queue and execution times will increase. Adaptive limiters aggregate recent execution times in a window and regularly compare them to baseline execution times to estimate if work is queueing inside a system. 
 
-You can configure the min and max durations of a sampling window, along with the min number of samples that must be collected before adjusting the limit:
+You can configure the min and max durations of the [recent sampling window][WithRecentWindow], along with the min number of samples that must be collected before adjusting the limit:
 
 ```go
 builder.WithRecentWindow(time.Second, 30*time.Second, 50)
 ```
 
-When a window's conditions are met, a quantile of aggregated recent execution times is compared against the baseline. By default, the p90 quantile is used, but you can specify a different quantile:
+When a window's conditions are met, a quantile of aggregated recent execution times is compared against the baseline. By default, the p90 quantile is used, but you can specify a different [quantile][WithRecentQuantile]:
 
 ```go
 builder.WithRecentQuantile(.5)
 ```
 
-Recent sample quantiles are periodically added to a baseline window, which is a weighted moving average representing execution times over a longer term. You can configure the average age of values in this window:
+Recent sample quantiles are periodically added to a [baseline window][WithBaselineWindow], which is a weighted moving average representing execution times over a longer term. You can configure the average age of values in this window:
 
 ```go
 builder.WithBaselineWindow(10)
@@ -88,7 +88,7 @@ Larger baseline windows will cause the limiter to be slower to adjust to changes
 
 While changes in execution times are a good indicator of overload, they're not perfect. So as a second indicator of overload, adaptive limiters also track recent changes in throughput. In particular, limiters track the _correllation_ between inflight executions and throughput. If inflight executions are increasing but throughput is flat or decreasing, the system is likely overloaded, and the concurrency limit is decreased. 
 
-The number of recent throughput and inflight measurements to store can be configured:
+The number of [recent throughput][WithCorrelationWindow] and inflight measurements to store can be configured:
 
 ```go
 builder.WithCorrelationWindow(50)
@@ -108,7 +108,7 @@ For example: with a current limit of 10, an initial rejection factor of 2, and a
 - Up to 20 additional executions can queue before rejections gradually begin
 - After 30 executions are queued, all additional executions are rejected
 
-Configuring queue sizes as a multiple of the current limit allows the queue to scale for different workloads without requiring different configuration for each workload. To enable queueing with some initial and max rejection factors:
+Configuring queue sizes as a multiple of the current limit allows the queue to scale for different workloads without requiring different configuration for each workload. To [enable queueing][WithQueueing] with some initial and max rejection factors:
 
 ```go
 builder.WithQueueing(2, 3)

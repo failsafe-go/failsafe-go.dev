@@ -77,25 +77,32 @@
 <!-- Policy docs -->
 [RetryPolicy]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicy
 [RetryPolicyExceededError]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#ExceededError
-[RetryPolicyBuilder]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder
+[RetryPolicyBuilder]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder
 [retrypolicy-defaults]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#WithDefaults
-[WithMaxAttempts]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithMaxAttempts
-[WithMaxRetries]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithMaxRetries
-[WithMaxDuration]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithMaxDuration
-[WithBackoff]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithBackoff
-[WithRandomDelay]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithRandomDelay
-[WithJitterFactor]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithJitterFactor
-[WithJitter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.WithJitter
-[AbortOnErrors]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.AbortOnErrors
-[OnRetry]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnRetry
-[OnRetryScheduled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnRetryScheduled
-[OnRetriesExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnRetriesExceeded
-[OnAbort]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnAbort
+[WithMaxAttempts]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithMaxAttempts
+[WithMaxRetries]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithMaxRetries
+[WithMaxDuration]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithMaxDuration
+[WithBackoff]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithBackoff
+[WithRandomDelay]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithRandomDelay
+[WithJitterFactor]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithJitterFactor
+[WithJitter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.WithJitter
+[AbortOnErrors]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.AbortOnErrors
+[OnRetry]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetry
+[OnRetryScheduled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetryScheduled
+[OnRetriesExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetriesExceeded
+[OnAbort]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnAbort
 
 [AdaptiveLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#AdaptiveLimiter
 [Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Prioritizer
 [PriorityLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#PriorityLimiter
 [AdaptiveLimiterMetrics]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Metrics
+[WithLimits]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithLimits
+[WithMaxLimitFactor]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithMaxLimitFactor
+[WithRecentWindow]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithRecentWindow
+[WithRecentQuantile]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithRecentQuantile
+[WithBaselineWindow]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithBaselineWindow
+[WithCorrelationWindow]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithCorrelationWindow
+[WithQueueing]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithQueueing
 [OnLimitChanged]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitChanged
 [OnLimitExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitExceeded
 
@@ -113,8 +120,8 @@
 [Timeout]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/timeout#Timeout
 
 [HedgePolicy]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicy
-[WithMaxHedges]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicyBuilder.WithMaxHedges
-[OnHedge]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicyBuilder.OnHedge
+[WithMaxHedges]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#Builder.WithMaxHedges
+[OnHedge]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#Builder.OnHedge
 
 [Bulkhead]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/bulkhead#Bulkhead
 
