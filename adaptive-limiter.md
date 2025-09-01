@@ -36,7 +36,7 @@ Details on how adaptive limiters work, along with their configuration options, a
 - If overload is detected, the limit may be decreased
 - If overload is not detected, the limit may be increased
 
-Executions are permitted until the number of concurrent executions hits the limit, after which executions will either fail with `ErrExceeded` or wait until permitted.
+Executions are permitted until the number of concurrent executions hits the limit, after which executions will either fail with `ErrExceeded` or queue until permitted.
 
 ## How it Behaves
 

@@ -9,7 +9,7 @@ title: Policies
 1. TOC
 {:toc}
 
-Failsafe-go provides several resilience policies including [Retry], [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge], [Bulkhead][bulkheads], and [Cache]. While each policy handles failures in different ways, some of their common features are described below.
+Failsafe-go provides several resilience policies including [Retry], [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge], [Bulkhead][bulkheads], and [Cache]. While each policy handles failures in different ways, some of their common features are described below.
 
 ## Failure Handling
 
@@ -100,7 +100,7 @@ That said, it really depends on how the policies are being used, and different c
 
 ## Policy Reuse
 
-All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
+All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
 
 ## Supported Policies
 
