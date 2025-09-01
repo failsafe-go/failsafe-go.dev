@@ -44,6 +44,24 @@ The difference between these two approaches is that a `ServerInHandle` handles a
 
 For most load limiting use cases, prefer `ServerInHandle` since it [does not create][ServerInHandle] additional server side resources for requests that are rejected. For use cases where a policy needs to inspect the response, such as a `Fallback` or a `CircuitBreaker`, you can use a `UnaryServerInterceptor`.
 
+## Adaptive Limiters
+
+When using an [adaptive limiter][adaptive-limiters], executions can include priority or level information. Ideally, this should be propagated from gRPC clients to servers, and on to the server's handler. On the client, we can propagate priority or level information from a context through an outgoing request by including an interceptor:
+
+```go
+interceptor := failsafegrpc.NewUnaryClientInterceptorWithLevel()
+client, err := grpc.NewClient(target, grpc.WithUnaryInterceptor(interceptor))
+```
+
+And on the server, we can decode priority or level information from an incoming request, optionally generate a level if one does not exist but a priority does, and propagate it to the handling context:
+
+```go
+interceptor := failsafegrpc.NewUnaryServerInterceptorWithLevel(true)
+server := grpc.NewServer(target, grpc.UnaryInterceptor(interceptor))
+```
+
+For distributed systems, you typically want to generate a level, if one does not exist, at the edge of your system, and then propagate the same level for all sub-requests.
+
 ## Fallbacks
 
 When using a [Fallback][fallbacks] with a `UnaryClientInterceptor`, it's necessary to set your fallback value against the execution's `LastResult()` since a [UnaryClientInterceptor] has no way to return an alternative result:

@@ -17,7 +17,7 @@ Creating and using a [CachePolicy] for a [cache] is simple:
 
 ```go
 // Store connections under the "connection" key in the cache
-cachePolicy := cachePolicy.Builder(cache).
+cachePolicy := cachePolicy.NewBuilder(cache).
   WithKey("connection").
   Build()
   
@@ -30,7 +30,7 @@ connection, err := failsafe.Get(Connect, cachePolicy)
 A [CachePolicy] can use a key specified at the policy level, as shown above, to store cached execution results. It can also use a cache key provided at execution time, via a [Context], allowing different keys to be used for different executions:
 
 ```go
-ctx := context.WithValue(context.Background(), cachepolicy.CacheKey, "connection")
+ctx := cache.ContextWithCacheKey(context.Background(), "connection")
 connection, err := failsafe.NewExecutor(cachePolicy).
   WithContext(ctx).
   Get(Connect)

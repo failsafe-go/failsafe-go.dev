@@ -16,19 +16,19 @@ title: Fallback
 There are a few different options for creating a [Fallback]. You can provide an alternative result:
 
 ```go
-fallback := fallback.WithResult(defaultResult)
+fallback := fallback.NewWithResult(defaultResult)
 ```
 
 An alternative error:
 
 ```go
-fallback := fallback.WithError(ErrConnecting)
+fallback := fallback.NewWithError(ErrConnecting)
 ```
 
 Or compute a different result or error:
 
 ```go
-fallback := fallback.WithFunc[any](func(e failsafe.Execution[any]) (any, error) {
+fallback := fallback.NewWithFunc[any](func(e failsafe.Execution[any]) (any, error) {
   return ConnectToBackup(backupConfig)
 })
 ```

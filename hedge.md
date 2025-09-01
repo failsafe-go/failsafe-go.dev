@@ -17,7 +17,7 @@ Creating and using a [HedgePolicy] is straightforward, for example:
 
 ```go
 // Hedge up to 2 times with a 1 second delay between attempts
-hedgePolicy := hedgepolicy.BuilderWithDelay[any](time.Second).
+hedgePolicy := hedgepolicy.NewBuilderWithDelay[any](time.Second).
   WithMaxHedges(2).
   Build()
   
@@ -40,7 +40,7 @@ The hedging pattern was first described in [The Tail at Scale][tail-at-scale], w
 With this in mind, you can configure a dynamic delay for a [HedgePolicy], based on a function result:
 
 ```go
-hedgePolicy := hedgepolicy.BuilderWithDelayFunc[any](
+hedgePolicy := hedgepolicy.NewBuilderWithDelayFunc[any](
   func(exec failsafe.ExecutionAttempt[any]) time.Duration {
     return p95Latency()  
   }).

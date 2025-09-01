@@ -17,7 +17,7 @@ Creating and using a [CircuitBreaker] is straightforward, for example:
 
 ```go
 // Opens after 5 failures, half-opens after 1 minute, closes after 2 successes
-breaker := circuitbreaker.Builder[any]().
+breaker := circuitbreaker.NewBuilder[any]().
   HandleErrors(ErrSending).
   WithFailureThreshold(5).
   WithDelay(time.Minute).
@@ -120,14 +120,6 @@ It can also notify you when the breaker [opens][OnOpen], [closes][OnClose], or [
 
 [CircuitBreaker] provides [metrics][CircuitBreakerMetrics] for the current state that the breaker is in, including execution count, success count, failure count, success rate, and failure rate. 
 
-## Best Practices
-
-A [CircuitBreaker] can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
-
-### Composing Circuit Breakers
-
-When [composing policies][policy-composition], it's recommended to not have a circuit breaker handle errors from other policies, such as `bulkhead.ErrFull` or `ratelimiter.ErrExceeded`. If an execution is rejected by any policy, there's no need to have a circuit breaker open in addition. This makes it easier to reason about why a circuit breaker has opened, and avoids limiting load longer than is needed.
-
 ## Standalone Usage
 
 A [CircuitBreaker] can also be manually operated in a standalone way:
@@ -146,11 +138,21 @@ if breaker.TryAcquirePermit() {
 }
 ```
 
-## Time Based Resolution
+## Best Practices
+
+A [CircuitBreaker] can and *should* be shared across code that accesses common dependencies. This ensures that if the circuit breaker is opened, all executions that share the same dependency and use the same circuit breaker will be blocked until the circuit is closed again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same circuit breaker.
+
+### Composing Circuit Breakers
+
+When [composing policies][policy-composition], it's recommended to not have a circuit breaker handle errors from other policies, such as `bulkhead.ErrFull` or `ratelimiter.ErrExceeded`. If an execution is rejected by any policy, there's no need to have a circuit breaker open in addition. This makes it easier to reason about why a circuit breaker has opened, and avoids limiting load longer than is needed.
+
+## Additional Details
+
+### Time Based Resolution
 
 *Time based* circuit breakers use a sliding window to aggregate execution results. As time progresses and newer results are recorded, older results are discarded. In order to maintain space and time efficiency, results are grouped into 10 time slices, each representing 1/10th of the configured failure threshold period. When a time slice is no longer within the thresholding period, its results are discarded. This allows the circuit breaker to operate based on recent results without needing to track the time of each individual execution.
 
-## Performance
+### Performance
 
 Failsafe-go's internal [CircuitBreaker] implementation is space and time efficient, utilizing a single circular data structure to record execution results. Recording an execution and evaluating a threshold has an _O(1)_ time complexity, regardless of the thresholding capacity.
 

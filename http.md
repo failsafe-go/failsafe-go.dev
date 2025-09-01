@@ -9,7 +9,11 @@ title: HTTP Support
 1. TOC
 {:toc}
 
-Failsafe-go makes it easy to use any policies with HTTP. You can create a failsafe `RoundTripper` for a [policy composition][policy-composition] which can be used with an `http.Client`:
+Failsafe-go makes it easy to use any policies with HTTP. 
+
+## Clients
+
+You can create a failsafe `RoundTripper` for a [policy composition][policy-composition] which can be used with an `http.Client`:
 
 ```go
 client := &http.Client{
@@ -31,12 +35,20 @@ response, err := failsafeRequest.Do()
 
 The difference between these two approaches is that a failsafe `Request` wraps a client whereas a failsafe `RoundTripper` is used internally by a client. This means any errors created by a client before using the `RoundTripper` would not be handled, but could be handled by a failsafe `Request`.
 
+## Servers
+
+On the server side, you can use load limiting or time limiting policies to create a failsafe `http.Handler`:
+
+```go
+handler = failsafehttp.NewHandler(innerHandler, bulkhead, timeout)
+```
+
 ## Retrying HTTP Failures
 
 The `failsafehttp` package provides a `RetryPolicyBuilder` that can build retry policies with built-in detection of retryable HTTP errors and responses:
 
 ```go
-retryPolicy := failsafehttp.RetryPolicyBuilder().
+retryPolicy := failsafehttp.NewRetryPolicyBuilder().
   WithBackoff(time.Second, 30*time.Second).
   WithMaxRetries(3).
   Build()
@@ -49,13 +61,31 @@ retryPolicy := failsafehttp.RetryPolicyBuilder().
 Other policies that support delays, such as [circuit breakers][circuit-breakers] can also be configured with a `failsafehttp.DelayFunc` that delays according to `Retry-After` headers:
 
 ```go
-circuitBreaker := circuitbreaker.Builder[*http.Response]().
+circuitBreaker := circuitbreaker.NewBuilder[*http.Response]().
   HandleIf(func(response *http.Response, err error) bool {
     return response != nil && response.StatusCode == 429
   }).
   WithDelayFunc(failsafehttp.DelayFunc).
   Build()
 ```
+
+## Adaptive Limiters
+
+When using an [adaptive limiter][adaptive-limiters], executions can include priority or level information. Ideally, this should be propagated from HTTP clients to servers, and on to the server's handler. On the client, we can propagate priority or level information from a context through an outgoing request by using a `RoundTripper`:
+
+```go
+client := &http.Client{
+  Transport: failsafehttp.NewRoundTripperWithLevel(nil),
+}
+```
+
+And on the server, we can decode priority or level information from an incoming request, optionally generate a level if one does not exist but a priority does, and propagate it to the `http.Handler`:
+
+```go
+handler := failsafehttp.NewHandlerWithLevel(innerHandler, true)
+```
+
+For distributed systems, you typically want to generate a level, if one does not exist, at the edge of your system, and then propagate the same level for all sub-requests.
 
 ## Context Cancellation
 

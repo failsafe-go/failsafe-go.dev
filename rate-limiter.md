@@ -21,7 +21,7 @@ Creating and using a smooth [RateLimiter] is simple:
 
 ```go
 // Permits 100 executions per second
-limiter := ratelimiter.Smooth(100, time.Second)
+limiter := ratelimiter.NewSmooth(100, time.Second)
 err := failsafe.Run(SendMessage, limiter)
 ```
 
@@ -29,7 +29,7 @@ The rate at which individual executions are permitted is based on the given `max
 
 ```go
 // Permits an execution every 10 milliseconds
-limiter := ratelimiter.SmoothWithMaxRate(10*time.Millisecond)
+limiter := ratelimiter.NewSmoothWithMaxRate(10*time.Millisecond)
 ```
 
 Smooth rate limited executions are permitted with no delay up to the max rate, and are always performed at or below the max rate, avoiding potential bursts.
@@ -40,7 +40,7 @@ Creating and using a bursty [RateLimiter] is also simple:
 
 ```go
 // Permits 10 executions per second
-limiter := ratelimiter.Bursty(10, time.Second)
+limiter := ratelimiter.NewBursty(10, time.Second)
 err := failsafe.Run(SendMessage, limiter)
 ```
 
@@ -67,10 +67,6 @@ builder.OnRateLimitExceeded(func(e failsafe.ExecutionEvent[any]) {
 })
 ```
 
-## Best Practices
-
-A [RateLimiter] can and *should* be shared across code that accesses common dependencies. This ensures that if the rate limit is exceeded, all executions that share the same dependency and use the same rate limiter will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same rate limiter.
-
 ## Standalone Usage
 
 A [RateLimiter] can also be manually operated in a standalone way:
@@ -87,6 +83,10 @@ You can also integrate a standalone rate limiter with an external scheduler to w
 permitWaitTime := rateLimiter.ReservePermit()
 scheduler.Schedule(SomeFunc, permitWaitTime)
 ```
+
+## Best Practices
+
+A [RateLimiter] can and *should* be shared across code that accesses common dependencies. This ensures that if the rate limit is exceeded, all executions that share the same dependency and use the same rate limiter will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, typically they should all go through the same rate limiter.
 
 ## Performance
 

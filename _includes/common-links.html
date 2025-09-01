@@ -8,6 +8,7 @@
 [retry]: {{ "/retry" | relative_url }}
 [retry-listeners]: {{ "/retry#event-listeners" | relative_url }}
 [aborts]: {{ "/retry#aborts" | relative_url }}
+[adaptive-limiters]: {{ "/adaptive-limiter" | relative_url }}
 [timeouts]: {{ "/timeout" | relative_url }}
 [hedge]: {{ "/hedge" | relative_url }}
 [hedge-listeners]: {{ "/hedge#event-listeners" | relative_url }}
@@ -91,12 +92,19 @@
 [OnRetriesExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnRetriesExceeded
 [OnAbort]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#RetryPolicyBuilder.OnAbort
 
+[AdaptiveLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#AdaptiveLimiter
+[Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Prioritizer
+[PriorityLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#PriorityLimiter
+[AdaptiveLimiterMetrics]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Metrics
+[OnLimitChanged]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitChanged
+[OnLimitExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitExceeded
+
 [CircuitBreaker]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreaker
-[CircuitBreakerBuilder]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreakerBuilder
-[OnStateChanged]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreakerBuilder.OnStateChanged
-[OnOpen]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreakerBuilder.OnOpen
-[OnClose]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreakerBuilder.OnClose
-[OnHalfOpen]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreakerBuilder.OnHalfOpen
+[CircuitBreakerBuilder]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder
+[OnStateChanged]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder.OnStateChanged
+[OnOpen]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder.OnOpen
+[OnClose]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder.OnClose
+[OnHalfOpen]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder.OnHalfOpen
 [RemainingDelay]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreaker.RemainingDelay
 [CircuitBreakerMetrics]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Metrics
 
@@ -130,3 +138,4 @@
 [tail-at-scale]: https://www.barroso.org/publications/TheTailAtScale.pdf
 [littles-law]: https://en.wikipedia.org/wiki/Little%27s_law
 [grpc-site]: https://grpc.io/
+[Tripwire]: https://github.com/jhalterman/tripwire

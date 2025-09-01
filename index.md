@@ -8,7 +8,7 @@ title: Fault tolerance and resilience patterns for Go
 Failsafe-go is a library for building resilient, fault tolerant Go applications. It works by wrapping functions with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. Policies include:
 
 - Failure handling: [Retry][retry], [Fallback][fallbacks]
-- Load limiting: [Circuit Breaker][circuit-breakers], [Bulkhead][bulkheads], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Cache][caches]
+- Load limiting: [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Bulkhead][bulkheads], [Rate Limiter][rate-limiters], [Cache][caches]
 - Time limiting: [Timeout][timeouts], [Hedge][hedge]
 
 ## Getting Started
@@ -16,7 +16,7 @@ Failsafe-go is a library for building resilient, fault tolerant Go applications.
 To see how Failsafe-go works, we'll create a [retry policy][retry] that defines which failures to handle and when retries should be performed:
 
 ```go
-retryPolicy := retrypolicy.Builder[any]().
+retryPolicy := retrypolicy.NewBuilder[any]().
   HandleErrors(ErrConnecting).
   WithDelay(time.Second).
   WithMaxRetries(3).
@@ -52,9 +52,9 @@ The returned [ExecutionResult] can be used to wait for the execution to be done 
 Multiple [policies] can be composed to add additional layers of resilience or to handle different failures in different ways:
 
 ```go
-fallback := fallback.WithResult(backupConnection)
-circuitBreaker := circuitbreaker.WithDefaults[any]()
-timeout := timeout.With[any](10*time.Second)
+fallback := fallback.NewWithResult(backupConnection)
+circuitBreaker := circuitbreaker.NewWithDefaults[any]()
+timeout := timeout.New[any](10*time.Second)
 
 // Get with fallback, retries, circuit breaker, and timeout
 failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, timeout)

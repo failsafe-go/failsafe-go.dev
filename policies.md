@@ -108,6 +108,7 @@ Read about the built-in policies that Failsafe supports:
 
 - [Retry][retry]
 - [Circuit Breaker][circuit-breakers]
+- [Adaptive Limiter][adaptive-limiters]
 - [Rate Limiter][rate-limiters]
 - [Timeout][timeouts]
 - [Fallback][fallbacks]

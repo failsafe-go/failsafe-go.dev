@@ -17,7 +17,7 @@ Creating and using a [Timeout] is simple:
 
 ```go
 // Timeout after 10 seconds
-timeout := timeout.With[any](10*time.Second)
+timeout := timeout.New[any](10*time.Second)
 err := failsafe.Run(Connect, timeout)
 ```
 

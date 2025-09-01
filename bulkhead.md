@@ -17,7 +17,7 @@ Creating and using a [Bulkhead] is simple:
 
 ```go
 // Permit 10 concurrent executions
-bulkhead := bulkhead.With[any](10)
+bulkhead := bulkhead.New[any](10)
 err := failsafe.Run(SendRequest, bulkhead)
 ```
 
@@ -31,7 +31,7 @@ By default, when the max concurrent executions are exceeded, further executions 
 
 ```go
 // Wait up to 1 second for execution permission
-bulkhead := bulkhead.Builder[any](10).
+bulkhead := bulkhead.NewBuilder[any](10).
   WithMaxWaitTime(time.Second).
   Build()
 ```
@@ -48,10 +48,6 @@ builder.OnBulkheadFull(func(e failsafe.ExecutionEvent[any]) {
 })
 ```
 
-## Best Practices
-
-A [Bulkhead] can and *should* be shared across code that accesses finite resources. This ensures that if the bulkhead is full, all executions that access the same resource and use the same bulkhead will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, you may route them through the same bulkhead.
-
 ## Standalone Usage
 
 A [Bulkhead] can also be manually operated in a standalone way:
@@ -62,5 +58,9 @@ if bulkhead.TryAcquirePermit() {
   bulkhead.releasePermit()
 }
 ```
+
+## Best Practices
+
+A [Bulkhead] can and *should* be shared across code that accesses finite resources. This ensures that if the bulkhead is full, all executions that access the same resource and use the same bulkhead will either wait or fail until executions are permitted again. For example, if multiple connections or requests are made to the same external server, you may route them through the same bulkhead.
 
 {% include common-links.html %}

@@ -17,7 +17,7 @@ Creating and using a [RetryPolicy] is straightforward, for example:
 
 ```go
 // Retry on ErrConnecting up to 3 times with a 1 second delay between attempts
-retryPolicy := retrypolicy.Builder[Connection]().
+retryPolicy := retrypolicy.NewBuilder[Connection]().
   HandleErrors(ErrConnecting).
   WithDelay(time.Second).
   WithMaxRetries(3).
