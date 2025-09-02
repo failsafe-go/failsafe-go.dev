@@ -116,7 +116,7 @@ builder.WithQueueing(2, 3)
 
 ## Rejection Prioritization
 
-When a limiter's queue begins to fill, we can optionally prioritize which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. To do this, we create a [Prioritizer] along with a [PriorityLimiter]:
+When a limiter's queue begins to fill, we can optionally prioritize which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. Priorities are based on the idea of [criticality], as described in the [Google SRE book][sre-book]. To do this, we create a [Prioritizer] along with a [PriorityLimiter]:
 
 ```go
 prioritizer := adaptivelimiter.NewPrioritizer()
@@ -213,6 +213,8 @@ The way a limiter distinguishes between these is _experimentally_: by lowering t
 
 Thank you to Jakob Holdgaard Thomsen, Vladimir Gavrilenko, and Jesper Lindstrøm Nielsen for their valuable insights and feedback while developing Failsafe-go's adaptive limiter.
 
+[sre-book]: https://sre.google/sre-book/
+[criticality]: https://sre.google/sre-book/handling-overload/#criticality-00sDCK
 [cinnamon]: https://www.uber.com/blog/cinnamon-using-century-old-tech-to-build-a-mean-load-shedder/
 [concurrency-limits]: https://github.com/Netflix/concurrency-limits
 [vegas]: https://en.wikipedia.org/wiki/TCP_Vegas
