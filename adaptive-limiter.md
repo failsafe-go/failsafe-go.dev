@@ -116,7 +116,7 @@ builder.WithQueueing(2, 3)
 
 ## Rejection Prioritization
 
-When a limiter's queue begins to fill, we can optionally prioritize which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. Priorities are based on the idea of [criticality], as described in the [Google SRE book][sre-book]. To do this, we create a [Prioritizer] along with a [PriorityLimiter]:
+When a limiter's queue begins to fill, we can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. Priorities are based on the idea of [criticality], as described in the [Google SRE book][sre-book]. To do this, first we create a [Prioritizer] along with a [PriorityLimiter]:
 
 ```go
 prioritizer := adaptivelimiter.NewPrioritizer()
@@ -129,7 +129,7 @@ limiter := adaptivelimiter.NewBuilder[any]().
 
 A [Prioritizer] is responsible for storing the priorities of recent executions and calibrating a rejection threshold based on recent priorities and limiter queue sizes. A [Prioritizer] should be calibrated regularly to update the rejection threshold, and a shared prioritizer can be used to determine a rejection threshold across multiple limiters. 
 
-To perform an execution with a priority, provide a context containing the priority to Failsafe:
+Then, to perform an execution with a priority, provide a context containing the priority to Failsafe:
 
 ```go
 ctx := priority.High.AddTo(context.Background())
