@@ -124,9 +124,8 @@ By default, when an execution fails and a [RetryPolicy] is exceeded, an [Exceede
 
 ```go
 response, err := failsafe.Get(SendMessage, retryPolicy)
-var exceededErr retrypolicy.ExceededError
-if errors.As(err, &exceededErr) {
-  logger.Error("Failed to send message", "response", err.LastResult, "err", err.LastError)
+if ee := retrypolicy.AsExceededError(err); ee != nil {
+  logger.Error("Failed to send message", "response", ee.LastResult, "err", ee.LastError)
 }
 ```
 
