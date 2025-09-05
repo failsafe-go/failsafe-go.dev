@@ -9,7 +9,7 @@ title: Timeout
 1. TOC
 {:toc}
 
-[Timeouts][Timeout] can be used to cancel executions that take too long to complete or limit load on systems.
+[Timeouts][Timeout] can be used to cancel executions that take too long to complete or to limit load on systems.
 
 ## Usage
 
