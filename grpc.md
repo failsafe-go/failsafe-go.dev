@@ -44,6 +44,17 @@ The difference between these two approaches is that a `ServerInHandle` handles a
 
 For most load limiting use cases, prefer `ServerInHandle` since it [does not create][ServerInHandle] additional server side resources for requests that are rejected. For use cases where a policy needs to inspect the response, such as a `Fallback` or a `CircuitBreaker`, you can use a `UnaryServerInterceptor`.
 
+## Retrying gRPC Failures
+
+The `failsafegrpc` package provides a `NewRetryPolicyBuilder` that can build retry policies with built-in detection of retryable gRPC errors, including `Unavailable`, `DeadlineExceeded`, and `ResourceExhausted`:
+
+```go
+retryPolicy := failsafegrpc.NewRetryPolicyBuilder().
+  WithBackoff(time.Second, 30*time.Second).
+  WithMaxRetries(3).
+  Build()
+```
+
 ## Adaptive Limiters
 
 When using an [adaptive limiter][adaptive-limiters], executions can include priority or level information. Ideally, this should be propagated from gRPC clients to servers, and on to the server's handler. On the client, we can propagate priority or level information from a context through an outgoing request by including an interceptor:
