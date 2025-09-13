@@ -9,6 +9,7 @@
 [retry-listeners]: {{ "/retry#event-listeners" | relative_url }}
 [aborts]: {{ "/retry#aborts" | relative_url }}
 [adaptive-limiters]: {{ "/adaptive-limiter" | relative_url }}
+[adaptive-throttlers]: {{ "/adaptive-throttler" | relative_url }}
 [timeouts]: {{ "/timeout" | relative_url }}
 [hedge]: {{ "/hedge" | relative_url }}
 [hedge-listeners]: {{ "/hedge#event-listeners" | relative_url }}
@@ -27,8 +28,11 @@
 [policy-listeners]: {{ "/event-listeners#policy-listeners" | relative_url }}
 [execution-info]: {{ "/execution-info" | relative_url }}
 [execution-cancellation]: {{ "/execution-cancellation" | relative_url }}
+[execution-prioritization]: {{ "/execution-prioritization" | relative_url }}
 [http]: {{ "/http" | relative_url }}
+[http-priorities]: {{ "http/#propagating-priorities" | relative_url }}
 [grpc]: {{ "/grpc" | relative_url }}
+[grpc-priorities]: {{ "grpc/#propagating-priorities" | relative_url }}
 [cooperative-cancellation]: {{ "/execution-cancellation#cooperative-cancellation" | relative_url }}
 [type-safety]: {{ "/type-safety" | relative_url }}
 [extending]: {{ "/extending" | relative_url }}
@@ -92,8 +96,9 @@
 [OnRetriesExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetriesExceeded
 [OnAbort]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnAbort
 
+[Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#Prioritizer
+
 [AdaptiveLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#AdaptiveLimiter
-[Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Prioritizer
 [PriorityLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#PriorityLimiter
 [AdaptiveLimiterMetrics]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Metrics
 [WithLimits]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithLimits
@@ -105,6 +110,10 @@
 [WithQueueing]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.WithQueueing
 [OnLimitChanged]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitChanged
 [OnLimitExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#Builder.OnLimitExceeded
+
+[AdaptiveThrottler]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivethrottler#AdaptiveThrottler
+[PriorityThrottler]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivethrottler#PriorityThrottler
+[AdaptiveThrottlerMetrics]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivethrottler#Metrics
 
 [CircuitBreaker]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#CircuitBreaker
 [CircuitBreakerBuilder]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/circuitbreaker#Builder
@@ -146,3 +155,5 @@
 [littles-law]: https://en.wikipedia.org/wiki/Little%27s_law
 [grpc-site]: https://grpc.io/
 [Tripwire]: https://github.com/jhalterman/tripwire
+[sre-book]: https://sre.google/sre-book/
+[criticality]: https://sre.google/sre-book/handling-overload/#criticality-00sDCK

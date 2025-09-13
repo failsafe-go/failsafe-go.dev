@@ -9,7 +9,7 @@ title: Policies
 1. TOC
 {:toc}
 
-Failsafe-go provides several resilience policies including [Retry], [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge], [Bulkhead][bulkheads], and [Cache]. While each policy handles failures in different ways, some of their common features are described below.
+Failsafe-go provides several resilience policies including [Retry], [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttlers][adaptive-throttlers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge], [Bulkhead][bulkheads], and [Cache]. While each policy handles failures in different ways, some of their common features are described below.
 
 ## Failure Handling
 
@@ -90,7 +90,7 @@ policyBuilder.HandleErrors(
 
 ### Composition Recommendations
 
-A common policy composition ordering might place a `Fallback` as the outer-most policy, followed by a `CachePolicy`, a `RetryPolicy` or `HedgePolicy`, a `CircuitBreaker` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
+A common policy composition ordering might place a `Fallback` as the outer-most policy, followed by a `CachePolicy`, a `RetryPolicy` or `HedgePolicy`, a `CircuitBreaker`, `AdaptiveLimiter`, `AdaptiveThrottler` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
 
 ```go
 failsafe.NewExecutor[any](fallback, cachePolicy, retryPolicy, circuitBreaker, bulkhead, timeout)
@@ -109,6 +109,7 @@ Read about the built-in policies that Failsafe supports:
 - [Retry][retry]
 - [Circuit Breaker][circuit-breakers]
 - [Adaptive Limiter][adaptive-limiters]
+- [Adaptive Throttler][adaptive-throttler]
 - [Rate Limiter][rate-limiters]
 - [Timeout][timeouts]
 - [Fallback][fallbacks]

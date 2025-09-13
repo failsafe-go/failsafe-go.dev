@@ -114,36 +114,9 @@ Configuring queue sizes as a multiple of the current limit allows the queue to s
 builder.WithQueueing(2, 3)
 ```
 
-## Rejection Prioritization
+## Execution Prioritization
 
-When a limiter's queue begins to fill, we can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. Priorities are based on the idea of [criticality], as described in the [Google SRE book][sre-book]. To do this, first we create a [Prioritizer] along with a [PriorityLimiter]:
-
-```go
-prioritizer := adaptivelimiter.NewPrioritizer()
-prioritizer.ScheduleCalibrations(ctx, time.Second)
-
-limiter := adaptivelimiter.NewBuilder[any]().
-  WithQueueing(2, 3).
-  BuildPrioritized(prioritizer)
-```
-
-A [Prioritizer] is responsible for storing the priorities of recent executions and calibrating a rejection threshold based on recent priorities and limiter queue sizes. A [Prioritizer] should be calibrated regularly to update the rejection threshold, and a shared prioritizer can be used to determine a rejection threshold across multiple limiters. 
-
-Then, to perform an execution with a priority, provide a context containing the priority to Failsafe:
-
-```go
-ctx := priority.High.AddTo(context.Background())
-executor := failsafe.NewExecutor[any](limiter).WithContext(ctx)
-
-// Get with adaptive limiting, using high priority
-response, err := executor.Get(FetchData)
-```
-
-When a [PriorityLimiter] is full and its queue starts to fill up, rejections are based on the Prioritizer's current rejection threshold.
-
-### Priorities vs Levels
-
-Internally, a [Prioritizer] and [PriorityLimiter] will convert priorities to more granular levels, ranging from 0-499. By setting rejection thresholds based on levels, rejection rates are more precise than if they were just based on 5 priorities.
+Adaptive limiters can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. See the [execution prioritization][execution-prioritization] docs for more info.
 
 ## Event Listeners
 
@@ -213,8 +186,6 @@ The way a limiter distinguishes between these is _experimentally_: by lowering t
 
 Thank you to Jakob Holdgaard Thomsen, Vladimir Gavrilenko, and Jesper Lindstrøm Nielsen for their valuable insights and feedback while developing Failsafe-go's adaptive limiter.
 
-[sre-book]: https://sre.google/sre-book/
-[criticality]: https://sre.google/sre-book/handling-overload/#criticality-00sDCK
 [cinnamon]: https://www.uber.com/blog/cinnamon-using-century-old-tech-to-build-a-mean-load-shedder/
 [concurrency-limits]: https://github.com/Netflix/concurrency-limits
 [vegas]: https://en.wikipedia.org/wiki/TCP_Vegas

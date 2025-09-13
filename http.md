@@ -69,9 +69,9 @@ circuitBreaker := circuitbreaker.NewBuilder[*http.Response]().
   Build()
 ```
 
-## Adaptive Limiters
+## Propagating Priorities
 
-When using an [adaptive limiter][adaptive-limiters], executions can include priority or level information. Ideally, this should be propagated from HTTP clients to servers, and on to the server's handler. On the client, we can propagate priority or level information from a context through an outgoing request by using a `RoundTripper`:
+When using policies that support [execution prioritization][execution-prioritization], ideally priorities and levels should be propagated from HTTP clients to servers, and on to the server's handler. On the client, we can propagate priority or level information from a context through an outgoing request by using a `RoundTripper`:
 
 ```go
 client := &http.Client{
