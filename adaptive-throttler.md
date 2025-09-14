@@ -51,7 +51,7 @@ Adaptive throttlers can optionally decide which executions to reject based on th
 
 ## Standalone Usage
 
-A [AdaptiveThrottler] can also be manually operated in a standalone way:
+An [AdaptiveThrottler] can also be manually operated in a standalone way:
 
 ```go
 if throttler.TryAcquirePermit() {
