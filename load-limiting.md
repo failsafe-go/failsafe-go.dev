@@ -9,7 +9,7 @@ title: Load Limiting
 1. TOC
 {:toc}
 
-Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk and network IO, thread pools, and so on. Failsafe-go offers several policies that can prevent and sometimes detect system overload, including [Adaptive Limiters][adaptive-limiters], [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], [Timeouts][timeouts], and [Caches][caches]. We'll discuss below how these policies differ, and when you might choose one over another.
+Systems become overloaded when usage exceeds the capacity of resources such as CPU, memory, disk and network IO, thread pools, and so on. Failsafe-go offers several policies that can prevent and sometimes detect system overload, including [Adaptive Limiters][adaptive-limiters], [Adaptive Throttlers][adaptive-throttlers], [Circuit Breakers][circuit-breakers], [Bulkheads][bulkheads], [Rate Limiters][rate-limiters], [Timeouts][timeouts], and [Caches][caches]. We'll discuss below how these policies differ, and when you might choose one over another.
 
 ## Types of Load Limiting
 
@@ -23,13 +23,17 @@ There's two general approaches to load limiting: *proactive*, where we estimate 
 
 *Reactive* load limiters take a different approach. Rather than limiting based on a static configuration that might not match a system's capacity, *reactive* limiters wait for a signal that a system is actually becoming overloaded before they start to limit. The benefit is that they can be used with any sized system, without requiring carefully chosen configuration.
 
-[Adaptive limiters][adaptive-limiters] are *reactive* since they detect indications of overload through changes in latency and throughput. Time based [Circuit Breakers][circuit-breakers] are also *reactive* since they only limit executions when the recent failure rate exceeds a threshold, ex: 10% in the last minute.
+[Adaptive limiters][adaptive-limiters] are *reactive* since they detect indications of overload through changes in latency and throughput. [Adaptive throttlers][adaptive-throttlers] and time based [Circuit Breakers][circuit-breakers] are also *reactive* since they only limit executions when the recent failure rate exceeds a threshold, ex: 10% in the last minute.
 
 ## Adaptive Limiters vs Circuit Breakers
 
 The effectiveness of time based [circuit breakers][circuit-breakers] depends on the failures that are being used to drive them. Typically timeouts are used to drive circuit breakers, indicating that a system is overloaded. But timeouts are often a lagging indicator of overload, representing very high latency within a system. In extreme cases, a system may crash before a timeout driven circuit breaker opens.
 
 This is where adaptive limiters excel. [Adaptive limiters][adaptive-limiters] are able to detect unusual latency before large numbers of timeouts even occur. This, along with them maintaining a reasonable concurrency limit, can protect a system from overload before it even happens.
+
+## Adaptive Throttlers vs Circuit Breakers
+
+Adaptive throttlers and time based circuit breakers are very similar in that they're both driven by the recent rate of failures. The difference is in what they do when the failure rate threshold is exceeded: circuit breakers reject all executions for some duration, whereas adaptive throttlers gradually increase executions, based on how much the failure rate threshold is exceeded. 
 
 ## Rate Limiters vs Bulkheads
 
