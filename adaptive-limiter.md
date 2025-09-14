@@ -130,15 +130,6 @@ builder.OnLimitChanged(func(e adaptivelimiter.LimitChangedEvent) {
 })
 ```
 
-A [Prioritizer] can also notify you when its rejection threshold changes:
-
-```go
-prioritizer := NewPrioritizerBuilder().
-  OnThresholdChanged(func(e adaptivelimiter.ThresholdChangedEvent) {
-    logger.Info("Threshold changed", "oldThresh", e.OldThreshold, "newThresh", e.NewThreshold)
-  })
-```
-
 ## Logging and Metrics
 
 Debug logging of [AdaptiveLimiter] limit changes and [Prioritizer] threshold changes can be enabled by providing an `slog.Logger` when building these:
