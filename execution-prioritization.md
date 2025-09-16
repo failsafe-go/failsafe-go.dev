@@ -9,11 +9,11 @@ title: Execution Prioritization
 1. TOC
 {:toc}
 
-Some policies, including [adaptive limiters][adaptive-limiters] and [adaptive throttlers][adaptive-throttlers] support execution prioritization, where an overloaded policy will reject executions based on their priority. Prioritization draws from the idea of [criticality], as described in the [Google SRE book][sre-book].
+Some policies, including [adaptive limiters][adaptive-limiters] and [adaptive throttlers][adaptive-throttlers] support execution prioritization, where an overloaded policy will reject executions based on their priority. Prioritization draws from the idea of [criticality], as described in the [Google SRE book][sre-book]. Adaptive limiters also support prioritization based on individual usage.
 
 ## Priorities
 
-Failsafe-go supports 5 priority classes:
+Failsafe-go supports five priority classes:
 
 - Very High
 - High
@@ -56,6 +56,27 @@ response, err := executor.Get(FetchData)
 
 When a policy is exceeded, executions are rejected based on the associated Prioritizer's rejection threshold.
 
+## Usage Tracking
+
+Adaptive limiters can track usage for individual users via a [UsageTracker], which allows users with higher usage to be throttled before those with lower usage when a limiter indicates overload. A [UsageTracker] can be configured via a [Prioritizer]:
+
+```go
+prioritizer := adaptivelimiter.NewPrioritizerBuilder().
+  WithUsageTracker(priority.NewUsageTracker()).
+  Build()
+```
+
+To perform an execution with usage tracking, provide a context containing the priority and user to Failsafe:
+
+```go
+ctx := priority.High.AddTo(context.Background())
+ctx = priority.ContextWithUser(ctx, "user1")
+executor := failsafe.NewExecutor[any](limiter).WithContext(ctx)
+
+// Get with adaptive limiting and usage tracking
+response, err := executor.Get(FetchData)
+```
+
 ## Priorities vs Levels
 
 In order to enable more granular prioritization of executions, priorities are internally converted to more granular levels, with 100 levels per priority class. In practice, Prioritizers use these levels to determine which executions to reject, allow more precise rejection rates.
@@ -65,10 +86,9 @@ In order to enable more granular prioritization of executions, priorities are in
 A [Prioritizer] can notify you when its rejection threshold changes:
 
 ```go
-prioritizer := adaptivelimiter.NewPrioritizerBuilder().
-  OnThresholdChanged(func(e adaptivelimiter.ThresholdChangedEvent) {
-    logger.Info("Threshold changed", "oldThresh", e.OldThreshold, "newThresh", e.NewThreshold)
-  })
+prioritizerBuilder.OnThresholdChanged(func(e adaptivelimiter.ThresholdChangedEvent) {
+  logger.Info("Threshold changed", "oldThresh", e.OldThreshold, "newThresh", e.NewThreshold)
+})
 ```
 
 ## HTTP and gRPC Support

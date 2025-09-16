@@ -116,7 +116,7 @@ builder.WithQueueing(2, 3)
 
 ## Execution Prioritization
 
-Adaptive limiters can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. See the [execution prioritization][execution-prioritization] docs for more info.
+Adaptive limiters can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. They can also prioritize executions based on usage from individual users. See the [execution prioritization][execution-prioritization] docs for more info.
 
 ## Event Listeners
 

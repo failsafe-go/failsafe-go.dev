@@ -45,6 +45,10 @@ builder.
 
 Adaptive throttlers can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. See the [execution prioritization][execution-prioritization] docs for more info.
 
+## Event Listeners
+
+Adaptive throttlers support the standard [policy listeners][policy-listeners].
+
 ## Metrics
 
 [AdaptiveThrottler] provides [metrics][AdaptiveThrottlerMetrics] that include the current rejection rate. 

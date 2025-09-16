@@ -49,7 +49,7 @@ Errors from policies themselves, such as `circuitbreaker.ErrOpen`, `retrypolicy.
 
 ## Policy Listeners
 
-Policies that can be configured to handle specific results or errors, such as [RetryPolicy][retry], [CircuitBreaker][circuit-breakers], and [Fallback][fallbacks], provide event listeners that indicate when an execution attempt succeeds or fails according to that policy's [failure handling configuration][failure-handling]:
+Policies that can be configured to handle specific results or errors, such as [RetryPolicy][retry], [CircuitBreaker][circuit-breakers], [AdaptiveThrottler][adaptive-throttlers], and [Fallback][fallbacks], provide event listeners that indicate when an execution attempt succeeds or fails according to that policy's [failure handling configuration][failure-handling]:
 
 ```go
 policyBuilder.
