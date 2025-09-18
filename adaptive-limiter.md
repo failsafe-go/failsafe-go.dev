@@ -9,7 +9,7 @@ title: Adaptive Limiter
 1. TOC
 {:toc}
 
-[Adaptive limiters][AdaptiveLimiter] are concurrency limiters that continually adjust their limit based on indications of overload, taking inspiration from [Uber's Cinnamon][cinnamon] and [Netflix's concurrency-limits][concurrency-limits]. Unlike other ways of preventing overload, adaptive limiters are able to automatically detect overload for any type of resource, adapt to changes in load, and also adapt to changes or degredations in a system's capacity.
+[Adaptive limiters][AdaptiveLimiter] are concurrency limiters that continually adjust their limit based on indications of overload, taking inspiration from [Uber's Cinnamon][cinnamon] and [Netflix's concurrency-limits][concurrency-limits]. Unlike other ways of preventing overload, adaptive limiters are able to automatically detect overload for any type of resource, adapt to changes in load, and also adapt to changes or degradations in a system's capacity.
 
 ## Basic Usage
 
