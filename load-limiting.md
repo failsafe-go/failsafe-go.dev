@@ -33,7 +33,7 @@ This is where adaptive limiters excel. [Adaptive limiters][adaptive-limiters] ar
 
 ## Adaptive Throttlers vs Circuit Breakers
 
-Adaptive throttlers and time based circuit breakers are very similar in that they're both driven by the recent rate of failures. The difference is in what they do when the failure rate threshold is exceeded: circuit breakers reject all executions for some duration, whereas adaptive throttlers gradually increase executions, based on how much the failure rate threshold is exceeded. 
+[Adaptive throttlers][adaptive-throttlers] and time based [Circuit Breakers][circuit-breakers] are very similar in that they're both driven by the recent rate of failures. The difference is in what they do when the failure rate threshold is exceeded: circuit breakers reject all executions for some duration, whereas adaptive throttlers gradually increase executions, based on how much the failure rate threshold is exceeded. 
 
 ## Rate Limiters vs Bulkheads
 
