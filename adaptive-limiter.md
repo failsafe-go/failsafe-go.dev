@@ -132,13 +132,13 @@ builder.OnLimitChanged(func(e adaptivelimiter.LimitChangedEvent) {
 
 ## Logging and Metrics
 
-Debug logging of [AdaptiveLimiter] limit changes and [Prioritizer] threshold changes can be enabled by providing an `slog.Logger` when building these:
+Debug logging of [AdaptiveLimiter] limit changes can be enabled by providing an `slog.Logger` when building these:
 
 ```go
 builder.WithLogger(logger)
 ```
 
-[AdaptiveLimiter] also provides [metrics][AdaptiveLimiterMetrics] that include the current limit, inflight executions, and queued executions, and [Prioritizers][Prioritizer] allow you to get the current rejection rate.
+[AdaptiveLimiter] also provides [metrics][AdaptiveLimiterMetrics] that include the current limit, inflight executions, and queued executions.
 
 ## Standalone Usage
 

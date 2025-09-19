@@ -91,6 +91,16 @@ prioritizerBuilder.OnThresholdChanged(func(e adaptivelimiter.ThresholdChangedEve
 })
 ```
 
+## Logging and Metrics
+
+Debug logging of [Prioritizer] threshold changes can be enabled by providing an `slog.Logger` when building these:
+
+```go
+builder.WithLogger(logger)
+```
+
+Prioritizers also allow you to get the [current rejection rate][RejectionRate].
+
 ## HTTP and gRPC Support
 
 When using HTTP or gRPC, you can propagate priority and level information through clients and servers. See the [HTTP][http-priorities] and [gRPC][grpc-priorities] docs for more info.
