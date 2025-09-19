@@ -31,6 +31,5 @@
   - [Github][github]
   - [Examples][examples]
   - [Comparisons][comparisons]
-  - [Slack][slack]
 
 {% include common-links.html %}
