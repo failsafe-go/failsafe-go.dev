@@ -9,7 +9,7 @@ title: Policies
 1. TOC
 {:toc}
 
-Failsafe-go provides several resilience policies including [Retry], [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttlers][adaptive-throttlers], [Rate Limiter][rate-limiters], [Timeout][timeouts], [Fallback][fallbacks], [Hedge], [Bulkhead][bulkheads], and [Cache]. While each policy handles failures in different ways, some of their common features are described below.
+Failsafe-go provides numerous resilience policies. While each policy handles failures in different ways, some of their common features are described below.
 
 ## Failure Handling
 
@@ -114,6 +114,7 @@ Read about the built-in policies that Failsafe supports:
 - [Timeout][timeouts]
 - [Fallback][fallbacks]
 - [Hedge][hedge]
+- [Budget][budget]
 - [Bulkhead][bulkheads]
 - [Cache][cache]
 

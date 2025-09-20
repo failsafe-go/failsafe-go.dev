@@ -23,7 +23,7 @@ err := failsafe.Run(SendRequest, bulkhead)
 
 ## How It Works
 
-Executions are permitted in a bulkhead until it is full, meaning the max number of concurrent executions has been reached. Any further executions will either fail with `ErrFull` or will wait until permitted.
+Executions are permitted in a bulkhead until it is full, meaning the max number of concurrent executions has been reached. Any further executions will either fail with `bulkhead.ErrFull` or will wait until permitted.
 
 ## Configuration
 
@@ -57,7 +57,7 @@ A [Bulkhead] can also be manually operated in a standalone way:
 ```go
 if bulkhead.TryAcquirePermit() {
   doSomething()
-  bulkhead.releasePermit()
+  bulkhead.ReleasePermit()
 }
 ```
 

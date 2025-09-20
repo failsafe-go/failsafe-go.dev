@@ -12,6 +12,7 @@
   - [Timeout][timeouts]
   - [Fallback][fallbacks]
   - [Hedge][hedge]
+  - [Budget][budgets]
   - [Bulkhead][bulkheads]
   - [Cache][caches]
 
