@@ -25,17 +25,15 @@ There's two general approaches to load limiting: *proactive*, where we estimate 
 
 [Adaptive limiters][adaptive-limiters] are *reactive* since they detect indications of overload through changes in latency and throughput. [Adaptive throttlers][adaptive-throttlers] and time based [Circuit Breakers][circuit-breakers] are also *reactive* since they only limit executions when the recent failure rate exceeds a threshold, ex: 10% in the last minute.
 
-## Adaptive Limiters vs Circuit Breakers
+## Best Practices
 
-The effectiveness of time based [circuit breakers][circuit-breakers] depends on the failures that are being used to drive them. Typically timeouts are used to drive circuit breakers, indicating that a system is overloaded. But timeouts are often a lagging indicator of overload, representing very high latency within a system. In extreme cases, a system may crash before a timeout driven circuit breaker opens.
+For overload prevention, it's recommended to use a *reactive* load limiter. [Adaptive Limiters][adaptive-limiters] are first among those, followed by [Adaptive Throttlers][adaptive-throttlers] and time based [Circuit Breakers][circuit-breakers]. For other use cases such as maintaining per-user quotas, [Rate Limiters][rate-limiters] or [Bulkheads][bulkheads] can be useful.
 
-This is where adaptive limiters excel. [Adaptive limiters][adaptive-limiters] are able to detect unusual latency before large numbers of timeouts even occur. This, along with them maintaining a reasonable concurrency limit, can protect a system from overload before it even happens.
+All load limiters can be used on the *client* side or the *server* side inside a system. If your client connects with only a few servers, it may make sense to have limiters on the client side for each server you connect to. If on the other hand you have many servers, it may make sense to place the limiter on the server, so that each client doesn't need a limiter for each server.
 
-## Adaptive Throttlers vs Circuit Breakers
+## Policy Comparisons
 
-[Adaptive throttlers][adaptive-throttlers] and time based [Circuit Breakers][circuit-breakers] are very similar in that they're both driven by the recent rate of failures. The difference is in what they do when the failure rate threshold is exceeded: circuit breakers reject all executions for some duration, whereas adaptive throttlers gradually increase executions, based on how much the failure rate threshold is exceeded. 
-
-## Rate Limiters vs Bulkheads
+### Rate Limiters vs Bulkheads
 
 [Rate limiters][rate-limiters] and [Bulkheads][bulkheads] are both forms of *proactive* limiting, and should be configured based on a system's capacity, but they differ in that [Bulkheads][bulkheads] are better at handling varied workloads than rate limiters. The reason for this is highlighted by [Little's Law][littles-law], which states that the average concurrency inside a system relates to the average request rate and response time.
 

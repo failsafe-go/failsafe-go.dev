@@ -25,7 +25,9 @@ err := failsafe.Run(SendRequest, bulkhead)
 
 Executions are permitted in a bulkhead until it is full, meaning the max number of concurrent executions has been reached. Any further executions will either fail with `ErrFull` or will wait until permitted.
 
-## Waiting
+## Configuration
+
+### Waiting
 
 By default, when the max concurrent executions are exceeded, further executions will immediately fail with `ErrFull`. A bulkhead can also be configured to wait for execution permission if it can be achieved within a max wait time:
 
@@ -38,7 +40,7 @@ bulkhead := bulkhead.NewBuilder[any](10).
 
 Fairness is guaranteed with waiting executions, meaning they're permitted in the order they're received. Actual wait times for a bulkhead can vary depending on how busy it is. Since executions will block while waiting on a rate limiter, a `maxWaitTime` should be chosen carefully to avoid excessive blocking.
 
-## Event Listeners
+### Event Listeners
 
 A [Bulkhead] can notify you with an [ExecutionEvent] when the bulkhead is full:
 

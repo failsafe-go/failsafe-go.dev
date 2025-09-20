@@ -25,7 +25,7 @@ cachePolicy := cachePolicy.NewBuilder(cache).
 connection, err := failsafe.Get(Connect, cachePolicy)
 ```
 
-## Cache Keys
+### Cache Keys
 
 A [CachePolicy] can use a key specified at the policy level, as shown above, to store cached execution results. It can also use a cache key provided at execution time, via a [Context], allowing different keys to be used for different executions:
 
@@ -36,7 +36,9 @@ connection, err := failsafe.NewExecutor(cachePolicy).
   Get(Connect)
 ```
 
-## Conditional Caching
+## Configuration
+
+### Conditional Caching
 
 By default, any non-error execution results will be cached. But a [CachePolicy] can also be configured only cache results when a condition is met:
 
@@ -46,7 +48,7 @@ builder.CacheIf(func(response *http.Response, err error) bool {
 })
 ```
 
-## Event Listeners
+### Event Listeners
 
 A [CachePolicy] can notify you with an [ExecutionEvent] when a result is added to the cache:
 

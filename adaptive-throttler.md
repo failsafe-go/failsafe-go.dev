@@ -9,9 +9,9 @@ title: Adaptive Throttler
 1. TOC
 {:toc}
 
-[Adaptive throttlers][AdaptiveThrottler] are probabalistic load shedders that limit load based on recent failures, as described in the [Google SRE Book][throttling]. They're similar to [circuit breakers][circuit-breakers] since they're driven by recent failures, but rather than being all on or off like a circuit breaker, they reject only some requests based on how overloaded they are.
+[Adaptive throttlers][AdaptiveThrottler] are probabalistic load shedders that limit load based on recent failures, as described in the [Google SRE Book][throttling].
 
-## Basic Usage
+## Usage
 
 Creating and using an [AdaptiveThrottler] is straightforward:
 
@@ -31,7 +31,13 @@ response, err := failsafe.Get(FetchData, throttler)
 
 [Adaptive throttlers][AdaptiveThrottler] track recent failures over some time period. When the recent failure rate exceeds the configured threshold, then the throttler will start probablistically rejecting requests. The rejection rate will gradually increase based on how far over the threshold the failure rate is, stopping at the max rate. Any executions that are rejected will fail with `ErrExceeded`.
 
-## Failure Handling
+## Policy Comparison
+
+[Adaptive throttlers][AdaptiveThrottler] are similar to [circuit breakers][circuit-breakers] since they both limit load based on recent failures. But whereas circuit breakers reject all executions for some time period, adaptive throttlers only reject some executions based on how overloaded they are. This makes execution flows more smooth with adaptive throttlers, and also allows them to more quickly detect when overload ends.
+
+## Configuration
+
+### Failure Handling
 
 An [AdaptiveThrottler] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
@@ -41,15 +47,15 @@ builder.
   HandleResult(nil)
 ```
 
-## Execution Prioritization
+### Execution Prioritization
 
 Adaptive throttlers can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. See the [execution prioritization][execution-prioritization] docs for more info.
 
-## Event Listeners
+### Event Listeners
 
 Adaptive throttlers support the standard [policy listeners][policy-listeners].
 
-## Metrics
+### Metrics
 
 [AdaptiveThrottler] provides [metrics][AdaptiveThrottlerMetrics] that include the current rejection rate. 
 

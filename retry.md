@@ -9,7 +9,7 @@ title: Retry
 1. TOC
 {:toc}
 
-[Retry policies][RetryPolicy] are used to retry failed executions a certain number of times, with an optional delay between attempts.
+[Retry policies][RetryPolicy] are used to retry failed executions a certain number of times, with an optional delay between attempts. Retry policies are stateless and can be shared as needed.
 
 ## Usage
 
@@ -27,7 +27,9 @@ retryPolicy := retrypolicy.NewBuilder[Connection]().
 connection, err := failsafe.Get(Connect, retryPolicy)
 ```
 
-## Failure Handling
+## Configuration
+
+### Failure Handling
 
 A [RetryPolicy] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
@@ -37,7 +39,7 @@ builder.
   HandleResult(nil)
 ```
 
-## Max Attempts
+### Max Attempts
 
 [By default][retrypolicy-defaults], a [RetryPolicy] will allow a maximum of 3 execution attempts. You can configure a different max number of [attempts][WithMaxAttempts]:
 
@@ -57,7 +59,7 @@ You can also disable the default max attempt limit:
 builder.WithMaxAttempts(-1)
 ```
 
-## Max Duration
+### Max Duration
 
 In addition to max attempts, you can also add a [max duration][WithMaxDuration] for an execution, after which retries will stop if the max attempts haven't already been reached.
 
@@ -65,7 +67,7 @@ In addition to max attempts, you can also add a [max duration][WithMaxDuration] 
 builder.WithMaxDuration(5*time.Minute)
 ```
 
-## Delays
+### Delays
 
 By default, a [RetryPolicy] has no delay between attempts. You can configure a fixed delay:
 
@@ -107,7 +109,7 @@ builder.WithJitter(100*time.Second)
 
 To cancel running executions, see the [execution cancellation][execution-cancellation] docs or [Timeout][timeouts] policy.
 
-## Abort
+### Abort
 
 You can also specify which results, errors, or conditions to [abort retries][AbortOnErrors] on:
 
@@ -118,7 +120,7 @@ builder.
   AbortIf(AbortCondition)
 ```
 
-## Return Value
+### Return Value
 
 By default, when an execution fails and a [RetryPolicy] is exceeded, an [ExceededError][RetryPolicyExceededError] will be returned, wrapping the last execution result and error:
 
@@ -137,7 +139,7 @@ builder.ReturnLastFailure()
 
 If additional handling or an alternative result is needed, additional policies, such as a [fallbacks], can be [composed][policy-composition] around a [RetryPolicy].
 
-## Event Listeners
+### Event Listeners
 
 In addition to the standard [policy event listeners][policy-listeners], a RetryPolicy can notify you with an [ExecutionEvent] when a retry is [scheduled][OnRetryScheduled] or is about to be [attempted][OnRetry], when an execution fails and the max retries are [exceeded][OnRetriesExceeded], or when retries are [aborted][OnAbort]. For example:
 

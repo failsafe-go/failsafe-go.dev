@@ -46,7 +46,9 @@ err := failsafe.Run(SendMessage, limiter)
 
 Bursty rate limited executions are permitted with no delay up to the given `maxExecutions` per `period`. When a new period begins, the number of permitted executions is reset to the configured `maxExecutions`. This may cause bursts of executions when a new time period begins. Larger time periods may cause larger bursts.
 
-## Waiting
+## Configuration
+
+### Waiting
 
 By default, when a [RateLimiter] is exceeded, further executions will immediately fail with `ratelimiter.ErrExceeded`. A rate limiter can also be configured to wait for execution permission if it can be achieved within a max wait time:
 
@@ -57,7 +59,7 @@ builder.WithMaxWaitTime(time.Second)
 
 Actual wait times for a rate limiter can vary depending on how busy the rate limiter is. Wait times will grow if more executions are consistently attempted than the rate limiter permits.
 
-## Event Listeners
+### Event Listeners
 
 A [RateLimiter] can notify you with an [ExecutionEvent] when a rate limit has been exceeded by an execution attempt:
 

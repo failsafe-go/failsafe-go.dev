@@ -100,7 +100,7 @@ That said, it really depends on how the policies are being used, and different c
 
 ## Policy Reuse
 
-All policies are safe to reuse across different executions. While some policies are stateless, others such as [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
+All policies are safe to reuse across different executions. While some policies such as [Retry Policy][retry] stateless, others such as [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttler][adaptive-throttlers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
 
 ## Supported Policies
 
@@ -109,7 +109,7 @@ Read about the built-in policies that Failsafe supports:
 - [Retry][retry]
 - [Circuit Breaker][circuit-breakers]
 - [Adaptive Limiter][adaptive-limiters]
-- [Adaptive Throttler][adaptive-throttler]
+- [Adaptive Throttler][adaptive-throttlers]
 - [Rate Limiter][rate-limiters]
 - [Timeout][timeouts]
 - [Fallback][fallbacks]

@@ -32,7 +32,9 @@ err := failsafe.Run(SendMessage, breaker)
 
 When the number of recent execution failures exceed a configured threshold, the breaker is *opened* and further executions will fail with `circuitbreaker.ErrOpen`. After a delay, the breaker is *half-opened* and trial executions are allowed which determine whether the breaker should be *closed* or *opened* again. If the trial executions meet a success threshold, the breaker is *closed* again and executions will proceed as normal, otherwise it's re-*opened*.
 
-## Failure Handling
+## Configuration
+
+### Failure Handling
 
 A [CircuitBreaker] can be configured to handle only [certain results, errors, or conditions][failure-handling] as failures:
 
@@ -41,10 +43,6 @@ builder.
   HandleErrors(ErrConnecting).
   HandleResult(nil)
 ```
-
-## Configuration
-
-[Circuit breakers][CircuitBreaker] can be flexibly configured to express when the breaker should be opened, half-opened, and closed.
 
 ### Opening
 
@@ -104,7 +102,7 @@ builder.WithSuccessThresholdRatio(3, 5)
 
 If a success threshold is not configured, then the failure threshold is used to determine if a breaker should transition from *half-open* to either *closed* or *open*.
 
-## Event Listeners
+### Event Listeners
 
 In addition to the standard [policy listeners][policy-listeners], a [CircuitBreaker] can notify you when the [state of the breaker changes][OnStateChanged]:
 
@@ -116,7 +114,7 @@ builder.OnStateChanged(func(e circuitbreaker.StateChangedEvent) {
 
 It can also notify you when the breaker [opens][OnOpen], [closes][OnClose], or [half-opens][OnHalfOpen].
 
-## Metrics
+### Metrics
 
 [CircuitBreaker] provides [metrics][CircuitBreakerMetrics] for the current state that the breaker is in, including execution count, success count, failure count, success rate, and failure rate. 
 

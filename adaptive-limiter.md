@@ -11,7 +11,7 @@ title: Adaptive Limiter
 
 [Adaptive limiters][AdaptiveLimiter] are concurrency limiters that continually adjust their limit based on indications of overload, taking inspiration from [Uber's Cinnamon][cinnamon] and [Netflix's concurrency-limits][concurrency-limits]. Unlike other ways of preventing overload, adaptive limiters are able to automatically detect overload for any type of resource, adapt to changes in load, and also adapt to changes or degradations in a system's capacity.
 
-## Basic Usage
+## Usage
 
 Creating and using an [AdaptiveLimiter] is straightforward:
 
@@ -46,7 +46,13 @@ When overload is detected, a limiter will gradually reduce its limit, converging
 
 To better get a feel for how adaptive limiters behave and to see their overload handling in action, check out the load simulation tool [Tripwire].
 
-## Limits
+## Policy Comparison
+
+[Adaptive limiters][AdaptiveLimiter] are similar to [circuit breakers][circuit-breakers] and [adaptive throttlers][adaptive-throttlers] in that they react to signs of overload. But while other policies require failures, such as timeouts, to drive them, adaptive limiters are able to detect overload on their own. And this is where they excel: in being able to detect unusual latency before large numbers of timeouts even occur. This, along with them maintaining a reasonable concurrency limit, can protect a system from overload before it even happens.
+
+## Configuration
+
+### Limits
 
 You can set the [min, max, and initial limits][WithLimits] for an adaptive limiter:
 
@@ -60,7 +66,7 @@ You can also configure the [max limit factor][WithMaxLimitFactor], which control
 builder.WithMaxLimitFactor(5)
 ```
 
-## Execution Times
+### Execution Times
 
 The primary indicator of overload in an adaptive limiter is execution times, since when a system is overloaded, work will queue and execution times will increase. Adaptive limiters aggregate recent execution times in a window and regularly compare them to baseline execution times to estimate if work is queueing inside a system. 
 
@@ -84,7 +90,7 @@ builder.WithBaselineWindow(10)
 
 Larger baseline windows will cause the limiter to be slower to adjust to changes in baseline load.
 
-## Throughput Correlation
+### Throughput Correlation
 
 While changes in execution times are a good indicator of overload, they're not perfect. So as a second indicator of overload, adaptive limiters also track recent changes in throughput. In particular, limiters track the _correllation_ between inflight executions and throughput. If inflight executions are increasing but throughput is flat or decreasing, the system is likely overloaded, and the concurrency limit is decreased. 
 
@@ -94,15 +100,13 @@ The number of [recent throughput][WithCorrelationWindow] and inflight measuremen
 builder.WithCorrelationWindow(50)
 ```
 
-## Queueing
+### Queueing
 
 Since adaptive limiters set a concurrency limit based on the detected capacity of a system, bursts of executions can quickly fill up the limiter, causing executions to be rejected. To avoid excess rejections when a limiter is full, we can allow some queueing in front of the limiter rather than immediately rejecting executions.
 
-### Gradual Rejections
+When a queue starts to fill up, rejections can be configured to be gradual, starting from an *initial* rejection threshold up to some *max*. The initial rejection threshold is the multiple of the current limiter and the initial rejection factor, which can be configured. And likewise for the max rejection factor.
 
-When a queue starts to fill up, rejections can be configured to be gradual, starting from an initial rejection threshold up to some max. The initial rejection threshold is the multiple of the current limiter and the initial rejection factor, which can be configured. And likewise for the max rejection factor.
-
-For example: with a current limit of 10, an initial rejection factor of 2, and a max rejection factor of 3:
+For example: with a current limit of 10, an *initial* rejection factor of 2, and a *max* rejection factor of 3:
 
 - Up to 10 inflight executions can be executed before the limiter is full
 - Up to 20 additional executions can queue before rejections gradually begin
@@ -114,11 +118,11 @@ Configuring queue sizes as a multiple of the current limit allows the queue to s
 builder.WithQueueing(2, 3)
 ```
 
-## Execution Prioritization
+### Execution Prioritization
 
 Adaptive limiters can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. They can also prioritize executions based on usage from individual users. See the [execution prioritization][execution-prioritization] docs for more info.
 
-## Event Listeners
+### Event Listeners
 
 In addition to the standard [policy listeners][policy-listeners], an [AdaptiveLimiter] can notify you when the [limit changes][OnLimitChanged] or is [exceeded][OnLimitExceeded]:
 
@@ -130,7 +134,7 @@ builder.OnLimitChanged(func(e adaptivelimiter.LimitChangedEvent) {
 })
 ```
 
-## Logging and Metrics
+### Logging and Metrics
 
 Debug logging of [AdaptiveLimiter] limit changes can be enabled by providing an `slog.Logger` when building these:
 
@@ -161,9 +165,7 @@ Additional methods are available to acquire permits with wait times and prioriti
 
 ## Best Practices
 
-### Shared Prioritizers
-
-[Prioritizers][Prioritizer] should be shared across multiple limiters when possible. This allows a combined rejection threshold to be determined across limiters, which takes their combined queueing levels into account, and leads to more stable rejection behavior.
+Adaptive limiters can be shared across an entire service, or separate limiters can be used to protect different workloads that might make use of different resources or downstream services. When using multiple limiters, it's recommended to use a [Prioritizer][execution-prioritization].
 
 ## Additional Details
 
