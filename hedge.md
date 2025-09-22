@@ -61,6 +61,14 @@ builder.
   CancelIf(CancelCondition)
 ```
 
+### Budgets
+
+[Budgets][budgets] can be added to hedge policies to control the max outstanding hedges across a system:
+
+```go
+builder.WithBudget(budget)
+```
+
 ### Event Listeners
 
 A HedgePolicy can notify you with an [ExecutionEvent] when a hedge is about to be [attempted][OnHedge]:

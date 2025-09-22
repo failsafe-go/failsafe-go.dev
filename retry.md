@@ -109,6 +109,14 @@ builder.WithJitter(100*time.Second)
 
 To cancel running executions, see the [execution cancellation][execution-cancellation] docs or [Timeout][timeouts] policy.
 
+### Budgets
+
+[Budgets][budgets] can be added to retry policies to control the max outstanding retries across a system:
+
+```go
+builder.WithBudget(budget)
+```
+
 ### Abort
 
 You can also specify which results, errors, or conditions to [abort retries][AbortOnErrors] on:

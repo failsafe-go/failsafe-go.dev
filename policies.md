@@ -114,7 +114,6 @@ Read about the built-in policies that Failsafe supports:
 - [Timeout][timeouts]
 - [Fallback][fallbacks]
 - [Hedge][hedge]
-- [Budget][budget]
 - [Bulkhead][bulkheads]
 - [Cache][cache]
 

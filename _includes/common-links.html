@@ -22,7 +22,6 @@
 [circuit-breaker-standalone]: {{ "/circuit-breaker#standalone-usage" | relative_url }}
 [rate-limiters]: {{ "/rate-limiter" | relative_url }}
 [bulkheads]: {{ "/bulkhead" | relative_url }}
-[budgets]: {{ "/budget" | relative_url }}
 [caches]: {{ "/cache" | relative_url }}
 [async-execution]: {{ "/async-execution" | relative_url }}
 [event-listeners]: {{ "/event-listeners" | relative_url }}
@@ -30,6 +29,7 @@
 [execution-info]: {{ "/execution-info" | relative_url }}
 [execution-cancellation]: {{ "/execution-cancellation" | relative_url }}
 [execution-prioritization]: {{ "/execution-prioritization" | relative_url }}
+[budgets]: {{ "/execution-budgets" | relative_url }}
 [http]: {{ "/http" | relative_url }}
 [http-priorities]: {{ "http/#propagating-priorities" | relative_url }}
 [grpc]: {{ "/grpc" | relative_url }}
@@ -71,6 +71,16 @@
 [IsCanceled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#Execution.IsCanceled
 [Canceled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#Execution.Canceled
 
+<!-- Feature docs -->
+[Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#Prioritizer
+[RejectionRate]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#Prioritizer.RejectionRate
+[UsageTracker]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#UsageTracker
+
+[Budget]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/budget#Budget
+[BudgetExceededEvent]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/budget#ExceededEvent
+[RetryRate]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/budget#Budget.RetryRate
+[HedgeRate]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/budget#Budget.HedgeRate
+
 <!-- Policy extension docs -->
 [failsafe.Policy]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go#Policy
 [policy-package]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/policy
@@ -96,10 +106,6 @@
 [OnRetryScheduled]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetryScheduled
 [OnRetriesExceeded]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnRetriesExceeded
 [OnAbort]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/retrypolicy#Builder.OnAbort
-
-[Prioritizer]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#Prioritizer
-[RejectionRate]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#Prioritizer.RejectionRate
-[UsageTracker]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/priority#UsageTracker
 
 [AdaptiveLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#AdaptiveLimiter
 [PriorityLimiter]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/adaptivelimiter#PriorityLimiter
@@ -134,8 +140,6 @@
 [HedgePolicy]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#HedgePolicy
 [WithMaxHedges]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#Builder.WithMaxHedges
 [OnHedge]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/hedgepolicy#Builder.OnHedge
-
-[Budget]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/budget#Budget
 
 [Bulkhead]: https://pkg.go.dev/github.com/failsafe-go/failsafe-go/bulkhead#Bulkhead
 

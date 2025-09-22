@@ -12,7 +12,6 @@
   - [Timeout][timeouts]
   - [Fallback][fallbacks]
   - [Hedge][hedge]
-  - [Budget][budgets]
   - [Bulkhead][bulkheads]
   - [Cache][caches]
 
@@ -22,6 +21,7 @@
   - [Execution Info][execution-info]
   - [Execution Cancellation][execution-cancellation]
   - [Execution Prioritization][execution-prioritization]
+  - [Execution Budgets][budgets]
   - [HTTP Support][http]
   - [gRPC Support][grpc]
   - [Type Safety][type-safety]

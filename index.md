@@ -8,7 +8,7 @@ title: Fault tolerance and resilience patterns for Go
 Failsafe-go is a library for building resilient, fault tolerant Go applications. It works by wrapping functions with one or more resilience [policies], which can be combined and [composed][policy-composition] as needed. Policies include:
 
 - Failure handling: [Retry][retry], [Fallback][fallbacks]
-- Load limiting: [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttler][adaptive-throttlers], [Budget][budgets], [Bulkhead][bulkheads], [Rate Limiter][rate-limiters], [Cache][caches]
+- Load limiting: [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttler][adaptive-throttlers], [Bulkhead][bulkheads], [Rate Limiter][rate-limiters], [Cache][caches]
 - Time limiting: [Timeout][timeouts], [Hedge][hedge]
 
 ## Getting Started
