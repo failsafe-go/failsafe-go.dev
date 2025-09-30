@@ -98,9 +98,24 @@ failsafe.NewExecutor[any](fallback, cachePolicy, retryPolicy, circuitBreaker, bu
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.
 
-## Policy Reuse
+## Policy Sharing
 
-All policies are safe to reuse across different executions. While some policies such as [Retry Policy][retry] stateless, others such as [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttler][adaptive-throttlers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are specifically meant to be shared across different executions that access the same resources.
+All policies are safe to share across different executions. While some policies such as [Retry Policy][retry] stateless, others such as [Circuit Breaker][circuit-breakers], [Adaptive Limiter][adaptive-limiters], [Adaptive Throttler][adaptive-throttlers], [Rate Limiter][rate-limiters], and [Bulkhead][bulkheads] are stateful, and are meant to be shared across different executions that access the same resources.
+
+When composing shared policies, it's common for the shared policy to have `any` as the result type. These can be composed _inside_ policies with specific result types:
+
+```go
+retryPolicy := retrypolicy.NewWithDefaults[Connection]()
+circuitBreaker := circuitbreaker.NewWithDefaults[any]()
+
+failsafe.With(retryPolicy).ComposeAny(circuitBreaker)
+```
+
+Or they can be composed _outside_ other policies:
+
+```go
+failsafe.WithAny[Connection](circuitBreaker).Compose(retryPolicy)
+```
 
 ## Supported Policies
 

@@ -53,21 +53,35 @@ Multiple [policies] can be composed to add additional layers of resilience or to
 
 ```go
 fallback := fallback.NewWithResult(backupConnection)
-circuitBreaker := circuitbreaker.NewWithDefaults[any]()
-timeout := timeout.New[any](10*time.Second)
+circuitBreaker := circuitbreaker.NewWithDefaults[Connection]()
+timeout := timeout.New[Connection](10*time.Second)
 
 // Get with fallback, retries, circuit breaker, and timeout
-failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, timeout)
+connection, err := failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, timeout)
 ```
 
 Order does matter when composing policies. See the [policy composition][policy-composition] overview for more details.
+
+### Mixed Result Types
+
+Common policies with `any` result type can be mixed with policies that handle specific result types:
+
+```go
+retryPolicy := retrypolicy.NewWithDefaults[Connection]()
+circuitBreaker := circuitbreaker.NewWithDefaults[any]()
+
+// Get with retries and circuit breaker
+connection, err := failsafe.With(retryPolicy).
+  ComposeAny(circuitBreaker).
+  Get(Connect)
+```
 
 ### Executor
 
 Policy compositions can also be saved for later use via an [Executor]:
 
 ```go
-executor := failsafe.NewExecutor[any](retryPolicy, circuitBreaker)
+executor := failsafe.With[Connection](retryPolicy, circuitBreaker)
 err := executor.Run(Connect)
 ```
 
