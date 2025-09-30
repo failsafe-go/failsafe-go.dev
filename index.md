@@ -16,7 +16,7 @@ Failsafe-go is a library for building resilient, fault tolerant Go applications.
 To see how Failsafe-go works, we'll create a [retry policy][retry] that defines which failures to handle and when retries should be performed:
 
 ```go
-retryPolicy := retrypolicy.NewBuilder[any]().
+retryPolicy := retrypolicy.NewBuilder[SomeResponse]().
   HandleErrors(ErrConnecting).
   WithDelay(time.Second).
   WithMaxRetries(3).
@@ -62,9 +62,9 @@ connection, err := failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, 
 
 Order does matter when composing policies. See the [policy composition][policy-composition] overview for more details.
 
-### Mixed Result Types
+### Shared Policies
 
-Common policies with `any` result type can be mixed with policies that handle specific result types:
+Shared policies with `any` result type can be mixed with policies that handle specific result types:
 
 ```go
 retryPolicy := retrypolicy.NewWithDefaults[Connection]()
@@ -81,8 +81,8 @@ connection, err := failsafe.With(retryPolicy).
 Policy compositions can also be saved for later use via an [Executor]:
 
 ```go
-executor := failsafe.With[Connection](retryPolicy, circuitBreaker)
-err := executor.Run(Connect)
+executor := failsafe.With[any](retryPolicy, circuitBreaker)
+err := executor.Get(Connect)
 ```
 
 ## Further Reading
