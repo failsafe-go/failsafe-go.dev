@@ -93,7 +93,7 @@ policyBuilder.HandleErrors(
 A common policy composition ordering might place a `Fallback` as the outer-most policy, followed by a `CachePolicy`, a `RetryPolicy` or `HedgePolicy`, a `CircuitBreaker`, `AdaptiveLimiter`, `AdaptiveThrottler` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
 
 ```go
-failsafe.NewExecutor[any](fallback, cachePolicy, retryPolicy, circuitBreaker, bulkhead, timeout)
+failsafe.With[any](fallback, cachePolicy, retryPolicy, circuitBreaker, bulkhead, timeout)
 ```
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.

@@ -62,20 +62,6 @@ connection, err := failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, 
 
 Order does matter when composing policies. See the [policy composition][policy-composition] overview for more details.
 
-### Shared Policies
-
-Shared policies with `any` result type can be mixed with policies that handle specific result types:
-
-```go
-retryPolicy := retrypolicy.NewWithDefaults[Connection]()
-circuitBreaker := circuitbreaker.NewWithDefaults[any]()
-
-// Get with retries and circuit breaker
-connection, err := failsafe.With(retryPolicy).
-  ComposeAny(circuitBreaker).
-  Get(Connect)
-```
-
 ### Executor
 
 Policy compositions can also be saved for later use via an [Executor]:
