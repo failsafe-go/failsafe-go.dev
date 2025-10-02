@@ -107,8 +107,8 @@ All policies are safe to share across different executions. While some policies 
 When composing shared policies, it's common for the shared policy to have `any` as the result type. These can be composed _inside_ policies with specific result types:
 
 ```go
-retryPolicy := retrypolicy.NewWithDefaults[Connection]()
 circuitBreaker := circuitbreaker.NewWithDefaults[any]()
+retryPolicy := retrypolicy.NewWithDefaults[Connection]()
 
 failsafe.With(retryPolicy).ComposeAny(circuitBreaker)
 ```
