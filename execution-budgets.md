@@ -49,7 +49,7 @@ Budgets permit executions to proceed up to some max number of concurrent retries
 
 ## Comparison
 
-[Budgets][Budget] are similar to [Bulkheads][bulkheads] in that they both limit concurrency. But whereas a bulkhead limits the concurrency of all executions wherever it's used, a budget limits the concurrency of just retries or hedges wherever it's used.
+[Budgets][Budget] are similar to [Bulkheads][bulkheads] in that they both limit concurrency. But whereas a bulkhead limits the concurrency of *all* executions wherever it's used, a budget limits the concurrency of *just retries or hedges* wherever it's used.
 
 ## Configuration
 
