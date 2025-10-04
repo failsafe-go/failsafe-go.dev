@@ -47,6 +47,26 @@ builder.
   HandleResult(nil)
 ```
 
+### Failure Rate Threshold
+
+A throttler's failure rate threshold configures the rate of failures over some time period, with a minimum number of executions, before executions start to get rejected.
+
+```go
+// Starts rejecting at 10% failures per minute, after 10 executions
+builder.WithFailureRateThreshold(.1, 10, time.Minute)
+```
+
+### Max Rejection Rate
+
+By default, the max rejection rate for a throttler is .9, but you can set a different rate:
+
+```go
+// Reject up to 75% of executions
+builder.MaxRejectionRate(.75)
+```
+
+It's important to ues a value less than 1 to ensure that not all executions are rejected. Maintaining some flow of executions allows the throttler to detect when an overloaded system recovers.
+
 ### Execution Prioritization
 
 Adaptive throttlers can optionally decide which executions to reject based on their priority, where lower priority executions are rejected before high priority ones. See the [execution prioritization][execution-prioritization] docs for more info.
