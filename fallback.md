@@ -28,7 +28,7 @@ fallback := fallback.NewWithError(ErrConnecting)
 Or compute a different result or error:
 
 ```go
-fallback := fallback.NewWithFunc[any](func(e failsafe.Execution[any]) (any, error) {
+fallback := fallback.NewWithFunc(func(e failsafe.Execution[Connection]) (Connection, error) {
   return ConnectToBackup(backupConfig)
 })
 ```
