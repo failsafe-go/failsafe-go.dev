@@ -31,9 +31,7 @@ A [CachePolicy] can use a key specified at the policy level, as shown above, to 
 
 ```go
 ctx := cache.ContextWithCacheKey(context.Background(), "connection")
-connection, err := failsafe.With(cachePolicy).
-  WithContext(ctx).
-  Get(Connect)
+connection, err := failsafe.With(cachePolicy).WithContext(ctx).Get(Connect)
 ```
 
 ## Configuration
