@@ -23,7 +23,7 @@ retryPolicy := retrypolicy.NewBuilder[SomeResponse]().
   Build()
 ```
 
-We can then [Run] or [Get] a result from a `func` with retries:
+We can then [Run] or [Get] a result from a `func` *with* retries:
 
 ```go
 // Run with retries
@@ -35,7 +35,7 @@ response, err := failsafe.Get(SendRequest, retryPolicy)
 
 ### Asynchronous Execution
 
-Executing a `func` [asynchronously][async-execution] with retries is simple:
+Executing a `func` [asynchronously][async-execution] *with* retries is simple:
 
 ```go
 // Run with retries asynchronously

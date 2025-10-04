@@ -29,7 +29,7 @@ response, err := failsafe.Get(FetchData, throttler)
 
 ## How it Works
 
-[Adaptive throttlers][AdaptiveThrottler] track recent failures over some time period. When the recent failure rate exceeds the configured threshold, then the throttler will start probablistically rejecting requests. The rejection rate will gradually increase based on how far over the threshold the failure rate is, stopping at the max rate. Any executions that are rejected will fail with `ErrExceeded`.
+[Adaptive throttlers][AdaptiveThrottler] track recent failures over some time period. When the recent failure rate exceeds the configured threshold, then the throttler will start probablistically rejecting requests. The rejection rate will gradually increase based on how far over the threshold the failure rate is, stopping at the max rate. Any executions that are rejected will fail with `adaptivethrottler.ErrExceeded`.
 
 ## Policy Comparison
 
