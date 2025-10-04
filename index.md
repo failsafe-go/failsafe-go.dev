@@ -27,10 +27,10 @@ We can then [Run] or [Get] a result from a `func` *with* retries:
 
 ```go
 // Run with retries
-err := failsafe.Run(Connect, retryPolicy)
+err := failsafe.With(retryPolicy).Run(Connect)
 
 // Get with retries
-response, err := failsafe.Get(SendRequest, retryPolicy)
+response, err := failsafe.With(retryPolicy).Get(SendRequest)
 ```
 
 ### Asynchronous Execution
@@ -38,11 +38,11 @@ response, err := failsafe.Get(SendRequest, retryPolicy)
 Executing a `func` [asynchronously][async-execution] *with* retries is simple:
 
 ```go
-// Run with retries asynchronously
-result := failsafe.RunAsync(Connect, retryPolicy)
+// Run asynchronously with retries
+result := failsafe.With(retryPolicy).RunAsync(Connect)
 
-// Get with retries asynchronously
-result := failsafe.GetAsync(SendRequest, retryPolicy)
+// Get asynchronously with retries
+result := failsafe.With(retryPolicy).GetAsync(SendRequest)
 ```
 
 The returned [ExecutionResult] can be used to wait for the execution to be done and gets its result or error.
@@ -57,17 +57,17 @@ circuitBreaker := circuitbreaker.NewWithDefaults[Connection]()
 timeout := timeout.New[Connection](10*time.Second)
 
 // Get with fallback, retries, circuit breaker, and timeout
-connection, err := failsafe.Get(Connect, fallback, retryPolicy, circuitBreaker, timeout)
+connection, err := failsafe.With(fallback, retryPolicy, circuitBreaker, timeout).Get(Connect)
 ```
 
 Order does matter when composing policies. See the [policy composition][policy-composition] overview for more details.
 
 ### Executor
 
-Policy compositions can also be saved for later use via an [Executor]:
+Policy compositions can also be saved and reused via an [Executor]:
 
 ```go
-executor := failsafe.With[any](retryPolicy, circuitBreaker)
+executor := failsafe.With(retryPolicy, circuitBreaker)
 err := executor.Get(Connect)
 ```
 

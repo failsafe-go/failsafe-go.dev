@@ -24,7 +24,7 @@ retryPolicy := retrypolicy.NewBuilder[Connection]().
   Build()
   
 // Get with retries
-connection, err := failsafe.Get(Connect, retryPolicy)
+connection, err := failsafe.With(retryPolicy).Get(Connect)
 ```
 
 ## Configuration
@@ -133,7 +133,7 @@ builder.
 By default, when an execution fails and a [RetryPolicy] is exceeded, an [ExceededError][RetryPolicyExceededError] will be returned, wrapping the last execution result and error:
 
 ```go
-response, err := failsafe.Get(SendMessage, retryPolicy)
+response, err := failsafe.With(retryPolicy).Get(SendMessage)
 if ee := retrypolicy.AsExceededError(err); ee != nil {
   logger.Error("Failed to send message", "response", ee.LastResult, "err", ee.LastError)
 }

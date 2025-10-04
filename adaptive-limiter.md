@@ -24,7 +24,7 @@ limiter := adaptivelimiter.NewBuilder[string]().
   Build()
 
 // Get with adaptive limiting
-response, err := failsafe.Get(FetchData, limiter)
+response, err := failsafe.With(limiter).Get(FetchData)
 ```
 
 Details on how adaptive limiters work, along with their configuration options, are described below.

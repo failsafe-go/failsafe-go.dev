@@ -16,7 +16,7 @@ Failsafe-go supports event listeners, both at the top level [failsafe.Executor][
 At the top level, Failsafe-go can notify you when an execution is done:
 
 ```go
-failsafe.NewExecutor[any](retryPolicy, circuitBreaker).
+failsafe.With(retryPolicy, circuitBreaker).
   OnDone(func(e failsafe.ExecutionDoneEvent[any]) {
     if e.Error != nil {
       logger.Error("Failed to create connection", "error", e.Error)

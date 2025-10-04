@@ -22,7 +22,7 @@ cachePolicy := cachePolicy.NewBuilder(cache).
   Build()
   
 // Get a connection from the cache, else create a new one
-connection, err := failsafe.Get(Connect, cachePolicy)
+connection, err := failsafe.With(cachePolicy).Get(Connect)
 ```
 
 ### Cache Keys
@@ -31,7 +31,7 @@ A [CachePolicy] can use a key specified at the policy level, as shown above, to 
 
 ```go
 ctx := cache.ContextWithCacheKey(context.Background(), "connection")
-connection, err := failsafe.NewExecutor(cachePolicy).
+connection, err := failsafe.With(cachePolicy).
   WithContext(ctx).
   Get(Connect)
 ```

@@ -36,10 +36,10 @@ If multiple handle methods are configured, they are logically OR'ed. The default
 
 ## Policy Composition
 
-Policies can be composed in any way desired, including multiple policies of the same type. Policies handle execution results in reverse order, similar to the way that function composition works. For example, consider:
+Policies can be composed in any way desired, including multiple policies of the same type. Policies are composed around a function from left to right, similar to have function composition works, where the inner-most policy handles a function result first. For example, consider:
 
 ```go
-failsafe.Get(fn, fallback, retryPolicy, circuitBreaker, timeout)
+failsafe.With(fallback, retryPolicy, circuitBreaker, timeout).Get(fn)
 ```
 
 This results in the following composition when executing the `fn` and handling its result:
@@ -60,7 +60,7 @@ Consider an execution of the following policy composition:
 
 <img class="composition" src="/assets/images/composition.png">
 
-- `failsafe.Get` calls the `Fallback`
+- `Get` calls the `Fallback`
 - `Fallback` calls the `RetryPolicy`
 - `RetryPolicy` calls the `CircuitBreaker`
 - `CircuitBreaker` returns `ErrOpen` if the breaker is open, else calls the `func`
@@ -68,7 +68,7 @@ Consider an execution of the following policy composition:
 - `CircuitBreaker` records the result as either a success or failure, based on its [configuration](#failure-handling), possibly changing the state of the breaker, then returns
 - `RetryPolicy` records the result as either a success or failure, based on its [configuration](#failure-handling), and either retries or returns
 - `Fallback` handles the result or error according to its configuration and returns a fallback result or error if needed
-- `failsafe.Get` returns the final result or error to the caller
+- `Get` returns the final result or error to the caller
 
 ### Composition and Error Handling
 
@@ -93,7 +93,7 @@ policyBuilder.HandleErrors(
 A common policy composition ordering might place a `Fallback` as the outer-most policy, followed by a `CachePolicy`, a `RetryPolicy` or `HedgePolicy`, a `CircuitBreaker`, `AdaptiveLimiter`, `AdaptiveThrottler` or `RateLimiter`, a `Bulkhead`, and a `Timeout` as the inner-most policy:
 
 ```go
-failsafe.With[any](fallback, cachePolicy, retryPolicy, circuitBreaker, bulkhead, timeout)
+failsafe.With(fallback, cachePolicy, retryPolicy, circuitBreaker, bulkhead, timeout)
 ```
 
 That said, it really depends on how the policies are being used, and different compositions make sense for different use cases.
@@ -110,12 +110,14 @@ When composing shared policies, it's common for the shared policy to have `any` 
 circuitBreaker := circuitbreaker.NewWithDefaults[any]()
 retryPolicy := retrypolicy.NewWithDefaults[Connection]()
 
+// Compose RetryPolicy[Connection] around CircuitBreaker[any]
 failsafe.With(retryPolicy).ComposeAny(circuitBreaker)
 ```
 
 Or they can be composed _outside_ other policies:
 
 ```go
+// Compose CircuitBreaker[any] around RetryPolicy[Connection]
 failsafe.WithAny[Connection](circuitBreaker).Compose(retryPolicy)
 ```
 

@@ -48,7 +48,7 @@ To perform an execution with a priority, provide a context containing the priori
 
 ```go
 ctx := priority.High.AddTo(context.Background())
-executor := failsafe.NewExecutor[any](limiter).WithContext(ctx)
+executor := failsafe.With(limiter).WithContext(ctx)
 
 // Get with adaptive limiting, using high priority
 response, err := executor.Get(FetchData)
@@ -71,7 +71,7 @@ To perform an execution with usage tracking, provide a context containing the pr
 ```go
 ctx := priority.High.AddTo(context.Background())
 ctx = priority.ContextWithUser(ctx, "user1")
-executor := failsafe.NewExecutor[any](limiter).WithContext(ctx)
+executor := failsafe.With(limiter).WithContext(ctx)
 
 // Get with adaptive limiting and usage tracking
 response, err := executor.Get(FetchData)

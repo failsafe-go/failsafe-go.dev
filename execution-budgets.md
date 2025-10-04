@@ -31,14 +31,14 @@ retryPolicy := retrypolicy.NewBuilder[any]().
   Build()
 
 // Run with budgeted retries
-err := failsafe.Run(SendRequest, retryPolicy)
+err := failsafe.With(retryPolicy).Run(SendRequest)
 
 hedgePolicy := hedgepolicy.NewBuilderWithDelay[any](time.Second).
   WithBudget(budget).
   Build()
 
 // Run with budgeted hedges
-err := failsafe.Run(SendRequest, hedgePolicy)
+err := failsafe.With(hedgePolicy).Run(SendRequest)
 ```
 
 You can use the same budget for retries and hedges if you like.

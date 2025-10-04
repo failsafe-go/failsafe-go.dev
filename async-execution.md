@@ -14,12 +14,12 @@ Failsafe-go can execute a `func` asynchronously via a goroutine. Async execution
 Executing a `func` asynchronously with a policy is simple: 
 
 ```go
-// Run with retries asynchronously
-result := failsafe.RunAsync(SendMessage, retryPolicy)
+// Run asynchronously with retries
+result := failsafe.With(retryPolicy).RunAsync(SendMessage)
 err := result.Error()
 
-// Get with retries asynchronously
-result := failsafe.GetAsync(Connect, retryPolicy)
+// Get asynchronously with retries
+result := failsafe.With(retryPolicy).GetAsync(Connect)
 connection, err := result.Get()
 ```
 

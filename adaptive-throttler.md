@@ -24,7 +24,7 @@ throttler := adaptivethrottler.NewBuilder[string]().
   Build()
 
 // Get with adaptive throttling
-response, err := failsafe.Get(FetchData, throttler)
+response, err := failsafe.With(throttler).Get(FetchData)
 ```
 
 ## How it Works

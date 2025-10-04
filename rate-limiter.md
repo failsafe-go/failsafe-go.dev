@@ -22,7 +22,7 @@ Creating and using a smooth [RateLimiter] is simple:
 ```go
 // Permits 100 executions per second
 limiter := ratelimiter.NewSmooth(100, time.Second)
-err := failsafe.Run(SendMessage, limiter)
+err := failsafe.With(limiter).Run(SendMessage)
 ```
 
 The rate at which individual executions are permitted is based on the given `maxExecutions` and `period`. Alternatively, you can directly specify the max rate of individual executions:
@@ -41,7 +41,7 @@ Creating and using a bursty [RateLimiter] is also simple:
 ```go
 // Permits 10 executions per second
 limiter := ratelimiter.NewBursty(10, time.Second)
-err := failsafe.Run(SendMessage, limiter)
+err := failsafe.With(limiter).Run(SendMessage)
 ```
 
 Bursty rate limited executions are permitted with no delay up to the given `maxExecutions` per `period`. When a new period begins, the number of permitted executions is reset to the configured `maxExecutions`. This may cause bursts of executions when a new time period begins. Larger time periods may cause larger bursts.

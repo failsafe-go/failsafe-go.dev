@@ -18,7 +18,7 @@ Creating and using a [Bulkhead] is simple:
 ```go
 // Permit 10 concurrent executions
 bulkhead := bulkhead.New[any](10)
-err := failsafe.Run(SendRequest, bulkhead)
+err := failsafe.With(bulkhead).Run(SendRequest)
 ```
 
 ## How It Works

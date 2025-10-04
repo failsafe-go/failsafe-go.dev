@@ -18,7 +18,7 @@ Creating and using a [Timeout] is simple:
 ```go
 // Timeout after 10 seconds
 timeout := timeout.New[any](10*time.Second)
-err := failsafe.Run(Connect, timeout)
+err := failsafe.With(timeout).Run(Connect)
 ```
 
 ## How It Works
@@ -30,13 +30,13 @@ If an execution is canceled by a `Timeout`, the execution and policies composed 
 When a `Timeout` is [composed][policy-composition] _outside_ a `RetryPolicy`, a timeout occurrence will cancel any _inner_ retries:
 
 ```go
-failsafe.Run(Connect, timeout, retryPolicy)
+failsafe.With(timeout, retryPolicy).Run(Connect)
 ```
 
 When a `Timeout` is [composed][policy-composition] _inside_ a `RetryPolicy`, each attempt will get its own timeout, and a timeout occurrence will not automatically cancel any _outer_ retries:
 
 ```go
-failsafe.Run(Connect, retryPolicy, timeout)
+failsafe.With(retryPolicy, timeout).Run(Connect)
 ```
 
 ## Timeout vs Context

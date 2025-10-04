@@ -36,7 +36,7 @@ fallback := fallback.NewWithFunc[any](func(e failsafe.Execution[any]) (any, erro
 Using a [Fallback] is simple:
 
 ```go
-connection, err := failsafe.Get(Connect, fallback)
+connection, err := failsafe.With(fallback).Get(Connect)
 ```
 
 ## Configuration

@@ -25,7 +25,7 @@ breaker := circuitbreaker.NewBuilder[any]().
   Build()
   
 // Run with circuit breaking
-err := failsafe.Run(SendMessage, breaker)
+err := failsafe.With(breaker).Run(SendMessage)
 ```
 
 ## How it Works

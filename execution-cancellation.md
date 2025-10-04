@@ -13,7 +13,7 @@ Failsafe-go supports execution cancellation, which can be triggered in a few way
 
 ```go
 // Cancel Connect call after 1 second
-failsafe.Get(Connect, timeout.With(time.Second))
+failsafe.With(timeout.New[any](time.Second)).Get(Connect)
 ```
 
 By a [Context]:
@@ -22,13 +22,13 @@ By a [Context]:
 ctx, _ := context.WithTimeout(context.Background(), time.Second)
 
 // Connect will be canceled by the ctx after 1 second
-failsafe.NewExecutor[any](retryPolicy).WithContext(ctx).Get(Connect)
+failsafe.With(retryPolicy).WithContext(ctx).Get(Connect)
 ```
 
 Or by an async [ExecutionResult]:
 
 ```go
-result := failsafe.RunAsync(Connect, retryPolicy)
+result := failsafe.With(retryPolicy).RunAsync(Connect)
 result.Cancel()
 ```
 
@@ -39,10 +39,11 @@ Outstanding [hedge executions][hedge] are also canceled once a successful result
 For executions that may be canceled by a policy such as a [timeout] or [hedge policy][hedge], a child context is created and made available via [Context()][ExecutionInfo.Context], which should be used to propagate these cancellations to downstream code:
 
 ```go
-failsafe.GetWithExecution(func(exec failsafe.Execution[*http.Response]) (*http.Response, error) {
-  request, err := http.NewRequestWithContext(exec.Context(), http.MethodGet, url, nil)
-  return client.Do(request)
-}, timeout)
+failsafe.With(timeout).
+  GetWithExecution(func(exec failsafe.Execution[*http.Response]) (*http.Response, error) {
+    request, err := http.NewRequestWithContext(exec.Context(), http.MethodGet, url, nil)
+    return client.Do(request)
+  })
 ```
 
 ## Cooperative Cancellation
@@ -50,7 +51,7 @@ failsafe.GetWithExecution(func(exec failsafe.Execution[*http.Response]) (*http.R
 Executions can cooperate with a cancellation by periodically checking [IsCanceled()][IsCanceled]:
 
 ```go
-failsafe.RunWithExecution(func(exec failsafe.Execution[any]) error {
+failsafe.With(timeout).RunWithExecution(func(exec failsafe.Execution[any]) error {
   for {
     if !exec.IsCanceled() {
       if err := DoWork(); err != nil {
@@ -59,13 +60,13 @@ failsafe.RunWithExecution(func(exec failsafe.Execution[any]) error {
     }
   }
   return nil
-}, timeout)
+})
 ```
 
 Executions can also use the [Canceled()][Canceled] channel to detect when an execution is canceled:
 
 ```go
-failsafe.RunWithExecution(func(exec failsafe.Execution[any]) error {
+failsafe.With(timeout).RunWithExecution(func(exec failsafe.Execution[any]) error {
   for {
     select {
     case <-exec.Canceled():
@@ -75,7 +76,7 @@ failsafe.RunWithExecution(func(exec failsafe.Execution[any]) error {
     }
   }
   return nil
-}, timeout)
+})
 ```
 
 ## Timeout vs Context Cancellation

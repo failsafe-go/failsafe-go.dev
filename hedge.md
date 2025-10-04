@@ -22,7 +22,7 @@ hedgePolicy := hedgepolicy.NewBuilderWithDelay[any](time.Second).
   Build()
   
 // Run with hedges
-err := failsafe.Run(SendRequest, hedgePolicy)
+err := failsafe.With(hedgePolicy).Run(SendRequest)
 ```
 
 ## Configuration
