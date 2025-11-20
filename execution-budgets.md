@@ -62,6 +62,8 @@ You can specify the max rate of retries or hedges that are permitted before reje
 builder.WithMaxRate(.5)
 ```
 
+### Min Concurrency
+
 You can also specify the min number of concurrent executions that can be retries or hedges:
 
 ```go
