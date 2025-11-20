@@ -39,6 +39,16 @@ If multiple handle methods are configured, they are logically OR'ed. The default
 Policies can be composed in any way desired, including multiple policies of the same type. Policies are composed around a function from left to right, similar to have function composition works, where the inner-most policy handles a function result first. For example, consider:
 
 ```go
+failsafe.With(fallback).
+  Compose(retryPolicy).
+  Compose(circuitBreaker).
+  Compose(timeout).
+  Get(fn)
+```
+
+The same statement can also be written as:
+
+```go
 failsafe.With(fallback, retryPolicy, circuitBreaker, timeout).Get(fn)
 ```
 
