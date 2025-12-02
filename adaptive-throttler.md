@@ -65,7 +65,7 @@ By default, the max rejection rate for a throttler is .9, but you can set a diff
 builder.MaxRejectionRate(.75)
 ```
 
-It's important to ues a value less than 1 to ensure that not all executions are rejected. Maintaining some flow of executions allows the throttler to detect when an overloaded system recovers.
+It's important to use a value less than 1 to ensure that not all executions are rejected. Maintaining some flow of executions allows the throttler to detect when an overloaded system recovers.
 
 ### Execution Prioritization
 
