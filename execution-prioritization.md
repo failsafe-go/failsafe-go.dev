@@ -25,7 +25,7 @@ Different priorities can be assigned to different types of executions. For examp
 
 ## Prioritizers
 
-To used prioritized rejection in an adaptive limiter or throttler, first we need to create a [Prioritizer]:
+To use prioritized rejection in an adaptive limiter or throttler, first we need to create a [Prioritizer]:
 
 ```go
 prioritizer := adaptivelimiter.NewPrioritizer()
