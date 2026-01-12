@@ -66,6 +66,14 @@ You can also configure the [max limit factor][WithMaxLimitFactor], which control
 builder.WithMaxLimitFactor(5)
 ```
 
+A [decay][WithMaxLimitFactorDecay] can be applied to the max limit factor, which reduces the max limit factor by the decay amount for each order of magnitude increase in inflight executions:
+
+```go
+builder.WithMaxLimitFactorDecay(1)
+```
+
+This is useful for providing more headroom for bursts when inflights are low, and less headroom when inflights are high.
+
 ### Execution Times
 
 The primary indicator of overload in an adaptive limiter is execution times, since when a system is overloaded, work will queue and execution times will increase. Adaptive limiters aggregate recent execution times in a window and regularly compare them to baseline execution times to estimate if work is queueing inside a system. 
