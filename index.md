@@ -68,7 +68,7 @@ Policy compositions can also be saved and reused via an [Executor]:
 
 ```go
 executor := failsafe.With(retryPolicy, circuitBreaker)
-err := executor.Get(Connect)
+err := executor.Run(Connect)
 ```
 
 ## Further Reading
