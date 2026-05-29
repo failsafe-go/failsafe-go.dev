@@ -79,7 +79,7 @@ response, err := executor.Get(FetchData)
 
 ## Priorities vs Levels
 
-In order to enable more granular prioritization of executions, priorities are internally converted to more granular levels, with 100 levels per priority class. In practice, Prioritizers use these levels to determine which executions to reject, allow more precise rejection rates.
+In order to enable more granular prioritization of executions, priorities are internally converted to more granular levels, with 100 levels per priority class. In practice, Prioritizers use these levels to determine which executions to reject, allowing more precise rejection rates.
 
 ## Features
 
