@@ -130,7 +130,7 @@ breaker.Close()
 if breaker.TryAcquirePermit() {
   if err := doSomething(); err != nil {
     breaker.RecordError(err)
-  else {
+  } else {
     breaker.RecordSuccess()
   }
 }
