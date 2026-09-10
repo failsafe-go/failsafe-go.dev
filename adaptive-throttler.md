@@ -87,7 +87,7 @@ An [AdaptiveThrottler] can also be manually operated in a standalone way:
 if throttler.TryAcquirePermit() {
   if err := doSomething(); err != nil {
     throttler.RecordError(err)
-  else {
+  } else {
     throttler.RecordSuccess()
   }
 }
