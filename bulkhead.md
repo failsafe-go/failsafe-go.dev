@@ -50,12 +50,9 @@ builder.OnFull(func(e failsafe.ExecutionEvent[any]) {
 })
 ```
 
-`OnAcquired` runs after an execution acquires a permit. `OnReleased` runs immediately before that execution releases its permit, whether the execution succeeds or returns an error.
-
-These listeners can track executions that hold a permit:
+It can also notify you when a permit is [acquired][OnAcquired] or [released][OnReleased]:
 
 ```go
-// Requires sync/atomic.
 var inflight atomic.Int64
 builder.
   OnAcquired(func(e failsafe.ExecutionEvent[any]) {
@@ -66,7 +63,7 @@ builder.
   })
 ```
 
-Neither listener runs when an execution fails to acquire a permit, including cancellation or an exceeded max wait time. Listener code must be safe for concurrent executions. These listeners provide side effects, such as logging and metrics, without changing execution results.
+Neither listener runs when an execution fails to acquire a permit, including cancellation or an exceeded max wait time.
 
 ## Standalone Usage
 

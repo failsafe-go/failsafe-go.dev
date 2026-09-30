@@ -63,8 +63,6 @@ policyBuilder.
 
 Additional listeners are available for different policies.
 
-For example, [Bulkhead] provides `OnFull` for rejected executions, plus `OnAcquired` and `OnReleased` to track executions that hold a permit. These listeners only apply to executions through Failsafe, not standalone permit methods.
-
 ## Alternative Execution Results
 
 Event listeners are meant for side effects such as logging and metrics. They do not influence the outcome of an execution. To provide an alternative execution result, use a [Fallback][fallbacks].
