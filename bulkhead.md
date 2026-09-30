@@ -45,10 +45,28 @@ Fairness is guaranteed with waiting executions, meaning they're permitted in the
 A [Bulkhead] can notify you with an [ExecutionEvent] when the bulkhead is full:
 
 ```go
-builder.OnBulkheadFull(func(e failsafe.ExecutionEvent[any]) {
+builder.OnFull(func(e failsafe.ExecutionEvent[any]) {
   logger.Error("Bulkhead full")
 })
 ```
+
+`OnAcquired` runs after an execution acquires a permit. `OnReleased` runs immediately before that execution releases its permit, whether the execution succeeds or returns an error.
+
+These listeners can track executions that hold a permit:
+
+```go
+// Requires sync/atomic.
+var inflight atomic.Int64
+builder.
+  OnAcquired(func(e failsafe.ExecutionEvent[any]) {
+    inflight.Add(1)
+  }).
+  OnReleased(func(e failsafe.ExecutionEvent[any]) {
+    inflight.Add(-1)
+  })
+```
+
+Neither listener runs when an execution fails to acquire a permit, including cancellation or an exceeded max wait time. Listener code must be safe for concurrent executions. These listeners provide side effects, such as logging and metrics, without changing execution results.
 
 ## Standalone Usage
 
@@ -60,6 +78,8 @@ if bulkhead.TryAcquirePermit() {
   bulkhead.ReleasePermit()
 }
 ```
+
+Standalone permit methods do not call `OnFull`, `OnAcquired`, or `OnReleased`. These listeners only apply to executions through Failsafe.
 
 ## Best Practices
 
